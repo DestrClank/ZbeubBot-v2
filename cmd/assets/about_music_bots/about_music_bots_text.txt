@@ -1,0 +1,25 @@
+**Introduction :**
+
+Rythm, depuis le 15 septembre 2021, a cessé de fonctionner sur les serveurs où il est encore présent. YouTube mène en ce moment une politique répréhensive contre les bots Discord musicaux qui utilisent leur service pour streamer de la musique dans les salons vocaux. YouTube a déjà attaqué Groovy avec un *cease and desist* (mise en demeure), pour "violation des règles de YouTube". Groovy et Rythm ont dû arrêter le fonctionnement de leurs bots, pour éviter un procès par YouTube. Les développeurs d'Hydra, quant à eux, ont preféré arrêter le support de YouTube comme source pour en utiliser d'autres. Cela pose bien évidemment plein de questions, quels seront les prochains bots visés par cette politique ? Est-ce la fin des bots musicaux ? Les autres bots plus petits peuvent aussi se faire attaquer par YouTube en justice pour la même raison.
+
+**Ce qui va changer :**
+
+Zbeub Bot est par conséquent en danger lui aussi, car il utilise YouTube comme source principale de musique. Par conséquent, si d'autres bots musicaux sont attaqués en justice ou Zbeub Bot est menacée, je devrais, DestrClank, le créateur/développeur du bot, retirer les fonctionnalités musicales de Zbeub Bot à mon tour, pour éviter des problèmes juridiques. Les autres commandes sociales et les commandes slash quant à eux, ne seront pas affectées. Si il devait arriver que les commandes musicales doivent être désactivées, j'essaierai d'implémenter une autre source de musique que YouTube, comme Spotify ou SoundCloud. Cependant, l'idéal serait de continuer de supporter YouTube comme source, car cette plateforme possède bien plus de choix que des plateformes comme Spotify. Pour citer un exemple, les soundtracks de jeux-vidéos sont bien plus complètes sur YouTube que sur Spotify, car les OST proposés sur Spotify sont des regroupements de musiques marquantes. Pourtant un jeu-vidéo possède bien plus de musiques que ça. Je suis sûr qu'il y a plein d'autres exemples, dans d'autres domaines.
+
+**Commentaires du créateur/développeur et revendications :**
+ 
+Cette politique, pour être honnête, *me pète bien les couilles*, sachant que YouTube est en train de tout ruiner, au lieu de proposer une meilleure solution officielle. Par exemple, un API crée par YouTube lui-même à destination des bots Discord pour y intégrer des annonces en provenance de leur plateforme. Mais ce n'est pas perdu pour autant, Zbeub Bot pour le moment garde les fonctions musicales, sur lequel j'ai passé énormément de temps à créer, améliorer etc... Ce bot est mon projet personnel sur lequel j'ai passé le plus de temps, à apprendre les rouages, le code et la programmation, et je veux le maintenir en vie, car l'informatique est ma passion, j'y apprends beaucoup plus en créant ce bot qu'en cours xD ! Cela me ferait vraiment chier si je devais jeter tout ça à la Corbeille. Je laisse les commandes pour le moment, pour montrer mon mécontentement envers YouTube. YouTube me déçoit toujours plus. Pour changer de sujet, j'espère que votre rentrée s'est bien passée, et je vous dis au revoir ! ^^
+
+**Liens utiles : **
+__Arrêt du support de YouTube par Hydra__ : 
+(Page officielle) --> https://hydra.bot/articles/why-is-youtube-support-removed
+
+__Arrêt de Groovy__ : 
+(20 minutes) --> https://www.20min.ch/fr/story/discord-perd-lun-de-ses-bots-les-plus-populaires-607941467427
+(Page officielle) --> https://groovy.bot/
+(The Verge, en anglais) --> https://www.theverge.com/2021/8/24/22640024/youtube-discord-groovy-music-bot-closure
+
+__Arrêt de Rythm__ : 
+(The Verge, en anglais) --> https://www.theverge.com/2021/9/12/22669502/youtube-discord-rythm-music-bot-closure
+(Page officielle) --> https://rythm.fm/
+(Kotaku, en anglais) --> https://kotaku.com/youtube-kills-two-big-discord-music-bots-and-that-suck-1847665322

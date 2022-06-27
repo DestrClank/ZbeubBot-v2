@@ -1,0 +1,248 @@
+{
+    "version": {
+        "versionNumber": "0.10.1.0 (bêta) [testing_version 1]",
+        "shortversionNumber": "0.10.1.0",
+        "slashversionNumber":  "2"
+    },
+    "properties": {
+        "name": "Zbeub Bot",
+        "developer": "DestrClank",
+        "userID": "456117123283157002",
+        "botprofileurl": "https://cdn.discordapp.com/avatars/830766885006999573/6a71964bd45d91809b31cd4112794531.jpeg",
+        "botinvitelink": "https://discord.com/api/oauth2/authorize?client_id=830766885006999573&permissions=8&scope=bot%20applications.commands"
+    },
+    "settings": {
+        "embedColor": "#FFF305",
+        "prefix": "z!",
+        "musicCmdEnable": true,
+        "TestFeatureDeployed": false,
+        "RandomfunctionDeployed": true,
+        "ChangelogFunctionDeployed": true,
+        "DevelopmentServer": "797836969517776927",
+        "ClientId": "830766885006999573"
+    },
+    "CmdList": {
+        "InfoCmds": {
+            "help": "z!help",
+            "about": "z!about",
+            "credits": "z!credits",
+            "music_bots_infos": "z!infos"
+        },
+        "MusicCmds": {
+            "play": "z!play",
+            "skip": "z!skip",
+            "stop": "z!stop",
+            "loop": "z!loop",
+            "queue": "z!queue",
+            "pause": "z!pause",
+            "resume": "z!resume",
+            "np": "z!np",
+            "qp": "z!qp"
+        },
+        "SocialCmds": {
+            "hello": "z!hello",
+            "error": "z!error",
+            "hug": "z!hug",
+            "attack": "z!attack",
+            "dance": "z!dance",
+            "cordula": "z!chewie",
+            "mtm": "z!mtm",
+            "wala": "z!wala",
+            "zemmour": "z!zemmour"
+        },
+        "MemberInfoCmds": {
+            "showmemberinfo": "undefined",
+            "membercard": "z!membercard"
+        },
+        "DebugCmds": {
+            "crash": "z!crash",
+            "debug": "z!debug",
+            "deployslashcmd": "z!deployglobalcommands",
+            "botusage": "z!botusage",
+            "generatebotinvite": "z!generatebotinvite"
+        },
+        "FeaturesTesting": {
+            "showInfoAboutMember": "z!showinfoaboutmember",
+            "changelog": "z!changelog"
+        },
+        "InstallCmds": {
+            "installslashcommands": "z!installslashcommands",
+            "deleteslashcommands": "z!deleteslashcommands"
+        }
+    },
+    "PrivateMsgCmdList": {
+        "help": "z!help",
+        "sendcomments": "z!sendcomments",
+        "sendfiles": "z!d_sendfiles"
+    },
+    "SlashCmds": {
+        "embed": "embed",
+        "error": "error",
+        "help": "help",
+        "sendmessage": "sendmessage",
+        "test": "test",
+        "play": "play",
+        "stop": "stop",
+        "skip": "skip",
+        "loop": "loop",
+        "queue": "queue",
+        "pause": "pause",
+        "resume": "resume",
+        "np": "np",
+        "qp": "qp"
+    },
+    "generalText": {
+        "featureTestMsg": {
+            "featureTestDisabledMessage": "Cette fonctionnalité est en cours de test et sera utilisable par tout le monde quand elle sera terminée ! Ne t'inquiètes pas !^^",
+            "debug_featureTestBlockedMessage": "L'utilisateur (utilisatrice) suivant(e) a essayé d'utiliser la commande mais a été refusé(e) : "
+        },
+        "ErrorMsg": {
+            "logs": {
+                "music_missingauthorisation": "Le bot ne possède pas les autorisations nécessaires tels que CONNECT et SPEAK. Il ne peut pas continuer.",
+                "music_notinvocal": "L'utilisateur n'était pas dans un salon vocal avant de faire la commande.",
+                "music_failjoinvocal": "Le bot n'a pas réussi à rejoindre le salon vocal.",
+                "music_nomusicplaying": "Aucune musique n'était en cours de lecture avant de faire la commande.",
+                "music_ytsearchunknownerror": "Fonction ytsearch : Une erreur inconnue est survenue pendant la préparation de la lecture.",
+                "music_ytsearchaddplaylisterror": "Fonction ytsearch : Une erreur est survenue pendant la récupération des métadonnés de la vidéo sélectionnée.",
+                "music_quicksearchunknownerror": "Fonction quicksearch : Une erreur inconnue est survenue pendant la préparation de la lecture.",
+                "music_quicksearchaddplaylisterror": "Fonction quicksearch : Une erreur est survenue pendant la récupération des métadonnés de la vidéo sélectionnée.",
+                "d_sendfiles_errorwhilesendingfiles": "z!d_sendfiles : Une erreur est survenue pendant l'envoi des fichiers. Une annulation s'est produite.",
+                "music_alreadypaused": "La musique est déja en pause.",
+                "music_alreadyplaying": "La musique est déja en lecture.",
+                "unknownerror": "Une erreur inconnue est survenue.",
+                "music_featuredisabledmsg": "Une commande musicale a été effectuée mais la fonctionnalité est désactivée.",
+                "music_nperror": "z!np : Une erreur est survenue pendant la récupération des informations des métadonnées.",
+                "music_servererror": "Fonction execute : Une erreur de serveur s'est produite."
+            },
+            "userend": {
+                "music_missingauthorisation": "Le bot ne possède pas les autorisations nécessaires au fonctionnement de la lecture de musique. Vérifiez les rôles de Zbeub Bot et leurs autorisations.",
+                "music_erroroccuredwhileyoutubelink": "Oups... Une erreur est survenue pendant que la commande faisait son travail... Désolé ! Peut-être as-tu mis un lien qui ne fonctionnait pas ? 😅",
+                "music_linkbroken": "Le lien YouTube n'a pas fonctionné, vérifie que tu ne t'ais pas trompé en le tapant ou en le copiant-collant ^^ !",
+                "music_noargumentprovided": "Tu as oublié de mettre quelque chose après la commande ! Mets un lien ou une recherche sur YouTube !^^",
+                "music_notinvocal": "Sois dans un salon vocal pour que cela fonctionne 😉 !",
+                "music_pikachuerror": "Pikachu n'est pas content ! Une erreur étrange s'est produite ! **tête choquée**",
+                "music_unknownerror": "Oups... Une erreur est survenue pendant que je faisais mon travail... Désolé ! 😅",
+                "music_featuredisabledmsg": "Les commandes musicales sont désactivées. Tapez la commande `z!infos` pour plus d'informations concernant la désactivation des commandes musicales.",
+                "music_servererror": "Oups... 😅 Une erreur côté du serveur de YouTube s'est produite ! Pikachu est désolé ! OnO",
+                "d_sendfiles_errorwhilesendingfiles": "Une erreur est survenue pendant l'envoi du fichier.",
+                "music_oups": "Oups...😅"
+            }
+        },
+        "GeneralLogsMsg": {
+            "musicLogs": {
+                "music_usesearchinstead": "Une recherche sur YouTube a été effectuée à la place car l'argument n'est pas un lien.",
+                "music_youtubemetadataget": "Récupération des métadonnées de la vidéo YouTube.",
+                "music_addtoplaylistmsg": "Ajout dans la liste de lecture.",
+                "music_joinvocal": "Le bot essaie de rejoindre le salon vocal...",
+                "music_youtubesucess": "La lecture de musique s'est effectuée via un lien YouTube.",
+                "music_linkadded": "z!play : Ajout de la musique suivante (via lien YouTube).",
+                "music_searchadded": "",
+                "music_stopmsg": "z!stop : Arrêt de la musique et nettoyage de la liste de lecture.",
+                "music_musicstopping": "Arrêt de la lecture et le bot quitte le salon vocal.",
+                "music_stopproccesslonger": "z!stop : La musique étant en pause, le processus d'arrêt sera plus long.",
+                "music_ytsearchprocessing": "Recherche des résultats via YouTube...",
+                "music_skipmusicmsg": "Passage à la musique suivante dans la liste de lecture.",
+                "music_playingmusicmsg": "Fonction play : Lecture de la musique suivante : ",
+                "music_sendsearchresult": "Envoi des résultats à l'utilisateur.",
+                "music_waituseranswermsg": "Récupération des messages utilisateurs et attente d'une réponse valide.",
+                "music_answerobtainedmsg": "Réponse valide récupérée.",
+                "music_quickplaylinkinstead": "z!qp : L'argument est un lien, utilisation du processus traitant les liens.",
+                "music_youtubesearchsucess": "La lecture de musique s'est effectuée via une recherche YouTube.",
+                "music_sendqueuemsg": "Affichage de la liste de lecture.",
+                "music_pausing": "La musique est en pause.",
+                "music_resuming": "La musique est en lecture.",
+                "music_resumeproblem": "z!resume : Le processus peut être plus long dû à un problème de la version actuelle de discord.js."
+            },
+            "PrivateMsgLogs": {
+                "cmdget": "Une commande a été effectuée en message privé par",
+                "msgget": "Un message a été reçue par un utilisateur du nom de",
+                "contentSent": "Son contenu est envoyée au développeur."
+            },
+            "GeneralCmdLog": {
+                "CmdGet": "Une commande a été effectuée :",
+                "SlashCmdGet": "Fonction Slash Command : La commande suivante a été effectuée :"
+            },
+            "BotOperationLog": {
+                "botInitialized": "Le bot est initialisé.",
+                "botReconnecting": "Le bot est en reconnexion.",
+                "botDisconnect": "Le bot est déconnecté.",
+                "botShardError": "Une erreur de connexion au websocket s'est produite.",
+                "botUnhandledRejection": "Une erreur inconnue s'est produite."
+            },
+            "InstallSlashCmd": {
+                "InstallCmdMsg": "z!installslashcommands : L'installation des commandes slash a commencé sur le serveur demandé.",
+                "UserNotAdmin": "z!installslashcommands : L'utilisateur n'a pas les droits nécessaires et l'installation des commandes est annulée."
+            },
+            "DeploymentSlashCmd": {
+                "botDeploying": "Déploiement des commandes slash..."
+            },
+            "SlashCmdDescription": {
+                "ping": "Une fonction de test qui permet de ping le bot OnO.",
+                "test": "Une fonction simple de test, qui teste les commandes slash.",
+                "embed": "Renvoie le message saisi sous la forme d'un embed.",
+                "sendmessage": "Le bot renvoie un message saisi par l'utilisateur.",
+                "error": "z!error : envoie un message d'erreur.",
+                "help": "z!help : envoie la liste des commandes.",
+                "play": "z!play : permet de lire de la musique dans un salon vocal ou de faire une recherche YouTube.",
+                "stop": "z!stop : permet d'arrêter la musique.",
+                "skip": "z!skip : Permet de passer la musique.",
+                "loop": "z!loop : Permet de boucler la musique en cours de lecture.",
+                "queue": "z!queue : Permet d'afficher la liste de lecture.",
+                "pause": "z!pause : Permet de mettre en pause la musique.",
+                "resume": "z!resume : Permet de reprendre la lecture de la musique.",
+                "np": "z!np : Permet de voir les détails de la musique en cours de lecture.",
+                "qp": "z!qp : Permet de lire de la musique sans passer par le choix de celle-ci."
+            },
+            "SlashCmdParameters": {
+                "embed": {
+                    "Title": {
+                        "Title": "titre",
+                        "Description": "description"
+                    },
+                    "Description": {
+                        "Descrption": "Renvoie le message saisi sous la forme d'un embed.",
+                        "Title": "Entrez le titre de l'embed ici."
+                    }
+                },
+                "sendmessage": {
+                    "Title": {
+                        "Argument": "texte"
+                    },
+                    "Description": {
+                        "Descrption": "Entrez le message ici."
+                    }
+                },
+                "play": {
+                    "Title": {
+                        "Argument" :"argument"
+                    },
+                    "Descrption": {
+                        "Description": "Entrez une recherche ou un lien YouTube."
+                    }
+                },
+                "qp": {
+                    "Title": {
+                        "Argument": "argument"
+                    },
+                    "Description": {
+                        "Descrption": "Entrez une recherche ou un lien YouTube."
+                    }
+                }
+            }
+        },
+        "GeneralUserMsg": {
+            "music_usernotinvocal": "Soyez dans un salon vocal pour que cela fonctionne 😉 !",
+            "music_musicstopped": "Musique arrêtée ! 😉",
+            "music_nomusicplaying": "Aucune musique n'est en cours de lecture. ^^",
+            "music_searchresultstext": "Liste des résultats : ",
+            "music_queuelisttext": "Liste de lecture : ",
+            "InstallSlashCmd_notenoughpermission": "Vous n'avez pas les droits nécessaires pour utiliser cette commande.\nPermission nécessaire : `Administrateur`"
+        }
+    },
+    "Functions": {
+        "ytsearch": "Fonction ytsearch",
+        "play": "Fonction play",
+        "quicksearch": "Fonction quicksearch",
+        "executeytsearch": "Fonction executeytsearch"
+    }
+}

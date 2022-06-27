@@ -1,0 +1,305 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title id="title"></title>
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="./images/android-desktop.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+  <link rel="apple-touch-icon-precomposed" href="./images/ios-desktop.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="#3372DF">
+
+  <link rel="shortcut icon" href="./images/favicon.png">
+
+  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+  <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+    <header
+      class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title" id="footer_title"></span>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+    </header>
+    <div class="demo-ribbon"></div>
+    <main class="demo-main mdl-layout__content">
+      <div class="demo-container mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+        <div
+          class="demo-content mdl-color--grey-900 mdl-shadow--4dp content mdl-color-text--grey-100 mdl-cell mdl-cell--8-col">
+          <div class="demo-crumbs mdl-color-text--grey-500" id="crumbs"></div>
+          <h2>Aide de Zbeub Bot</h2>
+          <p>
+            Zbeub Bot est un bot Discord possédant plusieurs fonctionnalités sympatiques ! Cette aide liste toutes les
+            commandes disponibles utilisables !
+          </p>
+          <h3>Aide</h3>
+          <p>
+            <code>z!help</code> : Affiche la liste des commandes disponibles. La commande slash <code>/help</code>
+            fonctionne également.
+          </p>
+          <p>
+            <code>z!about</code> : Affiche des informations à propos du bot (notamment le patch note).
+          </p>
+          <p>
+            <code>z!changelog</code> : Envoie tout le changelog complet du bot.
+          </p>
+          <p>
+            <code>z!credits</code> : Affiche les crédits.
+          </p>
+          <p>
+            <code>z!botusage</code> : Affiche des informations statistiques concernant le fonctionnement du bot.
+          </p>
+          <p>
+            <code>z!infos</code> : Affiche des informations importantes concernant l'avenir des bots musicaux et de
+            Zbeub Bot (il y a aussi les commentaires du créateur).
+          </p>
+            <p>
+                Les commandes présentes sur ce paragraphe sont aussi disponibles en commandes slash.
+            </p>
+          <h3>Installation</h3>
+          <p>
+            <strong>Attention :</strong> Ces commandes nécessitent la permission <code>Administrateur</code> pour être
+            utilisables.
+          </p>
+          <p>
+            <code>z!installslashcommands</code> : Installe les commandes slash et les commandes d'application sur le serveur.
+          </p>
+          <p>
+              <code>z!deleteslashcommands</code> : Supprime les commandes slash les commandes d'application sur le serveur.
+          </p>
+          <p>
+            <i>La commande z!deleteslashcommands a été réactivée depuis la version 0.10.0.0 de Zbeub Bot.</i>
+          </p>
+          <h3>Fun et social</h3>
+          <p>
+            Pour utiliser les commandes suivantes vous pouvez @mentionner la personne ou utiliser <code>random</code> à
+            la fin. <br>
+          <h4>Remarques:</h4>
+          <p>
+            - La commande <code>z!error</code> n'utilise pas d'arguments. <br>
+            - Toutes les commandes peuvent être utilisées sans argument. <br>
+          </p>
+
+          <h4>Exemples :</h4>
+          <p>
+            <code>z!hello @DestrClank</code><br>
+            <code>z!hello random</code>
+          <h4>Commandes : </h4>
+          <p>
+            <code>z!hello</code> : Dit bonjour à quelqu'un.
+          </p>
+          <p>
+            <code>z!error</code> : Envoie un message d'erreur fictif.
+          </p>
+          <p>
+            <code>z!attack</code> : Pikachu fera une attaque Boule Elek à quelqu'un.
+          </p>
+          <p>
+            <code>z!dance</code> : Pikachu fera une danse à quelqu'un.
+          </p>
+          <p>
+            <code>z!hug</code> : Pikachu fera un câlin à quelqu'un.
+          </p>
+          <p>
+            <code>z!chewie</code> : Christina Pikachu Cordon Bleu vous sortira sa meilleure phrase !
+          </p>
+          <p>
+            <code>z!wala</code> : Vous jurez que ce n'est pas vous ??
+          </p>
+          <p>
+            <code>z!mtm</code> : Kirby vous transmettra un joli message !
+          </p>
+          <p>
+            <code>z!zemmour</code> : Ça ne rigole plus là OnO !
+          </p>
+          <p>
+            <code>z!nice</code> : Nice...
+          </p>
+          <p>
+            <code>z!bogossitude</code> : La bogossitude à son paroxysme.
+          </p>
+          <h3>Commandes slash</h3>
+          <h4>Fonctionnement</h4>
+          <p>
+            Les commandes slash et les commandes d'application doivent être installés via une commande décrite dans le paragraphe <b>Installation</b>
+            pour être utilisables.
+          </p>
+          <h4>Commandes</h4>
+          <p>
+            <code>/sendmessage</code> : Le bot envoie le message saisi par l'utilisateur. <br>
+            Exemple : <code>/sendmessage texte:Ceci est un test.</code><br>
+            <img src="images/sendmessage.png">
+          </p>
+          <p>
+            <code>/embed</code> : Le bot envoie sous forme d'embed le message saisi par l'utilisateur.<br>
+            Exemple : <code>/embed description:Ceci est un test titre:Coucou !</code> <br>
+            <img src="images/embed.png"> <br>
+            <i>Remarque</i> : L'argument "titre" n'est pas nécessaire.
+          </p>
+          <p>
+            <code>/test</code> : Teste les commandes slash.
+          </p>
+          <p>
+            <code>/error</code> : Envoie un message d'erreur fictif.
+          </p>
+          <p>
+            <code>/ping</code> : Fait un ping-pong.
+          </p>
+          <h3>Informations</h3>
+          <h4>Fonctionnement</h4>
+          <p>
+            Les commandes suivantes nécessitent de @mentionner la personne pour fonctionner.
+          </p>
+          <h4>Commandes</h4>
+          <p>
+            <code>z!showinfoaboutmember</code> : Affiche des informations à propos d'un membre.
+          </p>
+          <p>
+            <code>z!membercard</code> : Envoie une carte de profil d'un membre.
+          </p>
+          <h3>Autres</h3>
+          <p>
+            <code>z!ytconvert</code> : Permet de convertir une vidéo YouTube en fichier musique (.mp3). <br>
+            <b>Attention : </b> La vidéo ne doit pas dépasser 20 minutes de temps. (depuis la version 0.10.0.5) <br>
+            Exemple : <code>z!ytconvert https://www.youtube.com/watch?v=dQw4w9WgXcQ</code>
+          </p>
+            <p>
+                <i>Cette commande est désormais disponible également en commande slash depuis la version 0.10.0.0 de Zbeub Bot.</i>
+            </p>
+          <h3>Musique</h3>
+          <h4>Fonctionnement</h4>
+          <p>
+            -> Les commandes suivantes peuvent être utilisées soit par commandes dans le chat (avec le préfixe z!) soit
+            par les commandes slash (avec le préfixe /) <br>
+            -> Pour utiliser ces commandes, vous devez être dans un salon vocal. <br>
+            -> Pour écouter de la musique dans un salon de conférence, vous devez utiliser d'abord la commande slash
+            <code>/play</code> ou choisir un résultat de recherche pour que le bot puisse rejoindre le salon de
+            conférence. Puis quand le bot est présent dans le salon de conférence les deux commandes
+            (<code>z!play</code> et <code>/play</code>) peuvent être utilisées.
+          </p>
+          <h4>Commandes</h4>
+          <p>
+            <code>z!play</code> : Joue de la musique via le lien YouTube ou effectue une recherche. <br>
+            Exemples : <br>
+            <code>z!play https://www.youtube.com/watch?v=dQw4w9WgXcQ</code><br>
+            <code>z!play dylan vassalo spamton neo remix extended</code>
+          </p>
+          <p>
+            <code>z!skip</code> : Permet de passer la musique.
+          </p>
+          <p>
+            <code>z!stop</code> : Stoppe la musique.
+          </p>
+          <p>
+            <code>z!loop</code> : Boucle la musique en cours de lecture.
+          </p>
+          <p>
+            <code>z!queue</code> : Affiche la liste de lecture.
+          </p>
+          <p>
+            <code>z!pause</code> : Met en pause la musique.
+          </p>
+          <p>
+            <code>z!resume</code> : Met en lecture la musique.
+          </p>
+          <p>
+            <code>z!np</code> : Affiche la musique en cours de lecture.
+          </p>
+          <p>
+            <code>z!qp</code> : Recherche la musique sur YouTube et lance immédiatement la lecture ou l'ajoute dans la
+            liste de lecture. La commande fonctionne avec les liens également. <br>
+            Exemples : <br>
+            <code>z!qp https://www.youtube.com/watch?v=dQw4w9WgXcQ</code><br>
+            <code>z!qp dylan vassalo spamton neo remix extended</code>
+          </p>
+            <h3>Commandes d'application</h3>
+            <p>
+                Les commandes d'application sont des commandes qui sont accessibles via le menu contextuel de Discord.
+                Le bot possède des commandes d'application pour les membres d'un serveur.
+
+                Pour les utiliser, faites un clic droit sur n'importe quel membre sur le côté droit lorsque vous êtes dans un salon textuel.<br />
+                <img src="images/leftpanel.png" />
+            </p>
+            <p>
+                Puis dans le menu qui apparaît, cliquez sur "Applications". <br />
+                <img src="images/menubar.png" />
+            </p>
+            <p>
+                La liste des commandes vont apparaître.<br />
+                <img src="images/cmdlist.png" />
+            </p>
+            <p>
+                Remarque : Les commandes d'appliction ne sont pour le moment disponibles que dans la version PC de Discord, elles ne sont pas disponibles sur la version mobile.
+            </p>
+        </div>
+      </div>
+      <footer class="demo-footer mdl-mini-footer">
+        <div class="mdl-mini-footer--left-section">
+          <ul class="mdl-mini-footer--link-list">
+          </ul>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script type="module">
+    import values from "./values.json" assert { type: "json" };
+    document.getElementById("crumbs").innerText = `Zbeub Bot ${values.version.versionNumber}`
+    document.getElementById("footer_title").innerText = `Zbeub Bot ${values.version.versionNumber}`
+    document.getElementById("title").innerText = `Zbeub Bot ${values.version.versionNumber}`
+  </script>
+</body>
+
+</html>

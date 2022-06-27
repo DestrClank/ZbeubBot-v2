@@ -1,0 +1,340 @@
+## Zbeub Bot crée par @DestrClank. 
+## Voici le changelog complet contenant tous les changements effectués depuis la version 0.3.3. 
+## Les anciennes versions antérieures à la version 0.3.3 ne sont pas listées dans ce changelog.
+## La commande z!about n'affiche que les versions récentes du bot.
+## Pour accéder au changelog complet : z!changelog
+## Les astérisques (**) indiquent que la version est une version majeure.
+## Les underscores (__) indiquent que la version est une version mineure.
+
+**Version 0.10.1.0 (bêta) [testing_version 1]**
+■ Ajout de la commande z!volume et de son équivalent en commande slash /volume. 
+Il permet de régler le volume de la musique et peut supporter un volume allant de 0% à 200%.
+AVERTISSEMENT : Il est déconseillé de régler le volume au delà de 100% car cela peut entraîner des problèmes auditifs à moyen et long terme si l'écoute est prolongée.
+
+La version des commandes slash est passée à 2. 
+Les administrateurs doivent faire la commande z!installslashcommands pour mettre à jour les commandes slash sur leur serveur.
+
+**Version 0.10.0.0 bêta [testing_version 3]** 
+■ Mise à jour des dépendances et plugins utilisés par le bot.
+■ Les fonctionnalités musicales du bot lors des tests ont été suffisamment stables pour que le bot passe de version alpha en version bêta. (peut changer si la fonctionnalité ne fonctionne pas correctement.)
+■ Amélioration de la commande z!ytconvert, le message lorsque le bot envoie le fichier est désormais sous forme d'embed.
+■ La commande z!ytconvert est désormais utilisable par la commande slash /ytconvert.
+■ La commande z!play (/play) lorsque qu'une recherche YouTube est lancée, la durée de la vidéo est désormais affichée à côté du nom de la chaîne dans le menu des résultats.
+■ Légère modification sur le fonctionnement du site.
+■ Le bot ajoute aux logs les étapes du démarrage et les dépendances en cours de chargement.
+■ Ajout sur le site un paragraphe dédiée aux commandes d'application.
+■ Le bot lorsqu'il reçoit une commande va indiquer qu'il "est en train d'écrire" en bas du chat.
+■ Ajout de la commande z!ping, permettant de calculer le temps de latence du bot.
+■ Le bot calcule au démarrage le temps de latence API.
+■ Désormais, si le bot rencontre une erreur sérieuse qui entrâine son arrêt complet, le bot puisera dans ses dernières ressources pour envoyer les logs au développeur !
+■ Idem pour les bugs ne causant pas l'arrêt du bot, il enverra les logs au développeur.
+■ Le bot gère désormais les demandes d'arrêts, avant de s'arrêter (ou de redémarrer), le bot envoie les logs au développeur.
+■ Ajout d'une fonction permettant lors de la phase de tests, la désactivation de la fonction ping du site.
+■ Ajout de commentaires dans le code pour une meilleure compréhension pour le développeur.
+■ Les miniatures des vidéos sont désormais intégrées dans les fichiers mp3 genérées par la commande z!ytconvert (/ytconvert).
+■ Les informations système au lancement du bot revoie désormais le numéro de version des commandes slash. (correction du texte également)
+■ La commande par message privé z!sendcomments envoie désormais les logs du bot en même temps au développeur pour lui permettre d'identifier plus rapidement les bugs.
+■ A partir de cette version de Zbeub Bot, les commandes slash possèdent leur propre numéro de version commençant à la version 1 (le numéro de version des commandes slash est affichée en faisant la commande z!credits ou /credits).
+■ Si on complimente le bot (en le mentionnant et en écrivant un compliment ou en l'insultant), le bot va répondre en retour xD ! 
+Phrases et mots compatibles (d'autres phrases seront ajoutées dans le futur) :
+Compliments         Insultes        Phrases annexes
+---------------------------------------------------------
+bon toutou          stupide         tu es en tn lacoste ?
+mignon/mignonne     idiot/idiotte   
+beau/belle/bo       inutile
+magnifique          con/conne
+bg/bgette           
+
+
+■ D'autres commandes sont désormais disponibles en commandes slash :
+
+Commandes de chat   Commandes slash
+-----------------------------------
+z!ytconvert         /ytconvert
+z!about             /about
+z!changelog         /changelog
+z!credits           /credits
+z!botusage          /botusage
+z!infos             /infos
+
+■ Ajout des commandes d'application : en faisant un clic droit sur un utilisateur et en allant sur "Applications", des commandes apparaîssent.
+
+Liste des commandes disponibles :
+Commandes d'application     Commandes de chat original
+------------------------------------------------------
+Attaquer                    z!attack
+Danser                      z!dance
+Dire bonjour                z!hello
+Faire un câlin              z!hug
+
+Ces commandes sont inspirées par les commandes sociales déjà existantes et réalisables dans le chat.
+Par soucis de limitations : il est impossible (pour le moment ?) d'ajouter toutes les commandes sociales dans les commandes d'applications (limite de 5 imposée par Discord.).
+Dans le futur, les commandes sociales seront portées en commandes slash.
+
+■ La commande z!deleteslashcommands est désormais fonctionnelle de nouveau et peut supprimer toutes les commandes slash ainsi que les commandes d'application (commandes disponibles par menu contextuel.).
+
+**__REMARQUE__ : Pour pouvoir utiliser les nouvelles commandes slash ainsi que les commandes d'application, un administrateur du serveur doit exécuter la commande `z!installslashcommands` pour mettre à jour la liste des commandes slash sur le serveur.**
+
+__0.10.0.1__ : Correction de bugs : 
+--> La commande slash /qp, si l'utilisateur n'est pas dans un salon vocal, le bot envoyait un nouveau message au lieu de répondre à l'interaction.
+--> Si une erreur de conversion se produisait, le bot cessait de fonctionner de manière globale.
+
+__0.10.0.2__ : Le développeur peut arrêter le bot ou le redémarrer avec une commande spécifique.
+
+__0.10.0.3__ : Mise à jour des dépendances utilisées par le bot.
+
+__0.10.0.4__ : 
+--> Améliorations dédiés au développeur :
+Amélioration du système de log en intégrant un système de configurations qui permet au bot d'avoir deux comportements différents lorsque qu'il est est en développement et quand il est en fonctionnement générale.
+Ce système permet l'utilisation d'une nouvelle "application" Discord (un autre "bot") qui est utilisé uniquement pour le développement et le test.
+Cela évitera de couper le bot lorsque le développeur travaille sur celui-ci.
+
+--> Améliorations utilisateur :
+La commande slash /ping indique désormais le temps de latence comme la commande z!ping.
+
+__0.10.0.5__ : 
+La commande /ytconvert renvoie le pourcentage de progression pendant la conversion.
+La commande /ytconvert et z!ytconvert supportent désormais des vidéos de plus de 8 minutes (maximum 20 minutes.)
+Si le fichier est trop lourd pour être envoyé via Discord, l'utilisateur est amené à telécharger le fichier via un lien.
+Les fichiers sont supprimés toutes les heures.
+
+Cette fonctionnalité est en cours de test et peut rendre le bot instable. (Désolé ^^" !)
+
+__O.10.0.6__ : Correction de certains textes.
+
+__0.10.0.7__ : Mise à jour des dépendances utilisées par le bot.
+--> Améliorations utilisateur générales :
+Les chats textuels dans les salons vocaux sont désormais supportés par le bot. 
+Avant cela, le bot pouvait répondre à certaines interactions via commandes slash mais ne pouvait pas envoyer de nouveaux messages, si il devait envoyer des messages, le bot crashait entièrement.
+
+--> Améliorations de commandes :
+Le taux de rafraîchissement du pourcentage de progression dans "/ytconvert" est plus élevée.
+Un bouton "Cliquez pour télécharger" a été ajouté dans le message quand la conversion d'une vidéo de plus de 8 minutes est terminée.
+
+--> Corrections : 
+Corrections de certains textes dans la page d'aide en ligne.
+
+__0.10.0.8__ : 
+--> Améliorations développeur :
+Le bot peut désormais tourner sur Windows et Linux sans modification majeure.
+Cependant, dû à une incompatiblilité avec "canvas", la commande z!membercard est désactivée lorsque le bot tourne sur Windows.
+
+__0.10.0.8-patch.1__ : 
+Correction de z!membercard qui faisait crasher le bot entièrement. (La fonction d'avant fonctionnait bel et bien sauf que le module n'était pas trouvé.)
+
+__0.10.0.8-patch.1 [testing_version 1]__ :
+--> Test de fonctionnalités :
+Test de la fonctionnalité d'enregistrement de la voix dans un salon vocal.
+Tapez "z!record" pour démarrer un enregistrement.
+La même commande arrête l'enregistrement.
+
+__0.10.0.8-patch.2 [testing_version 1]__ :
+Correction de la fonctionnalité d'enregistrement, qui ne fonctionnait pas à cause des dossiers de sauvegarde qui n'étaient pas présents.
+
+>>Remarques :
+--> Il faut être dans un salon vocal avant de faire la commande.
+
+-> Le bot ne peut enregistrer qu'un seul utilisateur à la fois.
+Même si plusieurs membres sont présents dans un même salon vocal, seul celui/celle qui a réalisé la commande sera enregistré(e).
+
+-> (peut changer à l'avenir)
+Le bot ne peut pas jouer de la musique en même temps que d'enregistrer la voix d'un utilisateur.
+Il ne peut réaliser qu'une action à la fois.
+
+**Version 0.9.4.7 alpha [testing_version 4]**
+■ Mise à jour des dépendances et plugins utilisés par le bot.
+■ Légère réecriture du code pour supporter la mise à jour de la dépendance discord.js. 
+Liste des changements :
+-> Modification des messages embed pour supporter la nouvelle syntaxe.
+-> Passage de Ubuntu vers Windows Subsystem for Linux (Ubuntu) pour éxecuter le bot lors des tests.
+
+**Version 0.9.4.2 alpha [testing_version 4]**
+■ Test d'une page web qui liste toutes les fonctionnalités de Zbeub Bot (aide).
+
+__0.9.4.3__ : Le site ne renvoyait pas la bonne version de Zbeub Bot.
+Ajout du lien vers l'aide en ligne dans la commande z!help.
+
+__0.9.4.4__ : Le bot cesse de fonctionner au bout d'un certain temps si le site n'est pas accédée. Par conséquent cette version va tester la séparation des deux applications.
+__0.9.4.5__ : Les fichiers du bot étaient accessibles par lien direct. Le site est désormais stocké à part dans un dossier dédié.
+__0.9.4.6__ : Le bot cessait de fonctionner au bout de 30 minutes si le site associée n'était pas accédée. Désormais le bot ping le site toutes les 20 minutes.
+
+**Version 0.9.4.0 alpha [testing_version 3]**
+■ La commande z!ytconvert est désormais totalement terminée.
+■ Ajout de la commande z!bogossitude.
+■ Ajout de la commande z!nice.
+■ Ajout de la commande z!botusage.
+■ Légère modification du texte dans z!help.
+
+**En développement :**
+■ La commande z!deleteslashcommands
+
+__0.9.4.1__ : Correction d'un problème de la commande z!ytconvert quand elle était utilisée sans argument. La valeur pour la durée était en secondes au lieu d'être en heures, minutes, secondes.
+
+**Version 0.9.3.3 alpha [testing_version 3]**
+■ Mise à jour des dépendances et plugins utilisés par le bot.
+■ Améloration globale du système de logs du bot, permettant la sauvegarde des logs.
+■ Des fonctionnalités sont en cours de développement et seront ajoutés dans une prochaine mise à jour.
+
+__0.9.3.4__ : Le bot lors du lancement récupère les informations système de la machine hôte.
+__0.9.3.5__ : Le bot renvoie le nombre de coeurs du processeur.
+__0.9.3.6__ : z!about ne fonctionnait pas.
+__0.9.3.7__ : Erreur de texte dans z!hug quand on mentionnait un membre.
+__0.9.3.8__ : Ajout d'une fonctionnalité en test qui permet de convertir une vidéo YouTube en fichier musique. (z!ytconvert)
+__0.9.3.9__ : Gestion des éventuels erreurs pendant la conversion.
+
+**Version 0.9.3.0 alpha [testing_version 3]**
+■ Ajout de la commande sociale z!wala.
+■ Ajout de la commande sociale z!mtm.
+■ Correction de la commande z!changelog qui n'envoyait que le fichier texte.
+■ Réecriture du code concernant la gestion des commandes reçues.
+■ Le support des salons de conférence a été ajouté pour la fonctionnalité musicale.
+Pour pouvoir lire de la musique dans un salon de conférence, il faut d'abord utiliser la commande slash /play pour jouer la première musique 
+(sélectionner un résultat de recherche retourné par z!play fonctionne également)
+puis pour ajouter de la musique dans la liste de lecture, les deux commandes fonctionnent.
+■ La commande `z!about` n'affichera désormais que les changements effectués sur la version actuelle de Zbeub Bot.
+
+__0.9.3.1__ : La commande slash /qp est désormais aussi supportée pour lire de la musique dans les salons de conférence.
+__0.9.3.2__ : Ajout de la commande z!zemmour.
+Mise à jour des dépendances et plugins utilisées par le bot.
+
+**Version 0.9.2.0 alpha [testing_version 3]**
+■ Ajout de la commande z!showinfoaboutmember qui permet d'afficher des informations sur un membre.
+■ Ajout de la commande z!membercard qui renvoie des informations sur un membre par le biais d'une carte de profil.
+■ Ajout d'un système contrôlée par le développeur qui permet de déployer les commandes slash de manière globale.
+
+__0.9.2.1__ : Correction d'un problème dans la commande slash loop, qui ne renvoyait pas de message quand l'utilisateur n'est pas dans un salon vocal.
+Les emojis et les caractères spéciaux sont désormais supportés dans la commande z!membercard, qui auparavant n'affichait pas correctement les emojis et les caractères spéciaux.
+
+**Version 0.9.0 alpha**
+■ Réecriture complète de Zbeub Bot pour supporter la version v13 de discord.js.
+■ Cela permettra l'ajout de *super* fonctionnalités ajoutées sur cette version de discord.js.
+■ Désormais, vous pouvez sélectionner la musique via une liste au lieu d'envoyer un chiffre lorsqu'une recherche YouTube est lancée via la commande \`z!play \`.   `)
+*Note : cette version de Zbeub Bot peut contenir plus de bugs qu'auparavant et peut être instable.* 
+*Si c'est le cas, envoyez un message privé à @DestrClank pour signaler votre problème.*
+
+__0.9.0.2__ : Correction de l'embed envoyé par la recherche YouTube.
+__0.9.0.3__ : Test en profondeur de la sélection de la musique par le menu, par conséquent le choix par le chiffre est désactivé. 
+__0.9.1.0__ : Les commandes musicales sont disponibles via les commandes slash désormais.
+Le code a été optimisée et réduit drastiquement.
+*Cette version est une version potentiellement instable et est testée en conditions réelles pour s'assurer de sa fiabilité.*
+__0.9.1.1__ : Correction d'un problème où la commande slash skip renvoyait une erreur d'interaction.
+Réactivation de la commande z!installslashcommands.
+__0.9.1.3__ : Correction d'un problème liée aux commandes slash, les interactions pouvaient ne pas s'éxecuter correctement.
+Cette version va permettre de tester la fonctionnalité musicale de Zbeub Bot en conditions réelles, le développeur étudiera avec cette version les éventuels problèmes de plantage liée à la fonctionnalité musicale et décidera si le bot peut revenir à une version bêta.
+__0.9.1.4__ : Rétablissement complète de la gestion de l'erreur 403 qui se produit aléatoirement lorsque qu'une musique commence à être lue.
+__0.9.1.5__ : Le problème qui faisait que la lecture de la musique s'arrête aléatoirement a été identifié et est causée par une dépendance qui ne fonctionne pas correctement. (Voir "Problèmes connus")
+La gestion des erreurs a été rendue complètement opérationnelle, en ce qui concerne les erreurs de lancement de la lecture de musique.
+Patch temporaire : Un paramètre est utilisée en attendant une mise à jour de la dépendance causant le problème.
+__0.9.1.6__ : Correction de la commande slash qp qui ne renvoyait aucune interaction.
+__0.9.1.7__ : Correction d'un problème sur la commande z!play où le message d'erreur retourné lorsque l'utilisateur n'était pas dans un salon vocal n'était pas correct.
+Ajout de la commande sociale "z!chewie".
+Amélioration du système de log utilisé par le développeur pour prendre en compte les interactions (boutons, commandes slash)
+Ajout d'un bouton lien cliquable dans la commande z!np qui renvoie vers la vidéo YouTube.
+__[testing_version 2]__ : Cette version va tester les correctifs liées à des erreurs de serveur YouTube. (erreur 410)
+
+**Version 0.8.0** [testing_version 2]**
+■ La commande z!about n'affichait pas le changelog dû au fait que l'embed dépassait la limite maximale de caractères. Par conséquent, à partir de cette version, la commande n'affichera que les changements effectués sur des versions plus récentes.
+■ La commande z!changelog est sortie de sa phase de test et permettra d'accéder au changelog complet depuis la version 0.3.3.
+■ Mise à jour des dépendances et plugins utilisés par le bot.
+■ Désormais, tous les messages envoyés par la fonctionnalité musicale de Zbeub Bot sont sous forme d'embeds.
+■ La commande \`z!queue\` renvoie désormais le nombre total de musiques et la durée totale.
+■ Si la liste de lecture est très longue, désormais seulement les 3 prochaines musiques seront affichés au lieu que la commande ne renvoie aucun message.
+■ Changement du design du texte lorsque \`z!play\` envoie les résultats de la recherche.
+■ Changement du design du texte lorsque \`z!queue\` envoie la liste de lecture.`
+
+**Version 0.7.8.1 [testing_version 3]**
+■ Réecriture du code sur la gestion des textes et des logs.
+■ Les messages envoyés par la fonctionnalité musicale, notammant les messages "Lecture de la musique" et "Ajout de la musique dans la liste de lecture" sont sous forme d'embeds.
+
+__0.7.8.5__ : Ajout d'un paragraphe concernant Watch Together dans z!infos.
+Amélioration de la commande z!np, elle affiche désormais qui a ajouté la musique et la commande a été optimisée.
+
+**Version 0.7.8 [testing_version 3]**
+■ Des fonctionnalités sont en cours de développement et nécessitent de faire fonctionner le bot en condition réelle pour pouvoir les tester convenablement. Ces fonctionnalités sont pour le moment utilisables uniquement par le développeur, elles seront déployées de manière globale quand elles seront terminées.
+■ Désormais, dans les messages embed, en bas du message, la photo de profil de Zbeub Bot est affichée en petit à côté du nom du bot.
+
+**Version 0.7.7**
+■ De nouvelles commandes sont disponibles en message privé désormais, comme z!sendcomments, qui permet d'envoyer un commentaire au développeur.
+■ z!help est disponible par conséquent en message privé.
+■ Correction de la syntaxe des textes.
+
+__0.7.7.6__ : Les pièces jointes envoyées via la commande z!sendcomments seront envoyées au développeur.
+Changement du texte de la commande z!help par message privé et ajout de précision.
+__0.7.7.6 [testing_version 1]__ : Cette version est une version de test contenant des fonctionnalités réservées au développeur.
+
+**Version 0.7.6**
+■ Suite aux mesures prises par YouTube concernant les bots musicaux sur Discord, une fonction a été mise en place pour désactiver les commandes musicales de manière générale. Cette fonction n'est cependant utilisable que par le développeur (DestrClank).
+■ Plus d'informations ont été ajoutées dans z!infos, des liens menant vers des articles ont été ajoutés.
+
+__0.7.6.5__ : Si une erreur se produit pendant le fonctionnement du bot, un message sera envoyé au développeur pour lui avertir.
+__0.7.6.7__ : Ajout de la section "Problèmes connus" dans z!about.
+Envoyer un message privé au bot ne le fera plus crash désormais.`
+
+**Version 0.7.5**
+■ Le code a été modifié, certaines fonctions ont été placés dans plusieurs scripts au lieu d'être regroupés dans un seul gros script.
+■ Ajout de la commande z!credits.
+
+__0.7.5.2__ : Correction de la commande z!credits qui était z!info auparavant pour des raisons de débogage.
+Correction de la commande z!hello.
+__0.7.5.3__ : La commande z!hug a été ajoutée.
+__0.7.5.4__ : Mise à jour des dépendances utilisés par le bot.
+__0.7.5.5__ : La commande z!np renvoie désormais plus d'informations, comme la durée, le nombre de likes, et le nombre de vues.
+__0.7.5.6__ : Ajout (à contrecoeur) de la commande z!infos, qui donnera des informations importantes concernant l'avenir incertain des bots musicaux et de Zbeub Bot.
+
+**Version 0.7.1"**
+■ Les commandes sociales z!dance, z!hello, et z!attack peuvent désormais choisir un membre au hasard parmi ceux présents dans un salon. Utilisez random à la fin de la commande ! 😊
+■ Désormais, le bot vérifiera les messages reçus pour déterminer si le message a été envoyé par un autre bot ou lui-même pour éviter de déclencher des commandes par inadvertance.
+
+__0.7.1.1__ : Affichage du numéro de version dans le statut du bot.
+    
+**Version 0.6.0**
+■ Ajout de la commande z!qp qui est un raccourci de la commande z!play. Elle permet de rechercher de la musique, comme z!play, sauf que le premier résultat de la recherche sera joué. Elle fonctionne également avec les liens, comme z!play.
+    
+**Version 0.5.1**
+■ L'installation ou la désinstallation des commandes slash ne peut désormais être gérée que par un ou plusieurs membres possédant la permission Administrateur.
+■ Amélioration des performances sur la fonctionnalité de recherche de vidéos YouTube, la musique sélectionnée devrait être ajoutée dans la liste de lecture ou jouée plus rapidement.
+■ Meilleure gestion des éventuelles erreurs que le bot pourrait rencontrer.
+
+**Version 0.4.2.3**
+■ La commande z!np renvoie désormais un message embed contenant plus d'informations, comme le titre, l'auteur, et le lien de la vidéo en cours de lecture.
+
+__0.4.2.2__ : Mise à jour des dépendances utilisées par le bot.
+Bug réparé : La commande z!resume ne relançait pas la lecture de la musique.
+__0.4.2.3__ : Désormais, si le loop est activé, le bot n'enverra pas de message lorsque la musique se rejoue.`)
+    .**Version 0.4.0.1", `
+■ Les commandes slash peuvent être désormais installées sur n'importe quel serveur via des commandes spécifiques décrites dans le paragraphe **"Installation"** de l'aide (z!help).
+■ Les commandes slash peuvent aussi être supprimées d'un serveur. (Voir **"Installation"** dans z!help)
+
+__0.4.0.1__ : Correction de la syntaxe des textes.
+
+**Version 0.3.7**
+■ Mise à jour des plugins et dépendances utilisés par le bot.
+■ Ajout de la commande z!np qui permet d'afficher la musique en cours de lecture.
+■ Les images utilisés ont été compressées. (GIF animés de Pikachu)`)
+
+**Version 0.3.6**
+■ Mise à jour des plugins et dépendances utilisés par le bot, notamment la dépendance permettant la lecture de la musique via YouTube.
+
+**Version 0.3.5**
+■ Correction de la commande z!error, où le message embed envoyé était de couleur par défaut au lieu d'être jaune.
+
+**Version 0.3.4**
+■ Correction du texte dans le message d'aide. (z!help)
+■ La couleur des messages embed est désormais jaune.
+
+**Version 0.3.3**
+■ Correction des commandes slash qui ne fonctionnaient plus.
+■ Ajout de la commande z!about, qui permettra d'avoir des informations.
+■ Correction de la mise en page sur l'embed envoyée par la commande z!help, qui ne s'affichait pas correctement sur les appareils mobiles.
+
+**Problèmes connus** :
+■ Si le bot reçoit un message privé, le bot va s'arrêter de fonctionner. Cela se manifeste par le fait que si une musique est en lecture pendant que le bot crash, la musique va se couper instantanément.(**réparé**)
+■ A cause du service d'hébergement du bot (VPS), le bot peut être déconnecté vers les fins de mois. Le bot se reconnecte le mois suivant.
+■ Le service d'hébergement impose un redémarrage du bot tout les soirs. Cela se manifeste par le fait que si une musique est en lecture à ce moment là, la musique va se couper instantanément.
+■ (z!deleteslashcommands) Les commandes permettant la gestion des commandes slash sont pour le moment désactivées. Elles seront réactivées dans une future mise à jour.
+■ (réparé) Les commandes disponibles par message privé ne fonctionnent pas.
+■ *(bug trouvé)(liée à une dépendance)(patch temporaire) Le bot peut cesser de fonctionner lorsque la liste de lecture est terminée et doit quitter le salon vocal (erreur aléatoire).
+■ *(bug trouvé)(liée à une dépendance)(patch temporaire) Le bot peut cesser de fonctionner lorsque que la fonctionnalité musicale est utilisée.
+■ (bug non provoqué par le bot) YouTube, de manière aléatoire peut refuser la connexion à son service (erreur 410), ce qui cause l'arrêt complet de la musique. Un message d'erreur est envoyé dans le chat.
+■ *(bug identifié)(problème de dépendance) Une dépendance (ytdl-core) utilisée par Zbeub Bot ne fonctionne pas correctement avec la version 16.x de node.js, ce qui fait que la lecture de la musique peut cesser de fonctionner aléatoirement. Un paramètre dans ytdl-core est utilisée.
+■ (problème éventuel de performance) Avec les paramètres utilisés, la lecture de la musique peut avoir des soucis de lag éventuels.

@@ -1,0 +1,347 @@
+/*
+slash.on("slashInteraction", async (interaction) => {
+    console.log(`Fonction slash : La commande suivante : ${interaction.command.name} a été effectuée.`);
+    switch (interaction.command.name) {
+        case "sendmessage":
+            interaction.callback(interaction.command.options[0].value);
+            //console.log(interaction);
+            break;
+        case "embed":
+            //console.log(interaction.command.options)
+            var description = interaction.command.options[0].value;
+            //var title = interaction.command.options[1].value;
+            const embed = new Discord.MessageEmbed()
+                .setTitle("Message Embed")
+                .setDescription(description);
+            if (interaction.command.options[1]) {
+                embed.setTitle(interaction.command.options[1].value)
+            }
+
+            interaction.callback(embed);
+
+            //console.log(member)
+            break;
+        case "playmusic":
+
+            const guild = await client.guilds.cache.get(interaction.channel.guild.id);
+            const member = await guild.members.cache.get(interaction.author.id);
+            //const member = getMember(interaction);
+            const serverQueue = queue.get(interaction.channel.guild.id);
+            const argument = interaction.command.options[0].value;
+            //console.log(member);
+            //const voiceChannel = member.voice.channel;
+            
+
+            //const voiceChannel = member.voice.channel;
+            //console.log(interaction)
+            //execute(interaction, serverQueue)
+            //execute(interaction, serverQueue, voiceChannel, true, member);
+            executeslash(interaction, serverQueue, guild, member).catch(() => {
+                console.log("Fonction slash : La commande /playmusic a échouée. Cela est dû à une mauvaise optimisation réseau ou du lag sur la connexion.")
+                console.log("Il est possible que le bot soit en train de s'installer correctement.")
+                console.log("Pour un meilleur résultat, l'utilisateur doit se connecter à un salon vocal avant d'effectuer la commande.")
+                return interaction.callback("La commande a échouée... 🥲 Pour que cela fonctionne correctement, connectez-vous dans un salon vocal et cela devrait marcher ! Si cela ne marche pas, utilisez \`z!play\` à la place.")
+            })
+            break;
+
+        case "help":
+            return interaction.callback(embedMessageHelp);
+            break;
+        case "error":
+            return interaction.callback(embedMessageError);
+            break;
+        default:
+    }
+});
+*/
+
+//async function executeviaslash(interaction, serverQueue) {
+//
+//    const args = message.content.split(" "); // On récupère les arguments dans le message pour la suite
+//    //const searchString = args.slice(1).join(" ");
+//    //const url = args[1] ? args[1].replace(/<(._)>/g, '$1') : ''
+//
+//    let validate = await ytdl.validateURL(args[1]);
+//
+//    const voiceChannel = message.member.voice.channel;
+//    if (!voiceChannel) // Si l'utilisateur n'est pas dans un salon vocal
+//    {
+//        console.log("z!play : L'utilisateur n'était pas dans un salon vocal avant de faire la commande play.");
+//        return message.channel.send(
+//            "Soyez dans un salon vocal pour que cela fonctionne 😉 !"
+//        );
+//    }
+//
+//    if (!args[1]) {
+//        console.log("z!play : L'utilisateur n'a pas spécifié d'arguments.");
+//        return message.channel.send("Pour utiliser la fonction \`z!play\`, vous devez mettre après \`z!play\` des termes de recherche ou un lien vers une vidéo YouTube spécifique.");
+//    }
+//
+//    if (!validate) {
+//        console.log("z!play : Une recherche sur YouTube a été effectuée à la place car l'argument n'est pas un lien.");
+//        return ytsearch(message, serverQueue);
+//    }
+//
+//
+//
+//    const permissions = voiceChannel.permissionsFor(message.client.user); // On récupère les permissions du bot pour le salon vocal
+//    if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) { // Si le bot n'a pas les permissions
+//        console.log("z!play : Le bot ne possède pas les autorisations nécessaires tels que CONNECT et SPEAK. Il ne peut pas continuer.");
+//        return message.channel.send(
+//            "Le bot ne possède pas les autorisations nécessaires au fonctionnement de la lecture de musique. Vérifiez les rôles de @Zbeub Bot et leurs autorisations."
+//        );
+//    }
+//    /*
+//    try {
+//        var video = await youtube.getVideoById(url)
+//    } catch {
+//        try {
+//            var videos = await youtube.searchVideos(searchString, 1)
+//            var video = await youtube.getVideoById(videos[0].id)
+//        } catch {
+//            return message.channel.send("Pas de résultats trouvés.")
+//        }
+//    }
+//    */
+//    /*
+//    const song = {
+//        id : video.id,
+//        title : video.title,
+//        url : `https://www.youtube.com/watch?v=${video.id}`
+//    } */
+//    console.log("z!play : Récupération des métadonnées de la vidéo YouTube.");
+//    const songInfo = await ytdl.getInfo(args[1]);
+//    const song = {
+//        title: songInfo.videoDetails.title,
+//        url: songInfo.videoDetails.video_url,
+//    };
+//
+//    if (!serverQueue) {
+//        const queueConstruct = {
+//           textChannel: message.channel,
+//            voiceChannel: voiceChannel,
+//            connection: null,
+//            songs: [],
+//            volume: 1,
+//            playing: true,
+//            loop: false,
+//        };
+//
+//        console.log("z!play : Ajout dans la liste de lecture.");
+//        // On ajoute la queue du serveur dans la queue globale:
+//        queue.set(message.guild.id, queueConstruct);
+//        // On y ajoute la musique
+//       queueConstruct.songs.push(song);
+//        console.log("z!play : Le bot essaie de rejoindre le salon vocal...");
+//        try {
+//            // On connecte le bot au salon vocal et on sauvegarde l'objet connection
+//
+//            var connection = await voiceChannel.join();
+//            queueConstruct.connection = connection;
+//            // On lance la musique
+//            console.log("z!play : La lecture de musique s'est effectuée via un lien YouTube.");
+//            play(message.guild, queueConstruct.songs[0]);
+//        }
+//        catch (err) {
+//            //On affiche les messages d'erreur si le bot ne réussi pas à se connecter, on supprime également la queue de lecture
+//            console.log("z!play : Le bot n'a pas réussi à rejoindre le salon vocal.");
+//            console.log(`Code d'erreur : ${err}`);
+//            queue.delete(message.guild.id);
+//            return message.channel.send(err);
+//        }
+//    }
+//    else {
+//        serverQueue.songs.push(song);
+//        console.log("z!play : Ajout de la musique suivante (via lien YouTube).");
+//        console.log(`z!play : Titre : ${song.title}`);
+//        console.log(`z!play : URL : ${song.url}`);
+//        //console.log(serverQueue.songs);
+//        return message.channel.send(`**${song.title}** a été ajoutée dans la liste de lecture ! 😉`);
+//    }
+//
+//}
+
+function ytsearchslasha(interaction, serverQueue, member, search) {
+    var args = search.trim().split(/ +/g);
+
+    
+
+    const voiceChannel = member.voice.channel;
+    if (!voiceChannel) // Si l'utilisateur n'est pas dans un salon vocal
+    {
+        console.log("Fonction ytsearch : L'utilisateur a quitté le salon vocal pendant la sélection de la musique ou n'était pas dans le salon vocal.");
+        return interaction.callback(
+            "Soyez dans un salon vocal pour que cela fonctionne 😉 !"
+        );
+    }
+
+    interaction.callback("Recherche sur YouTube...");
+
+    console.log("Fonction ytsearch : Recherche des résultats via YouTube...");
+    yts(args.join(' '), function (err, res) {
+
+
+        if (err) {
+            console.log("Fonction ytsearch : Une erreur inconnue est survenue.");
+            return interaction.callback("Pikachu n'est pas content ! Une erreur étrange s'est produite ! **tête choquée**");
+        }
+
+        let videos = res.videos.slice(0, 5);
+
+        let resp = '';
+        for (var i in videos) {
+            resp += `**[${parseInt(i) + 1}]:** \`${videos[i].title}\`\n`;
+        }
+
+        resp += `\n**Pour choisir la musique, saisissez un nombre entre \`1-${videos.length}\`**`;
+
+        interaction.channel.send(resp);
+        console.log("Fonction ytsearch : Envoi des résultats à l'utilisateur.");
+
+        const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0;
+        const collector = interaction.channel.createMessageCollector(filter);
+        console.log("Fonction ytsearch : Récupération des messages utilisateurs et attente d'une réponse valide.");
+        collector.videos = videos
+
+        //this is where I don't know what to do.
+        collector.once('collect', async function (m) {
+
+            console.log("Fonction ytsearch : Récupération des métadonnées de la vidéo YouTube.");
+            console.log("Fonction ytsearch : Réponse valide récupérée.");
+            const urlvideo = `https://www.youtube.com/watch?v=${videos[parseInt(m.content) - 1].videoId}`
+            const songInfo = await ytdl.getInfo(urlvideo);
+            const serverQueue = queue.get(interaction.channel.guild.id);
+
+            const song = {
+                title: songInfo.videoDetails.title,
+                url: songInfo.videoDetails.video_url,
+            };
+            console.log("Fonction ytsearch : Musique préparée : ")
+            console.log(`Fonction ytsearch : Titre : ${song.title}`);
+            console.log(`Fonction ytsearch : URL : ${urlvideo}`);
+            executeytsearch(urlvideo, serverQueue, m);
+
+            return;
+        });
+
+    });
+}
+
+
+
+client.ws.on('INTERACTION_CREATE', async (interaction) => {
+
+    const command = interaction.data.name.toLowerCase();
+
+    const args = interaction.data.options;
+
+    console.log(`${values.generalText.GeneralLogsMsg.GeneralCmdLog.SlashCmdGet} \"${command}\"`);
+
+    const reply = async (interaction, response) => {
+
+        let data = {
+            content: response,
+        }
+
+        if (typeof response === 'object') {
+            data = await createAPIMessage(interaction, response)
+        }
+
+        client.api.interactions(interaction.id, interaction.token).callback.post({
+            data: {
+                type: 4,
+                data,
+            }
+        })
+    }
+
+    const createAPIMessage = async (interaction, content) => {
+        const { data, files } = await Discord.APIMessage.create(
+            client.channels.resolve(interaction.channel_id),
+            content
+        )
+            .resolveData()
+            .resolveFiles()
+
+        return { ...data, files }
+    }
+
+    if (command === values.SlashCmds.test) {
+        reply(interaction, 'Ca marche !')
+    } else if (command === values.SlashCmds.embed) {
+        const description = args.find(arg => arg.name.toLowerCase() == "message").value;
+        const embed = new Discord.MessageEmbed()
+            .setTitle('Message Embed')
+            .setDescription(description)
+        if (args.find(arg => arg.name.toLowerCase() == "titre")) {
+            const title = args.find(arg => arg.name.toLowerCase() == "titre").value;
+            embed.setTitle(title)
+        }
+
+        return reply(interaction, embed)
+
+    } else if (command === values.SlashCmds.error) {
+        reply(interaction, embedMessageError);
+    } else if (command === values.SlashCmds.help) {
+        reply(interaction, embedMessageHelp)
+    } else if (command === values.SlashCmds.sendmessage) {
+        const description = args.find(arg => arg.name.toLowerCase() == "message").value;
+        return reply(interaction, description);
+    }
+
+
+})
+
+const getApp = (guildId) => {
+    const app = client.api.applications(client.user.id)
+    if (guildId) {
+        app.guilds(guildId)
+    }
+    return app
+}
+const commands = await getApp(guildId).commands.get()
+
+
+const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0;
+const collector = message.channel.createMessageCollector({filter, time: 15, max: 1});
+sendFunctionLog(values.Functions.ytsearch, values.generalText.GeneralLogsMsg.musicLogs.music_waituseranswermsg)
+collector.videos = videos
+
+//this is where I don't know what to do.
+collector.once('collect', async function (m) {
+
+    sendFunctionLog(values.Functions.ytsearch, values.generalText.GeneralLogsMsg.musicLogs.music_answerobtainedmsg)
+    sendFunctionLog(values.Functions.ytsearch, values.generalText.GeneralLogsMsg.musicLogs.music_youtubemetadataget)
+
+    try {
+        const urlvideo = `https://www.youtube.com/watch?v=${videos[parseInt(m.content) - 1].videoId}`
+        const songInfo = await ytdl.getInfo(urlvideo);
+        const serverQueue = queue.get(message.guild.id);
+
+        const song = {
+            title: songInfo.videoDetails.title,
+            url: songInfo.videoDetails.video_url,
+            author: songInfo.videoDetails.author.name,
+            thumbnail: songInfo.videoDetails.thumbnails[0].url,
+            time: songInfo.videoDetails.lengthSeconds,
+            likes: songInfo.videoDetails.likes,
+            views: songInfo.videoDetails.viewCount,
+            addedby: message.author.username+"#"+message.author.discriminator,
+            pdp: message.author.displayAvatarURL()
+        };
+        sendStatusLog("Fonction ytsearch : Musique préparée : ")
+        sendStatusLog(`Fonction ytsearch : Titre : ${song.title}`);
+        sendStatusLog(`Fonction ytsearch : URL : ${urlvideo}`);
+        executeytsearch(songInfo, serverQueue, message).catch(error => {
+            sendErrorLog(values.generalText.ErrorMsg.logs.music_ytsearchunknownerror, error)
+            sendErrorToDev(Discord, client, error, "ytsearch")
+            return message.channel.send(values.generalText.ErrorMsg.userend.music_unknownerror)
+        })
+    } catch (err) {
+        sendErrorLog(values.generalText.ErrorMsg.logs.music_ytsearchaddplaylisterror, err)
+        sendErrorToDev(Discord, client, err, "ytsearch")
+        return message.channel.send(values.generalText.ErrorMsg.userend.music_unknownerror)
+    }
+
+    return;
+});

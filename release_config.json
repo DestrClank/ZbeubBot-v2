@@ -1,0 +1,15 @@
+{
+    "ConfigType": "RELEASE",
+    "SendLogs": {
+        "SendLogsWhenShutdown": true,
+        "SendLogsWhenCrash": true,
+        "SendLogsWhenError": true
+    },
+    "MessageStatus": {
+        "SendStartedBotMessage": true
+    },
+    "DeleteOutputFiles": {
+        "DeleteAfter1Hour": true,
+        "DeleteAfterSending": true
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "ConfigType": "DEBUG",
+    "SendLogs": {
+        "SendLogsWhenShutdown": false,
+        "SendLogsWhenCrash": false,
+        "SendLogsWhenError": false
+    },
+    "MessageStatus": {
+        "SendStartedBotMessage": false
+    },
+    "DeleteOutputFiles": {
+        "DeleteAfter1Hour": false,
+        "DeleteAfterSending": true
+    }
+}

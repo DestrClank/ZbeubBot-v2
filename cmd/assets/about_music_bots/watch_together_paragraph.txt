@@ -1,0 +1,7 @@
+**Concernant YouTube Watch Together**
+
+Discord depuis quelques temps expérimente une fonctionnalité qui s'appelle Watch Together et qui est une solution officielle permettant de regarder des vidéos (ou d'écouter des musiques) directement dans un salon vocal. Pour le moment à l'heure où j'écris ces lignes, Watch Together n'est disponible que sur le serveur Discord Games Lab.
+
+Concernant Zbeub Bot, la fonctionnalité musicale restera activée même après le déploiement de Watch Together. Vous pourrez utiliser Watch Together ou la fonctionnalité musicale de Zbeub Bot pour écouter de la musique.
+
+La fonctionnalité Watch Together devrait arriver dans tous les serveurs à la fin du mois d'octobre.
