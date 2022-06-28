@@ -1114,7 +1114,19 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
 
 
     sendFunctionLog(values.CmdList.MusicCmds.play, values.generalText.GeneralLogsMsg.musicLogs.music_youtubemetadataget);
-    const songInfo = await ytdl.getInfo(arg);
+
+    try {
+        songInfo = await ytdl.getInfo(arg);
+    } catch (err) {
+        if (ifSlash) {
+            message.editReply("La musique n'a pas pu être ajoutée car la vidéo est peut-être soumise à une limite d'âge. Désolé !")
+        } else {
+            message.channel.send("La musique n'a pas pu être ajoutée car la vidéo est peut-être soumise à une limite d'âge. Désolé !")
+        }
+        return sendWarnLog("La vidéo suivante n'a pas pu être ajoutée. La vidéo est peut-être soumise à une limite d'âge.")
+    }
+    //var songInfo = await ytdl.getInfo(arg);
+
     const song = {
         title: songInfo.videoDetails.title,
         url: songInfo.videoDetails.video_url,
@@ -1461,7 +1473,7 @@ async function ytsearch(message, serverQueue, voiceChannel, ifSlash, member, arg
 
     
     sendFunctionLog(values.Functions.ytsearch, values.generalText.GeneralLogsMsg.musicLogs.music_ytsearchprocessing);
-    yts(args.join(" "), async function (err, res) {
+    await yts(args.join(" "), async function (err, res) {
 
         //console.log(args)
         if (err) {
@@ -1473,7 +1485,8 @@ async function ytsearch(message, serverQueue, voiceChannel, ifSlash, member, arg
         let videos = res.videos.slice(0, 5);
         //onsole.log(videos)
         let resp = '';
-        for (var i in videos) {
+        /*
+        for await (const i of videos) {
             resp += `**[${parseInt(i) + 1}]:** ${videos[i].title}\n--------------------\n`;
             dropdownmenu.push({
                 label: `${videos[i].title}`,
@@ -1481,6 +1494,73 @@ async function ytsearch(message, serverQueue, voiceChannel, ifSlash, member, arg
                 value: `${videos[i].url}`
             })
         }
+        */
+       /*
+       await videos.forEach((v) => {
+        resp += `${v.title}\n--------------------\n`;
+        dropdownmenu.push({
+            label: `${v.title}`,
+            description: `${v.author.name} ■ ${v.timestamp}`,
+            value: `${v.url}`
+        })
+       })
+       */
+       await Promise.all(videos.map(async (v) => {
+        resp += `${v.title}\n--------------------\n`;
+        dropdownmenu.push({
+            label: `${v.title}`,
+            description: `${v.author.name} ■ ${v.timestamp}`,
+            value: `${v.url}`
+        })
+       }))
+        //code de gros beauf
+        //1
+        /*
+        if (videos[0]) {
+            resp += `**[${parseInt(0) + 1}]:** ${videos[0].title}\n--------------------\n`;
+            dropdownmenu.push({
+                label: `${videos[0].title}`,
+                description: `${videos[0].author.name} ■ ${videos[0].timestamp}`,
+                value: `${videos[0].url}`
+            })
+        }
+        //2
+        if (videos[1]) {
+            resp += `**[${parseInt(1) + 1}]:** ${videos[1].title}\n--------------------\n`;
+            dropdownmenu.push({
+                label: `${videos[1].title}`,
+                description: `${videos[1].author.name} ■ ${videos[1].timestamp}`,
+                value: `${videos[1].url}`
+            })
+        }
+        //3
+        if (videos[2]) {
+            resp += `**[${parseInt(2) + 1}]:** ${videos[2].title}\n--------------------\n`;
+            dropdownmenu.push({
+                label: `${videos[2].title}`,
+                description: `${videos[0].author.name} ■ ${videos[2].timestamp}`,
+                value: `${videos[2].url}`
+            })
+        }
+        //4
+        if (videos[3]) {
+            resp += `**[${parseInt(3) + 1}]:** ${videos[3].title}\n--------------------\n`;
+            dropdownmenu.push({
+                label: `${videos[3].title}`,
+                description: `${videos[0].author.name} ■ ${videos[3].timestamp}`,
+                value: `${videos[3].url}`
+            })
+        }
+        //5
+        if (videos[4]) {
+            resp += `**[${parseInt(4) + 1}]:** ${videos[4].title}\n--------------------\n`;
+            dropdownmenu.push({
+                label: `${videos[4].title}`,
+                description: `${videos[4].author.name} ■ ${videos[4].timestamp}`,
+                value: `${videos[4].url}`
+            })
+        }
+        */
 
         const menu = new Discord.MessageActionRow()
             .addComponents(

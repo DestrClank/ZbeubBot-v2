@@ -20,6 +20,10 @@ Le bot désormais sauvegarde le volume réglé pour le serveur.
 
 Correction d'un problème avec la commande z!record qui pouvait planter si aucun son n'a été enregistré.
 
+__0.10.1.1-patch.1 (bêta) [testing_version 1]__ :
+Test d'une possible amélioration de performances lorsque le bot effectue une recherche YouTube.
+Correction d'un problème (la fameuse erreur 410) qui se manifeste quand une vidéo soumise à une limite d'âge est ajoutée.
+
 **Version 0.10.0.0 bêta [testing_version 3]** 
 ■ Mise à jour des dépendances et plugins utilisés par le bot.
 ■ Les fonctionnalités musicales du bot lors des tests ont été suffisamment stables pour que le bot passe de version alpha en version bêta. (peut changer si la fonctionnalité ne fonctionne pas correctement.)
