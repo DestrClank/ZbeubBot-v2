@@ -1,6 +1,4 @@
-■ Ajout de la commande z!volume et de son équivalent en commande slash /volume. 
-Il permet de régler le volume de la musique et peut supporter un volume allant de 0% à 200%.
-AVERTISSEMENT : Il est déconseillé de régler le volume au delà de 100% car cela peut entraîner des problèmes auditifs à moyen et long terme si l'écoute est prolongée.
+Correction d'un problème avec la commande z!volume, le volume se remettait à 100% entre chaque musique.
+Le bot désormais sauvegarde le volume réglé pour le serveur.
 
-La version des commandes slash est passée à 2. 
-Les administrateurs doivent faire la commande z!installslashcommands pour mettre à jour les commandes slash sur leur serveur.
+Correction d'un problème avec la commande z!record qui pouvait planter si aucun son n'a été enregistré.
