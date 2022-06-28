@@ -14,6 +14,12 @@ AVERTISSEMENT : Il est déconseillé de régler le volume au delà de 100% car c
 La version des commandes slash est passée à 2. 
 Les administrateurs doivent faire la commande z!installslashcommands pour mettre à jour les commandes slash sur leur serveur.
 
+__0.10.1.1__ (bêta) [testing_version 1]__ :
+Correction d'un problème avec la commande z!volume, le volume se remettait à 100% entre chaque musique.
+Le bot désormais sauvegarde le volume réglé pour le serveur.
+
+Correction d'un problème avec la commande z!record qui pouvait planter si aucun son n'a été enregistré.
+
 **Version 0.10.0.0 bêta [testing_version 3]** 
 ■ Mise à jour des dépendances et plugins utilisés par le bot.
 ■ Les fonctionnalités musicales du bot lors des tests ont été suffisamment stables pour que le bot passe de version alpha en version bêta. (peut changer si la fonctionnalité ne fonctionne pas correctement.)

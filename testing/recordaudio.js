@@ -9,6 +9,7 @@ const fs = require('fs');
 const { sendCmdLog, sendStatusLog, sendErrorLog, sendFunctionLog, sendWarnLog, sendLogToDev } = require("../debug/consolelogs")
 
 var ifrecording = true;
+var usertalked = false;
 
 /* When message is sent*/
 module.exports = async (message, client) => {
@@ -24,7 +25,7 @@ module.exports = async (message, client) => {
         if (!connection) {
             /* if user is not in any voice channel then return the error message */
             if(!voiceChannel) return message.channel.send("Vous devez être dans un salon vocal pour utiliser cette commande.")
-
+            
             /* Join voice channel*/
             connection = joinVoiceChannel({
                 channelId: voiceChannel.id,
@@ -35,6 +36,8 @@ module.exports = async (message, client) => {
             });
 
             ifrecording = true
+            usertalked = false
+            message.guild.me.voice.setDeaf(false)
 
             if (!fs.existsSync("./output")) {
                 fs.mkdirSync("./output")
@@ -54,6 +57,7 @@ module.exports = async (message, client) => {
                 if(userId !== message.author.id) return;
                 /* create live stream to save audio */
                 if (ifrecording == true) {
+                    usertalked = true;
                     createListeningStream(receiver, userId, client.users.cache.get(userId));
                 }
             });
@@ -71,6 +75,18 @@ module.exports = async (message, client) => {
             ifrecording = false
             /* wait for 5 seconds */
             await sleep(5000)
+
+            if (!usertalked) {
+                sendStatusLog("Le bot n'a enregistré aucun son. Le bot va quitter le salon vocal.")
+                msg.edit("Le bot n'a enregistré aucun son. Le bot va quitter le salon vocal.")
+                client.voiceManager.delete(message.channel.guild.id)
+                message.guild.me.voice.setDeaf(false, "Le bot rétablie le son car l'opération est terminée.")
+                sendStatusLog("Le bot a rétabli le son sur le serveur.")
+                await sleep(1000)
+                connection.destroy();
+                sendStatusLog("Le bot a quitté le salon vocal sur le serveur.")
+                return;
+            }
             
             /* disconnect the bot from voice channel */
 

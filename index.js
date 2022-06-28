@@ -143,6 +143,9 @@ const getParam = require('./debug/getParam'); sendStatusLog("Chargement de ./deb
 const bogossitude = require("./cmd/bogossitude"); sendStatusLog("Chargement de ./cmd/bogossitude...")
 const testrecordaudio = require("./testing/recordaudio"); sendStatusLog("Chargement de ./testing/recordaudio...")
 
+const GuildModel = require('./schemes/guildmodel'); sendStatusLog("Chargement de ./schemes/guildmodel...")
+const { connect } = require('mongoose')
+
 sendStatusLog("Chargement des dépendances terminé.")
 sendStatusLog("Récupération des informations système..")
 getParam();
@@ -525,6 +528,14 @@ client.on('interactionCreate', async interaction => {
         let guildname = interaction.guild.name
         let connection = client.voiceManager.get(interaction.guild.id)
 
+        const ifsettings = await GuildModel.findOne({id: interaction.guild.id})
+
+        if (!ifsettings) {
+            sendStatusLog("Pas de paramètres dans la base de données. Le bot va enregistrer pour ce serveur les paramètres par défaut.")
+            const defaultsettings = new GuildModel({id: interaction.guild.id})
+            await defaultsettings.save()
+        }
+
         sendStatusLog(`Fonction interactionCreate : Une commande slash : ${commandName} a été effectuée sur le serveur : ${guildname} par l'utilisateur : ${username}.`)
 
         if (commandName === 'ping') {
@@ -645,7 +656,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 //à chaque message envoyé (fonction d'analyse des messages avec préfixe z!)
-client.on("messageCreate", message => {
+client.on("messageCreate", async message => {
 
     if (message.author.bot) {
         return;
@@ -706,6 +717,14 @@ client.on("messageCreate", message => {
 
     sendCmdLog(cmd[0], guildname, username)
     message.channel.sendTyping()
+
+    const ifsettings = await GuildModel.findOne({id: message.guild.id})
+
+    if (!ifsettings) {
+        sendStatusLog("Pas de paramètres dans la base de données. Le bot va enregistrer pour ce serveur les paramètres par défaut.")
+        const defaultsettings = new GuildModel({id: message.guild.id})
+        await defaultsettings.save()
+    }
 
     switch (cmd[0]) {
         case values.CmdList.InfoCmds.help:
@@ -1019,8 +1038,20 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
     //message.channel.send()
 
     let arg = argument
-    
 
+    const serversettings = await GuildModel.findOne({id: message.guild.id})
+    console.log(serversettings.MusicVolume)
+
+    if (!serversettings) {
+        sendStatusLog("Aucun paramètres sont associés à ce serveur, la commande ne peut pas continuer.")
+        if (ifSlash) {
+            return message.editReply("Le bot n'a pas de paramètres associés à ce serveur. Faites une commande slash ou une commande chat pour que le bot initialise les paramètres.")
+        } else {
+            return message.channel.send("Le bot n'a pas de paramètres associés à ce serveur. Faites une commande slash ou une commande chat pour que le bot initialise les paramètres.")
+        }
+        
+    }
+    
     if (!voiceChannel) // Si l'utilisateur n'est pas dans un salon vocal
     {
         embedExecute.setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
@@ -1102,7 +1133,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: 1,
+            volume: serversettings.MusicVolume,
             playing: true,
             loop: false,
         };
@@ -1163,7 +1194,6 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         sendStatusLog(`z!play : Titre : ${song.title}`);
         sendStatusLog(`z!play : URL : ${song.url}`);
 
-
         let embedAddPlaylist = new Discord.MessageEmbed()
             .setAuthor({name: "Ajoutée par : " + song.addedby, iconURL:song.pdp})
             .setThumbnail(song.thumbnail)
@@ -1219,6 +1249,8 @@ async function setVolume(message, serverQueue, author, arg, ifSlash) {
         }
         
     }
+
+    await GuildModel.findOneAndUpdate({id : message.guild.id}, { $set: { MusicVolume: arg / 100}})
 
     serverQueue.volume = arg / 100
     serverQueue.audioResource.volume.setVolume(arg / 100)
@@ -1340,7 +1372,8 @@ async function play(guild, song, ifcrashed) {
 
     // On lance la musique
 
-    serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, volume: 1, inlineVolume: true })
+    serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
+    serverQueue.audioResource.volume.setVolume(serverQueue.volume)
 
     await audioplayer.play(serverQueue.audioResource)
 
@@ -1688,10 +1721,18 @@ function MusicFeatureDisabled(message) {
 
 }
 
-try {
+(async () => {
+    try {
+        sendStatusLog("Connexion aux serveurs...")
+        //mongodb://localhost/mangodb-demo
+    await connect('mongodb+srv://destrclank:n8j5kqgs@zbeubbotcluster.azqkywi.mongodb.net/?retryWrites=true&w=majority', {
+        useNewUrlParser: true,
+    })
     client.login(process.env.BOT_TOKEN);//connexion du bot au serveur de Discord
 } catch (err) {
-    sendErrorLog("Impossible de se connecter à l'API de Discord. Le bot ne peut pas continuer et va par conséquent s'arrêter.", err)
+    sendErrorLog("Impossible de se connecter à l'API de Discord et/ou au serveur MongoDB. Le bot ne peut pas continuer et va par conséquent s'arrêter.", err)
     process.exit(1)
 }
+})()
+
  
