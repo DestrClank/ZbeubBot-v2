@@ -672,7 +672,7 @@ client.on('interactionCreate', async interaction => {
         } else if (commandName === 'changelog') {
             debugNewAboutMessage(interaction, true)
         } else if (commandName === 'botusage') {
-            botusage(interaction, true, client)
+            botusage(interaction, true, client, queue)
         } else if (commandName === 'credits') {
             informations(interaction, true)
         } else if (commandName === 'infos') {
@@ -1003,7 +1003,7 @@ client.on("messageCreate", async message => {
             }
             break;
         case values.CmdList.DebugCmds.botusage:
-            botusage(message, false, client);
+            botusage(message, false, client, queue);
             break;
         case values.CmdList.MemberInfoCmds.membercard:
             if (platform == "linux") {

@@ -5,7 +5,7 @@ const values = require("../values.json");
 const convertyoutubetomp3 = require('./convertyoutubetomp3');
 const versionNumber = values.version.versionNumber;
 
-module.exports = (message, ifSlash, client) => {
+module.exports = (message, ifSlash, client, queue) => {
     processusage = process.cpuUsage()
     memory = process.memoryUsage()
     const embed = new Discord.MessageEmbed()
@@ -19,7 +19,8 @@ module.exports = (message, ifSlash, client) => {
             { name: "Temps CPU utilisateur : ", value: `${processusage.user} microsecondes` },
             { name: "Temps CPU système : ", value: `${processusage.system} microsecondes` },
             { name: "Statistiques : ",value: `Nombre de musiques en conversion : ${convertyoutubetomp3.convertingprocesses.length}`},
-            { name: "Nombres de serveurs", value: `${client.guilds.cache.size} serveurs`}
+            { name: "Nombres de serveurs", value: `${client.guilds.cache.size} serveurs`},
+            { name: "Fonctionnalité musicale utilisée sur", value: `${queue.size} serveurs`}
         )
         .setDescription("Voici les statistiques de performances de Zbeub Bot.")
         .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
