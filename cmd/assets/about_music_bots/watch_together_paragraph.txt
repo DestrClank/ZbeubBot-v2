@@ -5,3 +5,5 @@ Discord depuis quelques temps expérimente une fonctionnalité qui s'appelle Wat
 Concernant Zbeub Bot, la fonctionnalité musicale restera activée même après le déploiement de Watch Together. Vous pourrez utiliser Watch Together ou la fonctionnalité musicale de Zbeub Bot pour écouter de la musique.
 
 La fonctionnalité Watch Together devrait arriver dans tous les serveurs à la fin du mois d'octobre.
+
+Edit 11/07/2022 : Watch Together n'est TOUJOURS pas déployé mdrrr !!!

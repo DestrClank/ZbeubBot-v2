@@ -146,6 +146,14 @@ const { sendHelp, modifyHelp } = require("./testing/help"); sendStatusLog("Charg
 
 const { hellorandom, hellomember } = require("./testing/socialslashcmd/hello"); sendStatusLog("Chargement de ./testing/socialslashcmd/hello...")
 const { attackrandom, attackmember } = require("./testing/socialslashcmd/attack"); sendStatusLog("Chargement de ./testing/socialslashcmd/attack...")
+const { dancerandom, dancemember } = require("./testing/socialslashcmd/dance"); sendStatusLog("Chargement de ./testing/socialslashcmd/dance...")
+const { hugrandom, hugmember } = require("./testing/socialslashcmd/hug"); sendStatusLog("Chargement de ./testing/socialslashcmd/hug...")
+const { cordularandom, cordulamember } = require("./testing/socialslashcmd/cordula"); sendStatusLog("Chargement de ./testing/socialslashcmd/cordula...")
+const { walarandom, walamember } = require("./testing/socialslashcmd/wala"); sendStatusLog("Chargement de ./testing/socialslashcmd/wala...")
+const { mtmrandom, mtmmember } = require("./testing/socialslashcmd/mtm"); sendStatusLog("Chargement de ./testing/socialslashcmd/mtm...")
+const { zemmourrandom, zemmourmember } = require("./testing/socialslashcmd/zemmour"); sendStatusLog("Chargement de ./testing/socialslashcmd/zemmour...")
+const { nicerandom, nicemember } = require("./testing/socialslashcmd/nice"); sendStatusLog("Chargement de ./testing/socialslashcmd/nice...")
+const { bogossituderandom, bogossitudemember } = require("./testing/socialslashcmd/bogossitude"); sendStatusLog("Chargement de ./testing/socialslashcmd/bogossitude...")
 
 const GuildModel = require('./schemes/guildmodel'); sendStatusLog("Chargement de ./schemes/guildmodel...")
 const { connect } = require('mongoose')
@@ -682,6 +690,62 @@ client.on('interactionCreate', async interaction => {
             } else if (interaction.options.getSubcommand() === "member") {
                 let arg = interaction.options.getUser("membre")
                 attackmember(interaction, arg)
+            }
+        } else if (commandName === 'dance') {
+            if (interaction.options.getSubcommand() === "random") {
+                dancerandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                dancemember(interaction, arg)
+            } 
+        } else if (commandName === 'hug') {
+            if (interaction.options.getSubcommand() === "random") {
+                hugrandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                hugmember(interaction, arg)
+            }
+        } else if (commandName === 'chewie') {
+            if (interaction.options.getSubcommand() === "random") {
+                cordularandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                cordulamember(interaction, arg)
+            }
+        } else if (commandName === 'wala') {
+            if (interaction.options.getSubcommand() === "random") {
+                walarandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                walamember(interaction, arg)
+            }
+        } else if (commandName === 'mtm') {
+            if (interaction.options.getSubcommand() === "random") {
+                mtmrandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                mtmmember(interaction, arg)
+            }
+        } else if (commandName === 'zemmour') {
+            if (interaction.options.getSubcommand() === "random") {
+                zemmourrandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                zemmourmember(interaction, arg)
+            }
+        } else if (commandName === 'nice') {
+            if (interaction.options.getSubcommand() === "random") {
+                nicerandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                nicemember(interaction, arg)
+            }
+        } else if (commandName === 'bogossitude') {
+            if (interaction.options.getSubcommand() === "random") {
+                bogossituderandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                bogossitudemember(interaction, arg)
             }
         }
     }

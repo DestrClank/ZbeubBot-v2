@@ -233,6 +233,181 @@ async function installslash(message, client)
                 }
             ]
         })
+
+        commands.create({
+            name: "dance",
+            description: "z!dance : Pikachu fera une danse à un membre.",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!dance : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!dance : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
+            name: "hug",
+            description: "z!hug : Pikachu fera un câlin à un membre.",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!hug : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!hug : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
+            name: "wala",
+            description: "z!wala : Vous jurez que c'est vrai ??",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!wala : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!wala : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
+            name: "mtm",
+            description: "z!mtm : Kirby passera un message à un membre.",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!mtm : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!mtm : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
+            name: "zemmour",
+            description: "z!zemmour : A pas d'humour.",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!zemmour : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!zemmour : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
+            name: "nice",
+            description: "z!nice : Hmmm, nice !",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!nice : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!nice : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
+            name: "bogossitude",
+            description: "z!bogossitude : La bogossitude à son paroxysme.",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!bogossitude : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!bogossitude : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
     
         commands.create({
             name: "stop",

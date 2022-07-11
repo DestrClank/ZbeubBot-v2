@@ -6,6 +6,11 @@
 ## Les astérisques (**) indiquent que la version est une version majeure.
 ## Les underscores (__) indiquent que la version est une version mineure.
 
+**Version 0.11.1.0 (bêta)**
+■ Toutes les commandes sociales sont portés en commandes slash.
+Les administrateurs doivent faire la commande z!installslashcommands pour installer toutes les nouvelles 
+commandes.
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.
