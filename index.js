@@ -142,6 +142,10 @@ const { SlashCommandBuilder } = require("@discordjs/builders"); sendStatusLog("C
 const getParam = require('./debug/getParam'); sendStatusLog("Chargement de ./debug/getParam...")
 const bogossitude = require("./cmd/bogossitude"); sendStatusLog("Chargement de ./cmd/bogossitude...")
 const testrecordaudio = require("./testing/recordaudio"); sendStatusLog("Chargement de ./testing/recordaudio...")
+const { sendHelp, modifyHelp } = require("./testing/help"); sendStatusLog("Chargement de ./testing/help...")
+
+const { hellorandom, hellomember } = require("./testing/socialslashcmd/hello"); sendStatusLog("Chargement de ./testing/socialslashcmd/hello...")
+const { attackrandom, attackmember } = require("./testing/socialslashcmd/attack"); sendStatusLog("Chargement de ./testing/socialslashcmd/attack...")
 
 const GuildModel = require('./schemes/guildmodel'); sendStatusLog("Chargement de ./schemes/guildmodel...")
 const { connect } = require('mongoose')
@@ -171,7 +175,7 @@ async function MusicStateEmbed(message, author, ifslash, title, description) {
         embedMusicState.setDescription(`${description}`)
     }
     if (ifslash === true) {
-        await message.reply({ embeds: [embedMusicState] })
+        await message.editReply({ embeds: [embedMusicState] })
     } else {
         message.channel.send({ embeds: [embedMusicState] })
     }
@@ -512,6 +516,15 @@ client.on('interactionCreate', async interaction => {
             }
 
         }
+
+        if (interaction.customId = "helpselect") {
+            const { options } = interaction
+
+            let args = interaction.values[0]
+
+            modifyHelp(interaction, true, args)
+        }
+
     }
     if (interaction.isCommand()) {
 
@@ -575,7 +588,7 @@ client.on('interactionCreate', async interaction => {
             let contentsent = options.getString("texte")
             await interaction.reply(contentsent)
         } else if (commandName == 'help') {
-            help(interaction, true)
+            sendHelp(interaction, true)
         } else if (commandName == 'error') {
             await interaction.reply("OnO")
         } else if (commandName == 'play') {
@@ -603,20 +616,28 @@ client.on('interactionCreate', async interaction => {
 
 
         } else if (commandName === 'stop') {
+            await interaction.deferReply()
             stop(interaction, serverQueue, author, true)
         } else if (commandName === 'skip') {
+            await interaction.deferReply()
             skip(interaction, serverQueue, author, true)
         } else if (commandName === 'loop') {
+            await interaction.deferReply()
             loop(interaction, serverQueue, author, true)
         } else if (commandName === 'queue') {
+            await interaction.deferReply()
             showQueue(interaction, serverQueue, author, true)
         } else if (commandName === 'pause') {
+            await interaction.deferReply()
             pauseMusic(interaction, serverQueue, author, true)
         } else if (commandName === 'resume') {
+            await interaction.deferReply()
             resumeMusic(interaction, serverQueue, author, true)
         } else if (commandName === 'np') {
+            await interaction.deferReply()
             whatsplaying(interaction, serverQueue, author, true)
         } else if (commandName === 'volume') {
+            await interaction.deferReply()
             let args = options.getInteger("argument")
             setVolume(interaction, serverQueue, author, args, true)
         } else if (commandName === 'qp') {
@@ -649,8 +670,19 @@ client.on('interactionCreate', async interaction => {
         } else if (commandName === 'infos') {
             musicbotfuture(interaction, true)
         } else if (commandName === 'hello') {
-            let args = options.getString("argument")
-            hello(interaction, true, args)
+            if (interaction.options.getSubcommand() === "random") {
+                hellorandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                hellomember(interaction, arg)
+            }
+        } else if (commandName === 'attack') {
+            if (interaction.options.getSubcommand() === "random") {
+                attackrandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                let arg = interaction.options.getUser("membre")
+                attackmember(interaction, arg)
+            }
         }
     }
 });
@@ -728,8 +760,8 @@ client.on("messageCreate", async message => {
 
     switch (cmd[0]) {
         case values.CmdList.InfoCmds.help:
-            message.channel.send("Coucou, tu as besoin d'aide ?");
-            help(message);
+            //message.channel.send("Coucou, tu as besoin d'aide ?");
+            sendHelp(message, false);
             break;
         case values.CmdList.InfoCmds.about:
             about(message, false);
@@ -1000,6 +1032,9 @@ client.on("messageCreate", async message => {
 
             setVolume(message, serverQueue, author, args, false)
             break;
+        case "z!newhelp":
+            sendHelp(message, false)
+            break;
         default:
             message.channel.send("Cette commande n'existe pas ! ^^ \nVérifie si tu ne t'ai pas trompé en l'écrivant ou tape la commande \`z!help\` pour voir la liste des commandes !")
             sendStatusLog("La commande saisi par l'utilisateur n'existe pas.")
@@ -1231,41 +1266,25 @@ async function setVolume(message, serverQueue, author, arg, ifSlash) {
         return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
     }
 
-    if (!serverQueue) {
-        sendStatusLog("Aucune musique n'est en cours de lecture.")
-        if (ifSlash) {
-            return message.reply("Aucune musique n'est en cours de lecture actuellement.")
-        } else {
-            return message.channel.send("Aucune musique n'est en cours de lecture actuellement.")
-        }
-    }
-
     //let arg = message.content.split(" ")[1];
 
     if (!arg || isNaN(arg)) {
         sendStatusLog("Pas d'arguments valides saisis.")
-        if (ifSlash) {
-            return message.reply("Il n'y a pas d'argument valide après la commande. Mettez un nombre entre `0` et `200`.  \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
-        } else {
-            return message.channel.send("Il n'y a pas d'argument valide après la commande. Mettez un nombre entre `0` et `200`.  \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
-        }
-        
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, "Il n'y a pas d'argument valide après la commande. Mettez un nombre entre `0` et `200`.  \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
     }
 
     if (arg < 0 || arg > 200) {
-        sendStatusLog("La valeur n'est pas compris entre 0 et 200.")
-        if (ifSlash) {
-            return message.reply("La valeur entrée n'est pas entre `0` et `200`. Mettez un nombre entre `0` et `200`. \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
-        } else {
-            return message.channel.send("La valeur entrée n'est pas entre `0` et `200`. Mettez un nombre entre `0` et `200`. \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
-        }
-        
+        sendStatusLog("La valeur n'est pas comprise entre 0 et 200.")
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, "La valeur entrée n'est pas entre `0` et `200`. Mettez un nombre entre `0` et `200`. \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
     }
 
     await GuildModel.findOneAndUpdate({id : message.guild.id}, { $set: { MusicVolume: arg / 100}})
 
-    serverQueue.volume = arg / 100
-    serverQueue.audioResource.volume.setVolume(arg / 100)
+    if (serverQueue) {
+        serverQueue.volume = arg / 100
+        serverQueue.audioResource.volume.setVolume(arg / 100)
+    }
+
 
     sendStatusLog(`Le volume est réglé sur \`${arg}%\`.`)
 
@@ -1275,11 +1294,8 @@ async function setVolume(message, serverQueue, author, arg, ifSlash) {
         finalmessage = finalmessage + `\n\n**AVERTISSEMENT : Le volume actuel peut nuire à votre audition à long terme si vous écoutez de la musique sur une grande période de temps !**`
     }
 
-    if (ifSlash) {
-        return message.reply(finalmessage)
-    } else {
-        return message.channel.send(finalmessage)
-    }
+    return MusicStateEmbed(message, author, ifSlash, "Réglage du volume", finalmessage)
+
 }
 
 
@@ -1297,7 +1313,7 @@ async function skip(message, serverQueue, author, ifSlash) {
     }
 
     if (ifSlash === true) {
-        await message.reply("Passage à la musique suivante...")
+        await message.editReply("Passage à la musique suivante...")
     }
 
     sendFunctionLog(values.CmdList.MusicCmds.skip, values.generalText.GeneralLogsMsg.musicLogs.music_skipmusicmsg);
@@ -1483,6 +1499,15 @@ async function ytsearch(message, serverQueue, voiceChannel, ifSlash, member, arg
         }
 
         let videos = res.videos.slice(0, 5);
+
+        //console.log(videos)
+
+        if (videos.length == 0) {
+            sendStatusLog("Aucune vidéo n'a été trouvée.")
+            const errordescription = "Conseils :\nEssayez avec d'autres mots.\nVérifiez l'orthographe des termes de recherche.\nUtilisez des mots-clés plus généraux.\nSpécifiez un moins grand nombre de mots.\n\nEn derniers recours, effectuez la même recherche sur YouTube directement et copiez-collez le lien de votre vidéo en tant qu'argument."
+            return MusicStateEmbed(message, author, ifSlash, "Aucune vidéo n'a été trouvée.", errordescription)
+        }
+
         //onsole.log(videos)
         let resp = '';
         /*

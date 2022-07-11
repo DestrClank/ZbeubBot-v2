@@ -183,6 +183,56 @@ async function installslash(message, client)
                 }
             ]
         })
+
+        commands.create({
+            name: "hello",
+            description: "z!hello : Pikachu dira bonjour à un membre.",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!hello : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!hello : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
+            name: "attack",
+            description: "z!attack : Pikachu attaquera un membre.",
+            options: [ 
+                {
+                    name: "member",
+                    description: "z!attack : Vous choisissez un membre.",
+                    type: 1,
+                    options: [ 
+                        {
+                            name: "membre",
+                            description: "Choisissez un membre.",
+                            type: 6,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: "random",
+                    description: "z!attack : Le bot choisit un membre au hasard.",
+                    type: 1,
+                }
+            ]
+        })
     
         commands.create({
             name: "stop",

@@ -1,4 +1,19 @@
-Correction d'un problème avec la commande z!volume, le volume se remettait à 100% entre chaque musique.
-Le bot désormais sauvegarde le volume réglé pour le serveur.
+■ Portage de deux commandes sociales attack et hello en commandes slash. 
+Les autres commandes seront portés dans une future mise à jour.
+Le bot peut choisir un membre au hasard ou vous pouvez choisir un membre.
 
-Correction d'un problème avec la commande z!record qui pouvait planter si aucun son n'a été enregistré.
+■ Vous pouvez désormais contrôler le volume sans avoir de musique en cours de lecture.
+Cependant il faut être dans un salon vocal pour pouvoir régler le volume.
+Les messages renvoyés par la commande /volume ou z!volume sont sous forme d'embed.
+
+■ Nouveauté dans la commande z!help.
+Pour une meilleure lisibilité et une meilleure expérience, la liste des commandes sont réparties dans 
+plusieurs catégories à choisir via un menu.
+
+■ Corrections de bugs : 
+--> fonctionnalité musicale :
+Lorsque le bot ne trouvait pas de vidéos (recherche infructueuse), le bot rencontrait une erreur.
+Désormais, il affichera un message d'erreur indiquant qu'aucune vidéo n'a été trouvée.
+
+Les administrateurs doivent faire la commande z!installslashcommands pour installer les deux nouvelles 
+commandes.
