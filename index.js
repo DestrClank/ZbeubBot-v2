@@ -269,11 +269,11 @@ client.once('ready', async () => {
 
     switch (client.user.id) {
         case "986916236719980574":
-            client.user.setActivity(`[DEBUG] z!help ■ ${versionNumber}`, { type: "PLAYING" });
+            client.user.setActivity(`[DEBUG] z!help ■ ${versionNumber} ■ ${client.guilds.cache.size} serveurs`, { type: "PLAYING" });
             sendStatusLog("Le bot est en mode DEBUG.");
             break;
         default:
-            client.user.setActivity(`z!help ■ ${versionNumber}`, { type: "PLAYING" })
+            client.user.setActivity(`z!help ■ ${versionNumber} ■ ${client.guilds.cache.size} serveurs`, { type: "PLAYING" })
             sendStatusLog("Le bot est en mode RELEASE.")
             break;
     }
@@ -672,7 +672,7 @@ client.on('interactionCreate', async interaction => {
         } else if (commandName === 'changelog') {
             debugNewAboutMessage(interaction, true)
         } else if (commandName === 'botusage') {
-            botusage(interaction, true)
+            botusage(interaction, true, client)
         } else if (commandName === 'credits') {
             informations(interaction, true)
         } else if (commandName === 'infos') {
@@ -1003,7 +1003,7 @@ client.on("messageCreate", async message => {
             }
             break;
         case values.CmdList.DebugCmds.botusage:
-            botusage(message, false);
+            botusage(message, false, client);
             break;
         case values.CmdList.MemberInfoCmds.membercard:
             if (platform == "linux") {
@@ -1897,7 +1897,9 @@ function MusicFeatureDisabled(message) {
     await connect('mongodb+srv://destrclank:n8j5kqgs@zbeubbotcluster.azqkywi.mongodb.net/?retryWrites=true&w=majority', {
         useNewUrlParser: true,
     })
-    client.login(process.env.BOT_TOKEN);//connexion du bot au serveur de Discord
+    sendStatusLog("Le bot est connecté au serveur MongoDB.")
+    await client.login(process.env.BOT_TOKEN);//connexion du bot au serveur de Discord
+    sendStatusLog(`Le bot est connecté en tant que ${client.user.tag} et est présent sur ${client.guilds.cache.size} serveurs.`)
 } catch (err) {
     sendErrorLog("Impossible de se connecter à l'API de Discord et/ou au serveur MongoDB. Le bot ne peut pas continuer et va par conséquent s'arrêter.", err)
     process.exit(1)

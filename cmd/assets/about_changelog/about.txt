@@ -11,6 +11,10 @@
 Les administrateurs doivent faire la commande z!installslashcommands pour installer toutes les nouvelles 
 commandes.
 
+__0.11.1.1 (bêta)__ :
+Ajout dans le texte de présence le nombre de serveurs où le bot est présent.
+Cette information est ajoutée dans la commande z!botusage.
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.
