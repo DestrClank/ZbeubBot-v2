@@ -1844,7 +1844,8 @@ async function whatsplaying(message, serverQueue, author, ifSlash) {
                 { name: "Durée", value: `${duration}`, inline: true },
                 { name: "Nombre de \"J'aime\"", value: `${song.likes}`, inline: true },
                 { name: "Nombre de vues", value: `${song.views}`, inline: true },
-                { name: "Volume sonore", value: `${serverQueue.volume*100}%`})
+                { name: "Volume sonore", value: `${serverQueue.volume*100}%`, inline: true },
+                { name: "Mode loop", value: `${serverQueue.loop ? `Activé` : `Désactivé`}`, inline: true })
             .setThumbnail(song.thumbnail)
             .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl});
 
@@ -1857,7 +1858,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash) {
             );
 
         if (ifSlash === true) {
-            return await message.reply({ embeds: [embedMessageNowPlaying], components: [row] })
+            return await message.editReply({ embeds: [embedMessageNowPlaying], components: [row] })
         } else {
             return message.channel.send({ embeds: [embedMessageNowPlaying], components: [row] });
         }
@@ -1867,6 +1868,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash) {
     } catch (err) {
         sendFunctionLog(values.CmdList.MusicCmds.np, values.generalText.ErrorMsg.logs.music_nperror)
         sendErrorToDev(Discord, client, err, "whatsplaying")
+        sendErrorLog("Une erreur de merde est survenue.", err)
         return message.channel.send(values.generalText.ErrorMsg.userend.music_unknownerror)
     }
 

@@ -18,6 +18,10 @@ Cette information est ajoutée dans la commande z!botusage.
 __0.11.1.2 (bêta)__ :
 Ajout dans la commande z!botusage le nombre de serveurs utilisant la fonctionnalité musicale.
 
+__0.11.1.3 (bêta)__ : 
+L'état d'activation du mide loop est désormais affiché dans z!np.
+La commande slash /np ne fonctionnait pas, ce bug a été corrigé.
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.
