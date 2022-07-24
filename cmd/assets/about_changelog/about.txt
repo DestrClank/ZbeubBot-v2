@@ -26,6 +26,9 @@ __0.11.1.4 (bêta)__ :
 Ajout de la commande z!createinvite, cette commande permet de générer des liens d'invitations vers un salon.
 Ajout de fonctionnalités réservés au développeur.
 
+__0.11.1.5 (bêta)__ :
+Correction d'un problème lorsque le bot plante au démarrage dans une étape spécifique.
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.

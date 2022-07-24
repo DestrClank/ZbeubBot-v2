@@ -389,9 +389,8 @@ termination.forEach((eventType) => {
     process.on(eventType, async function () {
         requesttermination = 1;
         sendWarnLog(`Une demande d'arrêt du bot a été reçue. Code d'arrêt : ${eventType}`)
-        
-
-        if (getConfig().SendLogs.SendLogsWhenShutdown == true) {
+        try {
+            if (getConfig().SendLogs.SendLogsWhenShutdown == true) {
             sendWarnLog("Envoi des logs au développeur...")
             try {
                 await client.users.cache.get(values.properties.userID).send({
@@ -412,6 +411,11 @@ termination.forEach((eventType) => {
             sendWarnLog("La configuration désactive l'envoi des logs à l'arrêt du bot. Le bot va s'arrêter.")
             process.exit(1)
         }
+        } catch {
+            sendWarnLog("Aucune configuration n'a été chargée ou la configuration est inconnue. Le bot va s'arrêter.")
+            process.exit(1)
+        }
+
 
     })
 })
