@@ -29,6 +29,12 @@ Ajout de fonctionnalités réservés au développeur.
 __0.11.1.5 (bêta)__ :
 Correction d'un problème lorsque le bot plante au démarrage dans une étape spécifique.
 
+__0.11.1.6 (bêta)__ [testing_version 1] : 
+La commande z!np possède désormais des boutons pour contrôler la musique.
+Les messages de volume et d'ajout de musique/lecture ont un bouton pour afficher les détails et les contrôles.
+
+Cette fonctionnalité est en cours de test et peut être instable. (désolé UwU""""")
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.

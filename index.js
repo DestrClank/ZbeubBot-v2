@@ -447,7 +447,6 @@ process.on('uncaughtException', async (err) => {
 
 })
 
-
 async function getMember(interaction) {
     const guild = await client.guilds.cache.get(interaction.channel.guild.id);
     const member = await guild.members.cache.get(interaction.user.id);
@@ -462,10 +461,32 @@ client.on('interactionCreate', async interaction => {
     //console.log(interaction)
 
     if (interaction.isButton()) {
+
+        const serverQueue = queue.get(interaction.guild.id)
+        const guild = client.guilds.cache.get(interaction.guild.id);
+        const voiceChannel = interaction.member.voice.channel;
+        const member = guild.members.cache.get(interaction.user.id);
+        const author = interaction.user
+        let connection = client.voiceManager.get(interaction.guild.id)
+
         if (interaction.customId == "restart_confirmed") {
             restartbot.restartbot(interaction)
         } else if (interaction.customId == "restart_declined") {
             restartbot.deleteMsg(interaction)
+        } else if (interaction.customId == "skip_music") {
+            skip(interaction, serverQueue, author, false, true)
+        } else if (interaction.customId == "pause_music") {
+            pauseMusic(interaction, serverQueue, author, false, true)
+        } else if (interaction.customId == "resume_music") {
+            resumeMusic(interaction, serverQueue, author, false, true)
+        } else if (interaction.customId == "toggleloop_music") {
+            loop(interaction, serverQueue, author, false, true)
+        } else if (interaction.customId == "whatsplaying") {
+            whatsplaying(interaction, serverQueue, author, false, true)
+        } else if (interaction.customId == "showqueue") {
+            showQueue(interaction, serverQueue, author, false, true)
+        } else if (interaction.customId == "stop_music") {
+            stop(interaction, serverQueue, author, false, true)
         }
     }
 
@@ -641,7 +662,7 @@ client.on('interactionCreate', async interaction => {
             stop(interaction, serverQueue, author, true)
         } else if (commandName === 'skip') {
             await interaction.deferReply()
-            skip(interaction, serverQueue, author, true)
+            skip(interaction, serverQueue, author, true, false)
         } else if (commandName === 'loop') {
             await interaction.deferReply()
             loop(interaction, serverQueue, author, true)
@@ -905,7 +926,7 @@ client.on("messageCreate", async message => {
                 return MusicFeatureDisabled(message);
             }
 
-            skip(message, serverQueue, author);
+            skip(message, serverQueue, author, false, false);
             break;
         case values.CmdList.MusicCmds.stop:
             if (musicFeatureState == false) {
@@ -1278,7 +1299,8 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         likes: songInfo.videoDetails.likes,
         views: songInfo.videoDetails.viewCount,
         addedby: author.username + "#" + author.discriminator,
-        pdp: author.displayAvatarURL()
+        pdp: author.displayAvatarURL(),
+        beginplaytimestamp: null
     };
 
     if (!serverQueue) {
@@ -1290,6 +1312,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
             volume: serversettings.MusicVolume,
             playing: true,
             loop: false,
+            Button: false
         };
 
         sendFunctionLog(values.CmdList.MusicCmds.play, values.generalText.GeneralLogsMsg.musicLogs.music_addtoplaylistmsg);
@@ -1343,6 +1366,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         }
     }
     else {
+        serverQueue.Button = false;
         serverQueue.songs.push(song);
         sendStatusLog(values.generalText.GeneralLogsMsg.musicLogs.music_linkadded);
         sendStatusLog(`z!play : Titre : ${song.title}`);
@@ -1355,11 +1379,20 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
             .addFields(
                 { name: 'Titre', value: song.title })
             .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl});
+        
+
+        let row = new Discord.MessageActionRow() 
+            .addComponents(
+                new Discord.MessageButton()
+                    .setStyle('SECONDARY')
+                    .setLabel("Afficher les détails de la musique en cours")
+                    .setCustomId("whatsplaying")
+        )
 
         if (ifSlash === true) {
-            return await message.editReply({ embeds: [embedAddPlaylist], content: "La musique a été ajoutée." })
+            return await message.editReply({ embeds: [embedAddPlaylist], content: "La musique a été ajoutée." , components: [row]})
         } else {
-            return await message.channel.send({ embeds: [embedAddPlaylist] });
+            return await message.channel.send({ embeds: [embedAddPlaylist], components: [row]});
         }
 
     }
@@ -1387,12 +1420,6 @@ async function setVolume(message, serverQueue, author, arg, ifSlash) {
 
     await GuildModel.findOneAndUpdate({id : message.guild.id}, { $set: { MusicVolume: arg / 100}})
 
-    if (serverQueue) {
-        serverQueue.volume = arg / 100
-        serverQueue.audioResource.volume.setVolume(arg / 100)
-    }
-
-
     sendStatusLog(`Le volume est réglé sur \`${arg}%\`.`)
 
     let finalmessage = `Le volume est réglé sur ${arg}%.`
@@ -1401,12 +1428,52 @@ async function setVolume(message, serverQueue, author, arg, ifSlash) {
         finalmessage = finalmessage + `\n\n**AVERTISSEMENT : Le volume actuel peut nuire à votre audition à long terme si vous écoutez de la musique sur une grande période de temps !**`
     }
 
-    return MusicStateEmbed(message, author, ifSlash, "Réglage du volume", finalmessage)
+    let row = new Discord.MessageActionRow() 
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Afficher les détails de la musique en cours")
+            .setCustomId("whatsplaying")
+    );
+
+    let rowdisabled = new Discord.MessageActionRow() 
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Afficher les détails de la musique en cours")
+            .setCustomId("whatsplaying")
+            .setDisabled(true)
+    );
+
+    let embedMusicState = new Discord.MessageEmbed()
+    .setAuthor({name: `${author.username}#${author.discriminator}`, iconURL:`${author.displayAvatarURL()}`})
+    .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
+    .setColor(values.settings.embedColor)
+    .setTitle("Réglage du volume")
+    .setDescription(finalmessage)
+
+    if (serverQueue) {
+        serverQueue.volume = arg / 100
+        serverQueue.audioResource.volume.setVolume(arg / 100)
+
+            if (ifSlash) {
+                return message.editReply({embeds: [embedMusicState], components: [row]})
+            } else {
+                return message.channel.send({embeds: [embedMusicState], components: [row]})
+            }
+
+    } else {
+        if (ifSlash) {
+            return message.editReply({embeds: [embedMusicState], components: [rowdisabled]})
+        } else {
+            return message.channel.send({embeds: [embedMusicState], components: [rowdisabled]})
+        }
+    }
 
 }
 
 
-async function skip(message, serverQueue, author, ifSlash) {
+async function skip(message, serverQueue, author, ifSlash, ifButton) {
     if (!message.member.voice.channel) // on vérifie que l'utilisateur est bien dans un salon vocal pour skip
     {
         sendFunctionLog(values.CmdList.MusicCmds.skip, values.generalText.ErrorMsg.logs.music_notinvocal);
@@ -1419,16 +1486,23 @@ async function skip(message, serverQueue, author, ifSlash) {
         return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
     }
 
+    serverQueue.Button = ifButton
+
     if (ifSlash === true) {
         await message.editReply("Passage à la musique suivante...")
     }
 
+    if (ifButton === true) {
+        whatsplaying(message, serverQueue, author, false, true, "skip")
+    }
+
     sendFunctionLog(values.CmdList.MusicCmds.skip, values.generalText.GeneralLogsMsg.musicLogs.music_skipmusicmsg);
     await serverQueue.audioPlayer.stop(); // On termine la musique courante, ce qui lance la suivante grâce à l'écoute d'événement
-    // finish
+
+
 }
 
-async function stop(message, serverQueue, author, ifSlash) {
+async function stop(message, serverQueue, author, ifSlash, ifButton) {
     if (!message.member.voice.channel) // on vérifie que l'utilisateur est bien dans un salon vocal pour skip
     {
         sendFunctionLog(values.CmdList.MusicCmds.stop, values.generalText.ErrorMsg.logs.music_notinvocal);
@@ -1451,10 +1525,14 @@ async function stop(message, serverQueue, author, ifSlash) {
     sendStatusLog(values.generalText.GeneralLogsMsg.musicLogs.music_stopmsg);
 
     await serverQueue.audioPlayer.stop();
+
+    if (ifButton) {
+        return whatsplaying(message, serverQueue, author, false, true)
+    }
     MusicStateEmbed(message, author, ifSlash, null, values.generalText.GeneralUserMsg.music_musicstopped);
 }
 
-async function loop(message, serverQueue, author, ifSlash) {
+async function loop(message, serverQueue, author, ifSlash, ifButton) {
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.loop, values.generalText.ErrorMsg.logs.music_notinvocal);
         return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
@@ -1466,6 +1544,11 @@ async function loop(message, serverQueue, author, ifSlash) {
 
     serverQueue.loop = !serverQueue.loop
     sendStatusLog(`z!loop : Le bouclage (loop) de la musique en cours de lecture est : ${serverQueue.loop ? `activé` : `**désactivé`}`);
+    
+    if (ifButton) {
+        return whatsplaying(message, serverQueue, author, false, true)
+    }
+    
     return MusicStateEmbed(message, author, ifSlash, null, `Le loop est ${serverQueue.loop ? `**activé**` : `**désactivé**`} ! 😉`) //message.channel.send(`Le loop est ${serverQueue.loop ? `**activé**` : `**désactivé**`} ! 😉`)
 
 }
@@ -1511,6 +1594,7 @@ async function play(guild, song, ifcrashed) {
     serverQueue.audioResource.volume.setVolume(serverQueue.volume)
 
     await audioplayer.play(serverQueue.audioResource)
+    song.beginplaytimestamp = Date.now()
 
     audioplayer.on(Music.AudioPlayerStatus.Idle, async () => { // On écoute l'événement de fin de musique
         if (!serverQueue.loop) serverQueue.songs.shift(); // On passe à la musique suivante quand la courante se termine
@@ -1554,10 +1638,21 @@ async function play(guild, song, ifcrashed) {
             { name: "Ajoutée par", value: song.addedby })
         .setColor(values.settings.embedColor)
         .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl});
-
-    if (!serverQueue.loop) {
-        serverQueue.textChannel.send({ embeds: [embedIsPlaying] });
-    }
+    
+    let row = new Discord.MessageActionRow() 
+            .addComponents(
+                new Discord.MessageButton()
+                    .setStyle('SECONDARY')
+                    .setLabel("Afficher les détails")
+                    .setCustomId("whatsplaying")
+            )
+        
+        if (serverQueue.loop == false) {
+            if (serverQueue.Button == false) {
+                serverQueue.Button = false
+                serverQueue.textChannel.send({ embeds: [embedIsPlaying], components: [row] });
+            }
+        }   
 
     return;
 }
@@ -1730,7 +1825,7 @@ async function ytsearch(message, serverQueue, voiceChannel, ifSlash, member, arg
     });
 }
 
-async function showQueue(message, serverQueue, author, ifSlash) {
+async function showQueue(message, serverQueue, author, ifSlash, ifButton) {
 
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.queue, values.generalText.ErrorMsg.logs.music_notinvocal)
@@ -1785,15 +1880,27 @@ async function showQueue(message, serverQueue, author, ifSlash) {
 
     }
 
+    let row = new Discord.MessageActionRow() 
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Afficher les détails de la musique en cours")
+            .setCustomId("whatsplaying")
+    )
+
+    if (ifButton) {
+        return message.update({ embeds: [embedQueueMsg], components: [row] })
+    }
+
     if (ifSlash === true) {
-        await message.reply({ embeds: [embedQueueMsg] })
+        await message.reply({ embeds: [embedQueueMsg], components: [row] })
     } else {
-        message.channel.send({ embeds: [embedQueueMsg] })
+        message.channel.send({ embeds: [embedQueueMsg], components: [row] })
     }
 
 }
 
-async function pauseMusic(message, serverQueue, author, ifSlash) {
+async function pauseMusic(message, serverQueue, author, ifSlash, ifButton) {
     const PikachuEmote = client.emojis.cache.find(emoji => emoji.name === "Pikachu");
 
     if (!message.member.voice.channel) {
@@ -1814,10 +1921,15 @@ async function pauseMusic(message, serverQueue, author, ifSlash) {
     serverQueue.playing = false;
     serverQueue.audioPlayer.pause();
     sendFunctionLog(values.CmdList.MusicCmds.pause, values.generalText.GeneralLogsMsg.musicLogs.music_pausing);
+
+    if (ifButton) {
+        return whatsplaying(message, serverQueue, author, false, true)
+    }
+
     return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est en pause ! 😉`);
 }
 
-async function resumeMusic(message, serverQueue, author, ifSlash) {
+async function resumeMusic(message, serverQueue, author, ifSlash, ifButton) {
     const PikachuEmote = client.emojis.cache.find(emoji => emoji.name === "Pikachu");
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.resume, values.generalText.ErrorMsg.logs.music_notinvocal)
@@ -1840,11 +1952,15 @@ async function resumeMusic(message, serverQueue, author, ifSlash) {
     sendFunctionLog(values.CmdList.MusicCmds.resume, values.generalText.GeneralLogsMsg.musicLogs.music_resuming);
     sendStatusLog(values.generalText.GeneralLogsMsg.musicLogs.music_resumeproblem);
 
+    if (ifButton) {
+        return whatsplaying(message, serverQueue, author, false, true)
+    }
+
     return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est en lecture ! 😉`);
 }
 
 
-async function whatsplaying(message, serverQueue, author, ifSlash) {
+async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, command) {
 
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.np, values.generalText.ErrorMsg.logs.music_notinvocal)
@@ -1856,10 +1972,30 @@ async function whatsplaying(message, serverQueue, author, ifSlash) {
         return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
     }
 
-    let nowPlaying = serverQueue.songs[0];
+    if (command == "skip") {
+        if (!serverQueue.loop) {
+            var nowPlaying = serverQueue.songs[1];
+        } else {
+            var nowPlaying = serverQueue.songs[0];
+        }
+    } else {
+        var nowPlaying = serverQueue.songs[0];
+    }
+    
+
+    if (!nowPlaying) {
+        const embedFinished = new Discord.MessageEmbed()
+        .setColor("#FFF305")
+        .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
+        .setTitle("Liste de lecture finie.")
+        .setDescription("Il n'y a plus de musiques dans la liste de lecture. Jouez ou ajoutez de la musique via la commande `z!play` ou `/play`.")
+
+        message.update({ embeds: [embedFinished], components: [] })
+        return;
+    }
+        
     try {
         //const songInfo = await ytdl.getInfo(nowPlaying.url);
-
         const song = {
             title: nowPlaying.title,
             url: nowPlaying.url,
@@ -1869,12 +2005,14 @@ async function whatsplaying(message, serverQueue, author, ifSlash) {
             likes: nowPlaying.likes,
             views: nowPlaying.views,
             addedby: nowPlaying.addedby,
-            pdp: nowPlaying.pdp
+            pdp: nowPlaying.pdp,
+            timestamp: nowPlaying.beginplaytimestamp
         }
 
         const duration = convertHMS(song.time);
+        //const currenttime = convertHMS(Math.abs(song.timestamp - Date.now()))
 
-        sendFunctionLog(values.CmdList.MusicCmds.np, values.generalText.GeneralLogsMsg.musicLogs.music_youtubemetadataget)
+        //sendFunctionLog(values.CmdList.MusicCmds.np, values.generalText.GeneralLogsMsg.musicLogs.music_youtubemetadataget)
 
         let embedMessageNowPlaying = new Discord.MessageEmbed()
             .setColor("#FFF305")
@@ -1893,12 +2031,77 @@ async function whatsplaying(message, serverQueue, author, ifSlash) {
             .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl});
 
         const row = new Discord.MessageActionRow()
-            .addComponents(
+
+        if (serverQueue.loop) {
+            row.addComponents(
                 new Discord.MessageButton()
-                    .setLabel('Lien de la vidéo YouTube')
-                    .setStyle('LINK')
-                    .setURL(song.url)
-            );
+                .setLabel('Reprendre du début')
+                .setStyle('SECONDARY')
+                .setCustomId("skip_music")
+            )
+        } else {
+            row.addComponents(
+                new Discord.MessageButton()
+                .setLabel('Suivant')
+                .setStyle('SECONDARY')
+                .setCustomId("skip_music")
+            )
+        }
+
+            row.addComponents(
+                new Discord.MessageButton()
+                .setLabel('Liste de lecture')
+                .setStyle('SECONDARY')
+                .setCustomId("showqueue")
+            )
+
+        if (serverQueue.playing == false) {
+            row.addComponents(
+                new Discord.MessageButton()
+                .setLabel('Reprendre')
+                .setStyle('DANGER')
+                .setCustomId("resume_music")
+            )
+        } else {
+            row.addComponents(
+                new Discord.MessageButton()
+                .setLabel('Pause')
+                .setStyle('SECONDARY')
+                .setCustomId("pause_music")
+            )
+        }
+
+        if (serverQueue.loop == false) {
+            row.addComponents(
+                new Discord.MessageButton()
+                .setLabel('Activer loop')
+                .setStyle('SECONDARY')
+                .setCustomId("toggleloop_music")
+            )
+        } else {
+            row.addComponents(
+                new Discord.MessageButton()
+                .setLabel('Désactiver loop')
+                .setStyle('PRIMARY')
+                .setCustomId("toggleloop_music")
+            )
+        }
+
+        row.addComponents(
+            new Discord.MessageButton()
+            .setLabel('Stop')
+            .setStyle('DANGER')
+            .setCustomId("stop_music")
+        )
+
+        if (ifButton) {
+            if (command != "skip") {
+                serverQueue.Button = false;
+            }
+
+            message.update({ embeds: [embedMessageNowPlaying], components: [row] })
+            return;
+        }
 
         if (ifSlash === true) {
             return await message.editReply({ embeds: [embedMessageNowPlaying], components: [row] })
