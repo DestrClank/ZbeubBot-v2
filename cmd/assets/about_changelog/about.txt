@@ -19,8 +19,12 @@ __0.11.1.2 (bêta)__ :
 Ajout dans la commande z!botusage le nombre de serveurs utilisant la fonctionnalité musicale.
 
 __0.11.1.3 (bêta)__ : 
-L'état d'activation du mide loop est désormais affiché dans z!np.
+L'état d'activation du mode loop est désormais affiché dans z!np.
 La commande slash /np ne fonctionnait pas, ce bug a été corrigé.
+
+__0.11.1.4 (bêta)__ : 
+Ajout de la commande z!createinvite, cette commande permet de générer des liens d'invitations vers un salon.
+Ajout de fonctionnalités réservés au développeur.
 
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 

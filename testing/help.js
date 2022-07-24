@@ -95,7 +95,9 @@ const embedMiscCategory = new MessageEmbed()
 \`z!record\` : Enregistre la voix d'un utilisateur dans un salon vocal.
 *Cette commande est en version alpha pour le moment et doit être testée.*
 *L'utilisateur qui réalise la commande est le seul qui est enregistré même si plusieurs personnes sont présents dans un même salon vocal.*
-*La fonctionnalité musicale ne peut pas être utilisée en même temps que l'enregistrement de la voix.*`)
+*La fonctionnalité musicale ne peut pas être utilisée en même temps que l'enregistrement de la voix.*
+
+\`z!createinvite\` : Crée un lien d'invitation vers ce salon.`)
 
 const embedMusicCategory = new MessageEmbed()
 .setColor(values.settings.embedColor)

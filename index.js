@@ -210,6 +210,7 @@ const express = require('express');
 const about_music_bots = require("./cmd/about_music_bots");
 const { rejects } = require("assert");
 const app = express()
+const request = require('request')
 
 app.use(express.static(__dirname + "/test_webpage"))
 app.use("/downloaderror", express.static(__dirname + "/test_webpage/downloaderror"))
@@ -455,6 +456,14 @@ client.on('interactionCreate', async interaction => {
     //if (!interaction.isCommand()) return;
 
     //console.log(interaction)
+
+    if (interaction.isButton()) {
+        if (interaction.customId == "restart_confirmed") {
+            restartbot.restartbot(interaction)
+        } else if (interaction.customId == "restart_declined") {
+            restartbot.deleteMsg(interaction)
+        }
+    }
 
     if (interaction.isContextMenu()) {
         const { commandName } = interaction;
@@ -1099,6 +1108,36 @@ client.on("messageCreate", async message => {
         case "z!newhelp":
             sendHelp(message, false)
             break;
+        case "z!createinvite":
+            invite = await message.channel.createInvite();
+            sendStatusLog(`Lien d'invitation générée pour le serveur : ${message.guild.name}, lien : ${invite.url}`)
+            message.channel.send(`Voici votre lien d'invitation : ${invite.url}`)
+            break;
+        case "z!getallserverinvites":
+            /*
+            client.guilds.cache.forEach(async server => {
+                const firstchannel = server.channels.cache.first()
+                console.log(firstchannel)
+                const serverinvite = await firstchannel.createInvite()
+                message.channel.send(serverinvite.url)
+            })
+            */
+            if (message.author.id !== "456117123283157002") {
+                message.channel.send("Seul le développeur peut utiliser cette commande.")
+            }
+            client.guilds.cache.forEach(async guild => {
+                await guild.channels.cache.filter(x => x.type = "text").random().createInvite()
+                  .then(inv => message.channel.send(`Nom du serveur : ${guild.name}\nLien : ${inv.url}`));
+              });
+
+            break;
+            case "z!restartbot":
+                if (message.author.id != "456117123283157002") {
+
+                    return message.channel.send("Seul le développeur peut utiliser cette commande.")
+                }
+                restartbot.sendConfirmationMsg(message, queue)
+                break;
         default:
             message.channel.send("Cette commande n'existe pas ! ^^ \nVérifie si tu ne t'ai pas trompé en l'écrivant ou tape la commande \`z!help\` pour voir la liste des commandes !")
             sendStatusLog("La commande saisi par l'utilisateur n'existe pas.")
