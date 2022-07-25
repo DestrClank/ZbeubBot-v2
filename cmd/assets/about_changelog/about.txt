@@ -35,6 +35,10 @@ Les messages de volume et d'ajout de musique/lecture ont un bouton pour afficher
 
 Cette fonctionnalité est en cours de test et peut être instable. (désolé UwU""""")
 
+__0.11.1.7 (bêta)___ [testing_version 1] : 
+Si aucune musique n'est jouée ou que l'utilisateur n'est pas dans un salon vocal et que les boutons sont utilisés,
+le bot désactivera les boutons sur le message ou enverra un message d'erreur à l'utilisateur.
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.

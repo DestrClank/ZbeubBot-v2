@@ -170,11 +170,63 @@ const PikachuEmote = client.emojis.cache.find(emoji => emoji.name === "Pikachu")
 
 const queue = new Map();
 
-async function MusicStateEmbed(message, author, ifslash, title, description) {
+async function MusicStateEmbed(message, author, ifslash, title, description, serverQueue, ifButton, type) {
     let embedMusicState = new Discord.MessageEmbed()
         .setAuthor({name: `${author.username}#${author.discriminator}`, iconURL:`${author.displayAvatarURL()}`})
         .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
         .setColor(values.settings.embedColor);
+    
+    let row = new Discord.MessageActionRow() 
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Afficher les détails de la musique en cours")
+            .setCustomId("whatsplaying")
+    );
+
+    let rowdisabled = new Discord.MessageActionRow() 
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Afficher les détails de la musique en cours")
+            .setCustomId("whatsplaying")
+            .setDisabled(true)
+    );
+
+    let rownomusic = new Discord.MessageActionRow() 
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Aucune musique en cours de lecture")
+            .setCustomId("whatsplaying")
+            .setDisabled(true)
+    );
+
+    let rownotinvocal = new Discord.MessageActionRow() 
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Vous n'êtes pas dans un salon vocal")
+            .setCustomId("error1")
+            .setDisabled(true)
+    )
+    .addComponents(
+        new Discord.MessageButton()
+            .setStyle('SECONDARY')
+            .setLabel("Aucune musique en cours de lecture")
+            .setCustomId("error2")
+            .setDisabled(true)
+    );
+
+    if (serverQueue) {
+        var buttonactivation = row
+    } else {
+        var buttonactivation = rowdisabled
+    }
+
+    //if (type === "stop_music") {
+    //    buttonactivation = ""
+    //}
 
     if (title) {
         embedMusicState.setTitle(`${title}`)
@@ -182,10 +234,26 @@ async function MusicStateEmbed(message, author, ifslash, title, description) {
     if (description) {
         embedMusicState.setDescription(`${description}`)
     }
+
+    if (ifButton) {
+        if (type === "no_music") {
+            return message.update({components: [rownomusic]})
+        }
+
+        if (type === "not_in_vocal") {
+            if (serverQueue) {
+                return message.reply({ embeds: [embedMusicState], ephemeral: true })
+            } else {
+                return message.update({components: [rownotinvocal]})
+            }
+        }
+        return message.reply({ embeds: [embedMusicState], components: [buttonactivation], ephemeral: true })
+    }
+
     if (ifslash === true) {
-        await message.editReply({ embeds: [embedMusicState] })
+        await message.editReply({ embeds: [embedMusicState], components: [buttonactivation] })
     } else {
-        message.channel.send({ embeds: [embedMusicState] })
+        message.channel.send({ embeds: [embedMusicState], components: [buttonactivation] })
     }
     return
 }
@@ -895,7 +963,7 @@ client.on("messageCreate", async message => {
             }
 
             if (!findargument) {
-                return MusicStateEmbed(message, author, false, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_noargumentprovided)
+                return MusicStateEmbed(message, author, false, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_noargumentprovided, serverQueue)
             }
 
             if (connection) {
@@ -913,7 +981,7 @@ client.on("messageCreate", async message => {
 
                 if (error.message == "Video unavailable") {
                     sendErrorLog("z!play : Le lien YouTube est inexistant.", error);
-                    return MusicStateEmbed(message, author, false, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_linkbroken)
+                    return MusicStateEmbed(message, author, false, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_linkbroken, serverQueue)
                 } else {
                     sendErrorLog("z!play : Une erreur inconnue est survenue.", error);
                     sendErrorToDev(Discord, client, error, values.CmdList.MusicCmds.play)
@@ -1000,7 +1068,7 @@ client.on("messageCreate", async message => {
             }
 
             if (!findargument) {
-                return MusicStateEmbed(message, author, false, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_noargumentprovided)
+                return MusicStateEmbed(message, author, false, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_noargumentprovided, serverQueue)
             }
 
             if (connection) {
@@ -1410,12 +1478,12 @@ async function setVolume(message, serverQueue, author, arg, ifSlash) {
 
     if (!arg || isNaN(arg)) {
         sendStatusLog("Pas d'arguments valides saisis.")
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, "Il n'y a pas d'argument valide après la commande. Mettez un nombre entre `0` et `200`.  \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, "Il n'y a pas d'argument valide après la commande. Mettez un nombre entre `0` et `200`.  \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**", serverQueue)
     }
 
     if (arg < 0 || arg > 200) {
         sendStatusLog("La valeur n'est pas comprise entre 0 et 200.")
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, "La valeur entrée n'est pas entre `0` et `200`. Mettez un nombre entre `0` et `200`. \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**")
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, "La valeur entrée n'est pas entre `0` et `200`. Mettez un nombre entre `0` et `200`. \n\n**ATTENTION !!! : Il est FORTEMENT déconseillé de régler le volume au delà de 100% ! Cela peut nuire à votre audition à long terme si vous écoutez de la musique à un volume très élevé !**", serverQueue)
     }
 
     await GuildModel.findOneAndUpdate({id : message.guild.id}, { $set: { MusicVolume: arg / 100}})
@@ -1477,13 +1545,12 @@ async function skip(message, serverQueue, author, ifSlash, ifButton) {
     if (!message.member.voice.channel) // on vérifie que l'utilisateur est bien dans un salon vocal pour skip
     {
         sendFunctionLog(values.CmdList.MusicCmds.skip, values.generalText.ErrorMsg.logs.music_notinvocal);
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal
-        );
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal, serverQueue ,ifButton, "not_in_vocal");
     }
     if (!serverQueue) // On vérifie si une musique est en cours
     {
         sendFunctionLog(values.CmdList.MusicCmds.skip, values.generalText.ErrorMsg.logs.music_nomusicplaying);
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton, "no_music");
     }
 
     serverQueue.Button = ifButton
@@ -1506,12 +1573,12 @@ async function stop(message, serverQueue, author, ifSlash, ifButton) {
     if (!message.member.voice.channel) // on vérifie que l'utilisateur est bien dans un salon vocal pour skip
     {
         sendFunctionLog(values.CmdList.MusicCmds.stop, values.generalText.ErrorMsg.logs.music_notinvocal);
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal, serverQueue, ifButton, "not_in_vocal");
     }
     if (!serverQueue) // On vérifie si une musique est en cours
     {
         sendFunctionLog(values.CmdList.MusicCmds.stop, values.generalText.ErrorMsg.logs.music_nomusicplaying);
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton, "no_music");
     }
 
     if (!serverQueue.playing) {
@@ -1519,6 +1586,12 @@ async function stop(message, serverQueue, author, ifSlash, ifButton) {
         serverQueue.audioPlayer.unpause();
 
     }
+
+    let embedMusicState = new Discord.MessageEmbed()
+    .setAuthor({name: `${author.username}#${author.discriminator}`, iconURL:`${author.displayAvatarURL()}`})
+    .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
+    .setColor(values.settings.embedColor)
+    .setDescription(values.generalText.GeneralUserMsg.music_musicstopped)
 
     serverQueue.songs = [];
 
@@ -1529,17 +1602,23 @@ async function stop(message, serverQueue, author, ifSlash, ifButton) {
     if (ifButton) {
         return whatsplaying(message, serverQueue, author, false, true)
     }
-    MusicStateEmbed(message, author, ifSlash, null, values.generalText.GeneralUserMsg.music_musicstopped);
+    
+    if (ifSlash) {
+        return message.editReply({embeds: [embedMusicState]})
+    } else {
+        return message.channel.send({embeds: [embedMusicState]})
+    }
+
 }
 
 async function loop(message, serverQueue, author, ifSlash, ifButton) {
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.loop, values.generalText.ErrorMsg.logs.music_notinvocal);
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal, serverQueue, ifButton, "not_in_vocal");
     }
     if (!serverQueue) {
         sendFunctionLog(values.CmdList.MusicCmds.loop, values.generalText.ErrorMsg.logs.music_nomusicplaying);
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton, "no_music");
     }
 
     serverQueue.loop = !serverQueue.loop
@@ -1549,7 +1628,7 @@ async function loop(message, serverQueue, author, ifSlash, ifButton) {
         return whatsplaying(message, serverQueue, author, false, true)
     }
     
-    return MusicStateEmbed(message, author, ifSlash, null, `Le loop est ${serverQueue.loop ? `**activé**` : `**désactivé**`} ! 😉`) //message.channel.send(`Le loop est ${serverQueue.loop ? `**activé**` : `**désactivé**`} ! 😉`)
+    return MusicStateEmbed(message, author, ifSlash, null, `Le loop est ${serverQueue.loop ? `**activé**` : `**désactivé**`} ! 😉`, serverQueue, false, "stop_music") //message.channel.send(`Le loop est ${serverQueue.loop ? `**activé**` : `**désactivé**`} ! 😉`)
 
 }
 
@@ -1707,7 +1786,7 @@ async function ytsearch(message, serverQueue, voiceChannel, ifSlash, member, arg
         if (videos.length == 0) {
             sendStatusLog("Aucune vidéo n'a été trouvée.")
             const errordescription = "Conseils :\nEssayez avec d'autres mots.\nVérifiez l'orthographe des termes de recherche.\nUtilisez des mots-clés plus généraux.\nSpécifiez un moins grand nombre de mots.\n\nEn derniers recours, effectuez la même recherche sur YouTube directement et copiez-collez le lien de votre vidéo en tant qu'argument."
-            return MusicStateEmbed(message, author, ifSlash, "Aucune vidéo n'a été trouvée.", errordescription)
+            return MusicStateEmbed(message, author, ifSlash, "Aucune vidéo n'a été trouvée.", errordescription, serverQueue)
         }
 
         //onsole.log(videos)
@@ -1829,12 +1908,12 @@ async function showQueue(message, serverQueue, author, ifSlash, ifButton) {
 
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.queue, values.generalText.ErrorMsg.logs.music_notinvocal)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal, serverQueue, ifButton, "not_in_vocal");
     }
 
     if (!serverQueue) {
         sendFunctionLog(values.CmdList.MusicCmds.queue, values.generalText.ErrorMsg.logs.music_nomusicplaying)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton, "no_music");
     }
 
     let embedQueueMsg = new Discord.MessageEmbed()
@@ -1905,17 +1984,17 @@ async function pauseMusic(message, serverQueue, author, ifSlash, ifButton) {
 
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.pause, values.generalText.ErrorMsg.logs.music_notinvocal)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal, serverQueue, ifButton, "not_in_vocal");
     }
 
     if (!serverQueue) {
         sendFunctionLog(values.CmdList.MusicCmds.pause, values.generalText.ErrorMsg.logs.music_nomusicplaying)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton, "no_music");
     }
 
     if (!serverQueue.playing) {
         sendFunctionLog(values.CmdList.MusicCmds.pause, values.generalText.ErrorMsg.logs.music_alreadypaused);
-        return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est déja en pause ! 😅`);
+        return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est déja en pause ! 😅`, serverQueue);
     }
 
     serverQueue.playing = false;
@@ -1926,24 +2005,24 @@ async function pauseMusic(message, serverQueue, author, ifSlash, ifButton) {
         return whatsplaying(message, serverQueue, author, false, true)
     }
 
-    return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est en pause ! 😉`);
+    return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est en pause ! 😉`, serverQueue);
 }
 
 async function resumeMusic(message, serverQueue, author, ifSlash, ifButton) {
     const PikachuEmote = client.emojis.cache.find(emoji => emoji.name === "Pikachu");
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.resume, values.generalText.ErrorMsg.logs.music_notinvocal)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal, serverQueue, "not_in_vocal");
     }
 
     if (!serverQueue) {
         sendFunctionLog(values.CmdList.MusicCmds.resume, values.generalText.ErrorMsg.logs.music_nomusicplaying)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, "no_music");
     }
 
     if (serverQueue.playing) {
         sendFunctionLog(values.CmdList.MusicCmds.resume, values.generalText.ErrorMsg.logs.music_alreadyplaying);
-        return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est déja en lecture ! 😅`);
+        return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est déja en lecture ! 😅`, serverQueue);
     }
 
     serverQueue.playing = true;
@@ -1956,20 +2035,21 @@ async function resumeMusic(message, serverQueue, author, ifSlash, ifButton) {
         return whatsplaying(message, serverQueue, author, false, true)
     }
 
-    return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est en lecture ! 😉`);
+    return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est en lecture ! 😉`, serverQueue);
 }
 
 
 async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, command) {
-
+    /*
     if (!message.member.voice.channel) {
         sendFunctionLog(values.CmdList.MusicCmds.np, values.generalText.ErrorMsg.logs.music_notinvocal)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.ErrorMsg.userend.music_notinvocal, serverQueue, ifButton);
     }
+    */
 
     if (!serverQueue) {
         sendFunctionLog(values.CmdList.MusicCmds.np, values.generalText.ErrorMsg.logs.music_nomusicplaying)
-        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying);
+        return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton);
     }
 
     if (command == "skip") {
