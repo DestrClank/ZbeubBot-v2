@@ -2103,8 +2103,8 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                 { name: "Auteur", value: `${song.author}` },
                 { name: "Lien URL vers YouTube", value: `${song.url}` },
                 { name: "Durée", value: `${duration}`, inline: true },
-                { name: "Nombre de \"J'aime\"", value: `${song.likes}`, inline: true },
-                { name: "Nombre de vues", value: `${song.views}`, inline: true },
+                { name: "Nombre de \"J'aime\"", value: `${split(song.likes)}`, inline: true },
+                { name: "Nombre de vues", value: `${split(song.views)}`, inline: true },
                 { name: "Volume sonore", value: `${serverQueue.volume*100}%`, inline: true },
                 { name: "Mode loop", value: `${serverQueue.loop ? `Activé` : `Désactivé`}`, inline: true })
             .setThumbnail(song.thumbnail)
@@ -2212,6 +2212,24 @@ function convertHMS(value) {
     return hours + ':' + minutes + ':' + seconds; // Return is HH : MM : SS
 }
 
+//console.log(split(78)) //123 456 789
+
+function split(nbr)
+{
+		var nombre = ''+nbr;
+		var retour = '';
+		var count=0;
+		for(var i=nombre.length-1 ; i>=0 ; i--)
+		{
+			if(count!=0 && count % 3 == 0)
+				retour = nombre[i]+' '+retour ;
+			else
+				retour = nombre[i]+retour ;
+			count++;
+		}
+		//alert('nb : '+nbr+' => '+retour);
+		return retour;
+}
 function MusicFeatureDisabled(message) {
     sendStatusLog(values.generalText.ErrorMsg.logs.music_featuredisabledmsg)
     return message.channel.send(values.generalText.ErrorMsg.userend.music_featuredisabledmsg);

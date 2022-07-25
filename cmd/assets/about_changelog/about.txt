@@ -39,6 +39,9 @@ __0.11.1.7 (bêta)___ [testing_version 1] :
 Si aucune musique n'est jouée ou que l'utilisateur n'est pas dans un salon vocal et que les boutons sont utilisés,
 le bot désactivera les boutons sur le message ou enverra un message d'erreur à l'utilisateur.
 
+__0.11.1.8 (bêta) [testing_version 1] : 
+Le nombre de vues et le nombres de likes sont désormais formatés (le nombre est écrit par paquets de 3).
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.
