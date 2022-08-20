@@ -1,4 +1,9 @@
-La commande z!np possède désormais des boutons pour contrôler la musique.
-Les messages de volume et d'ajout de musique/lecture ont un bouton pour afficher les détails et les contrôles.
+La fonctionnalité musicale était inutilisable et renvoyait le message d'erreur suivant :
+--> "La musique n'a pas pu être ajoutée car la vidéo est peut-être soumise à une limite d'âge. Désolé !"
 
-Cette fonctionnalité est en cours de test et peut être instable. (désolé UwU""""")
+Ce problème est causé par un bug dans la dépendance ytdl-core de fent, GreepTheSheep a fait un fork corrigeant le problème. (Mille merci !! Tu gères !!^^)
+Ce problème est donc corrigé et la fonctionnalité musicale est de nouveau opérationnel.
+
+A l'avenir, le bot sera porté pour fonctionner avec discord.js v14.
+
+Les boutons de contrôle sont toujours en test à l'heure actuelle.

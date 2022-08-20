@@ -39,8 +39,19 @@ __0.11.1.7 (bêta)___ [testing_version 1] :
 Si aucune musique n'est jouée ou que l'utilisateur n'est pas dans un salon vocal et que les boutons sont utilisés,
 le bot désactivera les boutons sur le message ou enverra un message d'erreur à l'utilisateur.
 
-__0.11.1.8 (bêta) [testing_version 1] : 
+__0.11.1.8 (bêta) [testing_version 1]__ : 
 Le nombre de vues et le nombres de likes sont désormais formatés (le nombre est écrit par paquets de 3).
+
+__0.11.1.9 (bêta) [testing_version 1]__ :
+La fonctionnalité musicale était inutilisable et renvoyait le message d'erreur suivant :
+--> "La musique n'a pas pu être ajoutée car la vidéo est peut-être soumise à une limite d'âge. Désolé !"
+
+Ce problème est causé par un bug dans la dépendance ytdl-core de fent, GreepTheSheep a fait un fork corrigeant le problème. (Mille merci !! Tu gères !!^^)
+Ce problème est donc corrigé et la fonctionnalité musicale est de nouveau opérationnel.
+
+A l'avenir, le bot sera porté pour fonctionner avec discord.js v14.
+
+Les boutons de contrôle sont toujours en test à l'heure actuelle.
 
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 

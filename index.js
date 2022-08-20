@@ -1354,7 +1354,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         } else {
             message.channel.send("La musique n'a pas pu être ajoutée car la vidéo est peut-être soumise à une limite d'âge. Désolé !")
         }
-        return sendWarnLog("La vidéo suivante n'a pas pu être ajoutée. La vidéo est peut-être soumise à une limite d'âge.")
+        return sendErrorLog("La vidéo suivante n'a pas pu être ajoutée. La vidéo est peut-être soumise à une limite d'âge.", err)
     }
     //var songInfo = await ytdl.getInfo(arg);
 
