@@ -1,9 +1,3 @@
-La fonctionnalité musicale était inutilisable et renvoyait le message d'erreur suivant :
---> "La musique n'a pas pu être ajoutée car la vidéo est peut-être soumise à une limite d'âge. Désolé !"
-
-Ce problème est causé par un bug dans la dépendance ytdl-core de fent, GreepTheSheep a fait un fork corrigeant le problème. (Mille merci !! Tu gères !!^^)
-Ce problème est donc corrigé et la fonctionnalité musicale est de nouveau opérationnel.
-
-A l'avenir, le bot sera porté pour fonctionner avec discord.js v14.
-
-Les boutons de contrôle sont toujours en test à l'heure actuelle.
+La commande /ytconvert renvoie plus d'informations sur la progression de la conversion.
+EN TEST : Les vidéos de moins de 2 heures sont désormais supportées.
+Faire la commande z!ytconvert sans argument pendant une conversion renvoie également des informations sur la progression de la conversion.

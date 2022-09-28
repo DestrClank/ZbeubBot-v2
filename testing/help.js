@@ -90,7 +90,9 @@ const embedMiscCategory = new MessageEmbed()
 .addField("Autres", `
 \`z!ytconvert <lien>\` : Permet de convertir une vidéo YouTube en fichier musique (.mp3).
 *Cette commande est utilisable également par commande slash.*
-*La vidéo ne doit pas dépasser 20 minutes.*
+*La vidéo ne doit pas dépasser 2 heures.*
+*Remarque : Cette amélioration de la commande est en cours de test et peut rendre le bot instable.
+Il est pour le moment préférable de rester sur l'ancienne règle de 20 minutes.*
 
 \`z!record\` : Enregistre la voix d'un utilisateur dans un salon vocal.
 *Cette commande est en version alpha pour le moment et doit être testée.*

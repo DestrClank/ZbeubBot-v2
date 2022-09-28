@@ -10,6 +10,7 @@ const versionNumber = values.version.versionNumber
 let users = []
 
 const { sendCmdLog, sendStatusLog, sendErrorLog, sendFunctionLog, sendWarnLog, sendLogToDev } = require("../debug/consolelogs")
+const { devNull } = require('os')
 
 const invalidwindowsnames = [
     "con",
@@ -73,7 +74,14 @@ module.exports = {
 
         if (args == "") {
             if (doesExist) {
-                return message.channel.send(`Votre fichier est en cours de traitement.\nTitre : \`${users[users.findIndex(v => v.id === message.author.id)].songtitle}\`\nDurée : \`${convertHMS(users[users.findIndex(v => v.id === message.author.id)].duration)}\``)
+
+                if (users[users.findIndex(v => v.id === message.author.id)].progress == null) {
+                    var progressnumber = "Pas encore démarrée"
+                } else {
+                    var progressnumber = `${users[users.findIndex(v => v.id === message.author.id)].progress}% effectuées (${users[users.findIndex(v => v.id === message.author.id)].timestamp}/${convertHMS(users[users.findIndex(v => v.id === message.author.id)].duration)})`
+                }
+
+                return message.channel.send(`Votre fichier est en cours de traitement.\nTitre : \`${users[users.findIndex(v => v.id === message.author.id)].songtitle}\`\nDurée : \`${convertHMS(users[users.findIndex(v => v.id === message.author.id)].duration)}\`\nProgression : \`${progressnumber}\``)
             } else {
                 return message.channel.send("Pour convertir une vidéo YouTube en fichier musique, copiez-collez un lien YouTube après la commande.\nAttention : la vidéo doit durer moins de 20 minutes.\n\nExemple : \`\`\`\nz!ytconvert https://www.youtube.com/watch?v=dQw4w9WgXcQ\ \n\`\`\`")
             }
@@ -141,15 +149,17 @@ module.exports = {
             id: authorid,
             songtitle: songtitle,
             duration: duration,
-            artist: artist
+            artist: artist,
+            progress: null,
+            timestamp: null
         }
 
-        if (duration > 1200) {
-            sendWarnLog("Fonction ytconvert : La vidéo dépasse 20 minutes.")
+        if (duration > 7200) {
+            sendWarnLog("Fonction ytconvert : La vidéo dépasse 2 heures.")
             if (ifSlash === true) {
-                return message.editReply("Cette vidéo dépasse 20 minutes de longueur. Impossible de la traiter.")
+                return message.editReply("Cette vidéo dépasse 2 heures de longueur. Impossible de la traiter.")
             } else {
-                return message.channel.send("Cette vidéo dépasse 20 minutes de longueur. Impossible de la traiter.")
+                return message.channel.send("Cette vidéo dépasse 2 heures de longueur. Impossible de la traiter.")
             }
         }
 
@@ -196,7 +206,7 @@ module.exports = {
         if (ifSlash === true) {
             message.editReply("Conversion de la vidéo en cours...")
         } else {
-            message.channel.send("Conversion de la vidéo en cours...")
+            var messagestatus = message.channel.send("Conversion de la vidéo en cours...")
         }
 
         convert = ffmpeg(stream)
@@ -213,8 +223,10 @@ module.exports = {
                 //console.log(progress.timemark)
                 tick++
                 if (tick == 5) {
+                    userclient.progress = timestamp
+                    userclient.timestamp = progress.timemark
                     if (ifSlash === true) {
-                        message.editReply("Conversion de la vidéo en cours... : "+timestamp+"% effectués")
+                        message.editReply("Conversion de la vidéo en cours... : \nProgression : \`"+timestamp+"% effectuées\`\nTemps converti/Temps total :\`"+progress.timemark+"/"+convertHMS(duration)+"\`")
                     } 
                     tick = 0
                 }
