@@ -151,7 +151,8 @@ module.exports = {
             duration: duration,
             artist: artist,
             progress: null,
-            timestamp: null
+            timestamp: null,
+            starttime: Math.floor(Date.now()/1000)
         }
 
         if (duration > 7200) {
@@ -220,13 +221,15 @@ module.exports = {
                 let gethhmmss = currenttimemark[0].split(":")
                 let currentseconds = (+gethhmmss[0]) * 60 * 60 + (+gethhmmss[1]) * 60 + (+gethhmmss[2]); 
                 let timestamp = Math.floor(currentseconds*100/duration)
-                //console.log(progress.timemark)
+                let timeprocess = convertHMS(Math.abs((Math.floor(Date.now()/1000)) - userclient.starttime))
+                
+                //console.log(progress)
                 tick++
                 if (tick == 5) {
                     userclient.progress = timestamp
                     userclient.timestamp = progress.timemark
                     if (ifSlash === true) {
-                        message.editReply("Conversion de la vidéo en cours... : \nProgression : \`"+timestamp+"% effectuées\`\nTemps converti/Temps total :\`"+progress.timemark+"/"+convertHMS(duration)+"\`")
+                        message.editReply("Conversion de la vidéo en cours... : \nProgression : \`"+timestamp+"% effectuées\`\nTemps converti/Temps total : \`"+progress.timemark+"/"+convertHMS(duration)+"\`\nTemps écoulé :\`"+timeprocess+"\`")
                     } 
                     tick = 0
                 }

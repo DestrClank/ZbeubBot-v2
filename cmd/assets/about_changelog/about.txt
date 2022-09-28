@@ -58,6 +58,9 @@ La commande /ytconvert renvoie plus d'informations sur la progression de la conv
 EN TEST : Les vidéos de moins de 2 heures sont désormais supportées.
 Faire la commande z!ytconvert sans argument pendant une conversion renvoie également des informations sur la progression de la conversion.
 
+__0.11.1.11 [testing_version 1]__ :
+Le temps écoulé est affiché dans les informations sur la progression de la conversion.
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.
