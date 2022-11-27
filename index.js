@@ -386,7 +386,7 @@ function sleep(ms) {
     });
 }
 
-if (getConfig().PlatformUse == "HEROKU") {
+
     if (!fs.existsSync("./.noping")) {
 
         setInterval(function () {
@@ -400,9 +400,9 @@ if (getConfig().PlatformUse == "HEROKU") {
     } else {
         sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
     }
-} else if (getConfig().PlatformUse == "REPL") {
+
     keepalive()
-}
+
 
 client.once("reconnecting", () => {
     connectionstate = "connecting"
