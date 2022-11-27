@@ -386,7 +386,7 @@ function sleep(ms) {
     });
 }
 
-
+/*
     if (!fs.existsSync("./.noping")) {
 
         setInterval(function () {
@@ -400,8 +400,9 @@ function sleep(ms) {
     } else {
         sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
     }
+*/
 
-    keepalive()
+keepalive()
 
 
 client.once("reconnecting", () => {
