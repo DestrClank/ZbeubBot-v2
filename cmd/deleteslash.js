@@ -8,7 +8,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
-const token = "ODMwNzY2ODg1MDA2OTk5NTcz.YHLd9A.MS2PNqXhjr3EKNmGPf7CzHLeqOA"
+const token = process.env.BOT_TOKEN
 
 module.exports = (message, slash) => {
     //return message.channel.send("Cette commande est en cours de développement.")

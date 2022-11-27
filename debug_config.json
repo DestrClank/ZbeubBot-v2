@@ -11,5 +11,9 @@
     "DeleteOutputFiles": {
         "DeleteAfter1Hour": false,
         "DeleteAfterSending": true
+    },
+    "AccessWebSite": {
+        "EnableWebSite" : true,
+        "EnableLargeFilesDownloads": true
     }
 }

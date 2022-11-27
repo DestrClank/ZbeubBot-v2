@@ -1348,6 +1348,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
 
     try {
         songInfo = await ytdl.getInfo(arg);
+        //console.log(songInfo)
     } catch (err) {
         if (ifSlash) {
             message.editReply("La musique n'a pas pu être ajoutée car la vidéo est peut-être soumise à une limite d'âge. Désolé !")
