@@ -1369,7 +1369,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         author: songInfo.videoDetails.author.name,
         thumbnail: songInfo.videoDetails.thumbnails[0].url,
         time: songInfo.videoDetails.lengthSeconds,
-        likes: songInfo.videoDetails.likes,
+        likes: "N/A", //songInfo.videoDetails.likes,
         views: songInfo.videoDetails.viewCount,
         addedby: author.username + "#" + author.discriminator,
         pdp: author.displayAvatarURL(),

@@ -244,9 +244,9 @@ module.exports = {
                     sendStatusLog("Le fichier est trop lourd et ne peut pas être envoyé via Discord.")
 
                     if (fs.existsSync("./.noping")) {
-                        var downloadlink = `http://localhost:3000/download/${authorid}`
+                        var downloadlink = `http://localhost:3001/download/${authorid}`
                     } else {
-                        var downloadlink = `https://zbeubbot.herokuapp.com/download/${authorid}`
+                        var downloadlink = `https://ZbeubBot-v2.dylanvassalo.repl.co/download/${authorid}`
                     }
 
                     sendStatusLog("Envoi du message en cours.")

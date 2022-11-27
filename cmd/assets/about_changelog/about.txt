@@ -53,9 +53,6 @@ A l'avenir, le bot sera porté pour fonctionner avec discord.js v14.
 
 Les boutons de contrôle sont toujours en test à l'heure actuelle.
 
-__0.11.1.12__ : 
-Mise à jour de maintenance du bot, pour le changement de VPS. 
-
 __0.11.1.10 [testing_version 1]__ : 
 La commande /ytconvert renvoie plus d'informations sur la progression de la conversion.
 EN TEST : Les vidéos de moins de 2 heures sont désormais supportées.
@@ -63,6 +60,18 @@ Faire la commande z!ytconvert sans argument pendant une conversion renvoie égal
 
 __0.11.1.11 [testing_version 1]__ :
 Le temps écoulé est affiché dans les informations sur la progression de la conversion.
+
+__0.11.1.12__ : 
+Mise à jour de maintenance du bot, pour le changement de VPS. 
+
+__0.11.1.13__ :
+--> Changements majeurs :
+Migration du bot de Heroku vers Repl.it, à cause de la fin du free tier le 28 novembre 2022.
+Le nouveau serveur VPS est en cours de test et le bot peut être instable voire cesser de fonctionner si le VPS est arrêté par Repl.it.
+
+--> Bug à corriger : 
+Lorsque les détails sont affichés ou quand la commande z!np est lancée, le nombre de likes retourne la valeur "n ull". 
+Pour le moment, cela renverra "N/A".
 
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 

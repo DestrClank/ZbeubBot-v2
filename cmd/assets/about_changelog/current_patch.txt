@@ -1,3 +1,7 @@
-La commande /ytconvert renvoie plus d'informations sur la progression de la conversion.
-EN TEST : Les vidéos de moins de 2 heures sont désormais supportées.
-Faire la commande z!ytconvert sans argument pendant une conversion renvoie également des informations sur la progression de la conversion.
+--> Changements majeurs :
+Migration du bot de Heroku vers Repl.it, à cause de la fin du free tier le 28 novembre 2022.
+Le nouveau serveur VPS est en cours de test et le bot peut être instable voire cesser de fonctionner si le VPS est arrêté par Repl.it.
+
+--> Bug à corriger : 
+Lorsque les détails sont affichés ou quand la commande z!np est lancée, le nombre de likes retourne la valeur "n ull". 
+Pour le moment, cela renverra "N/A".
