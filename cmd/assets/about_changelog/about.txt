@@ -53,6 +53,9 @@ A l'avenir, le bot sera porté pour fonctionner avec discord.js v14.
 
 Les boutons de contrôle sont toujours en test à l'heure actuelle.
 
+__0.11.1.12__ : 
+Mise à jour de maintenance du bot, pour le changement de VPS. 
+
 __0.11.1.10 [testing_version 1]__ : 
 La commande /ytconvert renvoie plus d'informations sur la progression de la conversion.
 EN TEST : Les vidéos de moins de 2 heures sont désormais supportées.
