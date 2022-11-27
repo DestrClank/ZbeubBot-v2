@@ -15,5 +15,6 @@
     "AccessWebSite": {
         "EnableWebSite" : true,
         "EnableLargeFilesDownloads": true
-    }
+    },
+    "PlatformUse" : "REPL"
 }

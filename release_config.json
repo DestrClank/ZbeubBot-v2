@@ -15,5 +15,6 @@
     "AccessWebSite": {
         "EnableWebSite" : false,
         "EnableLargeFilesDownloads": false
-    }
+    },
+    "PlatformUse": "HEROKU"
 }

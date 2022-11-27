@@ -154,6 +154,7 @@ const { mtmrandom, mtmmember } = require("./testing/socialslashcmd/mtm"); sendSt
 const { zemmourrandom, zemmourmember } = require("./testing/socialslashcmd/zemmour"); sendStatusLog("Chargement de ./testing/socialslashcmd/zemmour...")
 const { nicerandom, nicemember } = require("./testing/socialslashcmd/nice"); sendStatusLog("Chargement de ./testing/socialslashcmd/nice...")
 const { bogossituderandom, bogossitudemember } = require("./testing/socialslashcmd/bogossitude"); sendStatusLog("Chargement de ./testing/socialslashcmd/bogossitude...")
+const keepalive = require("keepalive")
 
 const GuildModel = require('./schemes/guildmodel'); sendStatusLog("Chargement de ./schemes/guildmodel...")
 const { connect } = require('mongoose')
@@ -257,21 +258,6 @@ async function MusicStateEmbed(message, author, ifslash, title, description, ser
     }
     return
 }
-
-if (!fs.existsSync("./.noping")) {
-
-    setInterval(function () {
-        sendStatusLog("Ping du site en cours.")
-        try {
-            http.get("http://zbeubbot.herokuapp.com")
-        } catch (error) {
-            sendErrorLog("Une erreur de ping du site s'est produite.", error)
-        }
-    }, 1200000) //Maintien toutes les 20 minutes. 
-} else {
-    sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
-}
-
 
 
 const express = require('express');
@@ -398,6 +384,24 @@ function sleep(ms) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
     });
+}
+
+if (getConfig().PlatformUse == "HEROKU") {
+    if (!fs.existsSync("./.noping")) {
+
+        setInterval(function () {
+            sendStatusLog("Ping du site en cours.")
+            try {
+                //http.get("http://zbeubbot.herokuapp.com")
+            } catch (error) {
+                sendErrorLog("Une erreur de ping du site s'est produite.", error)
+            }
+        }, 1200000) //Maintien toutes les 20 minutes. 
+    } else {
+        sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
+    }
+} else if (getConfig().PlatformUse == "REPL") {
+    keepalive()
 }
 
 client.once("reconnecting", () => {
