@@ -154,7 +154,7 @@ const { mtmrandom, mtmmember } = require("./testing/socialslashcmd/mtm"); sendSt
 const { zemmourrandom, zemmourmember } = require("./testing/socialslashcmd/zemmour"); sendStatusLog("Chargement de ./testing/socialslashcmd/zemmour...")
 const { nicerandom, nicemember } = require("./testing/socialslashcmd/nice"); sendStatusLog("Chargement de ./testing/socialslashcmd/nice...")
 const { bogossituderandom, bogossitudemember } = require("./testing/socialslashcmd/bogossitude"); sendStatusLog("Chargement de ./testing/socialslashcmd/bogossitude...")
-const keepalive = require("keepalive")
+const keepalive = require("./keepalive")
 
 const GuildModel = require('./schemes/guildmodel'); sendStatusLog("Chargement de ./schemes/guildmodel...")
 const { connect } = require('mongoose')
