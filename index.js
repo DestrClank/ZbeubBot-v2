@@ -268,7 +268,8 @@ const request = require('request')
 
 app.use(express.static(__dirname + "/test_webpage"))
 app.use("/downloaderror", express.static(__dirname + "/test_webpage/downloaderror"))
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
+app.listen(3000, ()=>{console.log("Le serveur est actif.")});
 
 app.get("/", (req, res) => {
     res.render(index)
@@ -401,8 +402,6 @@ function sleep(ms) {
         sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
     }
 */
-
-keepalive()
 
 
 client.once("reconnecting", () => {
