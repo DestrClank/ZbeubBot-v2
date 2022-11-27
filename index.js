@@ -2241,7 +2241,7 @@ function MusicFeatureDisabled(message) {
     try {
         sendStatusLog("Connexion aux serveurs...")
         //mongodb://localhost/mangodb-demo
-    await connect('mongodb+srv://destrclank:n8j5kqgs@zbeubbotcluster.azqkywi.mongodb.net/?retryWrites=true&w=majority', {
+    await connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,
     })
     sendStatusLog("Le bot est connecté au serveur MongoDB.")
