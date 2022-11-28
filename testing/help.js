@@ -20,7 +20,7 @@ const embedInfoBotCategory = new MessageEmbed()
     .addFields({
         name: "Aide et informations", value: `
 \`z!help\` : Affiche l'aide.
-L'aide est aussi disponible sur https://zbeubbot.herokuapp.com !
+L'aide est aussi disponible en ligne sur https://ZbeubBot-v2.dylanvassalo.repl.co !
         
 \`z!about\` : Affiche des informations à propos du bot (patch note).
 \`z!changelog\` : Affiche le changelog complet du bot.
