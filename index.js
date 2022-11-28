@@ -387,21 +387,21 @@ function sleep(ms) {
     });
 }
 
-/*
-    if (!fs.existsSync("./.noping")) {
 
-        setInterval(function () {
-            sendStatusLog("Ping du site en cours.")
-            try {
-                //http.get("http://zbeubbot.herokuapp.com")
-            } catch (error) {
-                sendErrorLog("Une erreur de ping du site s'est produite.", error)
-            }
-        }, 1200000) //Maintien toutes les 20 minutes. 
-    } else {
-        sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
-    }
-*/
+if (!fs.existsSync("./.noping")) {
+
+    setInterval(function () {
+        sendStatusLog("Ping du site en cours.")
+        try {
+            http.get("https://ZbeubBot-v2.dylanvassalo.repl.co") //http://zbeubbot.herokuapp.com
+        } catch (error) {
+            sendErrorLog("Une erreur de ping du site s'est produite.", error)
+        }
+    }, 1200000) //Maintien toutes les 20 minutes. 
+} else {
+    sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
+}
+
 
 
 client.once("reconnecting", () => {

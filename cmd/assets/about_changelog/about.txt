@@ -73,6 +73,11 @@ Le nouveau serveur VPS est en cours de test et le bot peut être instable voire 
 Lorsque les détails sont affichés ou quand la commande z!np est lancée, le nombre de likes retourne la valeur "n ull". 
 Pour le moment, cela renverra "N/A".
 
+__0.11.1.14__ :
+Pour éviter l'arrêt du bot, il fera un ping au site associé à intervalles réguliers.
+Le lien dans l'aide n'était pas correcte et a été changée.
+
+
 **Version 0.11.0.0 (bêta)**
 ■ Portage de deux commandes sociales attack et hello en commandes slash. 
 Les autres commandes seront portés dans une future mise à jour.
