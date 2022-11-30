@@ -336,6 +336,13 @@ client.once('ready', async () => {
 
     getConfig()
     getPing()
+
+    try {
+        http.get("http://ZbeubBot-v2.dylanvassalo.repl.co") //http://zbeubbot.herokuapp.com
+        sendStatusLog("Ping du site initial réussi.")
+    } catch (error) {
+        sendErrorLog("Une erreur de ping du site s'est produite.", error)
+    }
     
     sendStateToDev(Discord.Client, client, `Le bot est initialisé.\n Version : \`${values.version.versionNumber}\``);
 
@@ -393,7 +400,7 @@ if (!fs.existsSync("./.noping")) {
     setInterval(function () {
         sendStatusLog("Ping du site en cours.")
         try {
-            http.get("https://ZbeubBot-v2.dylanvassalo.repl.co") //http://zbeubbot.herokuapp.com
+            http.get("http://ZbeubBot-v2.dylanvassalo.repl.co") //http://zbeubbot.herokuapp.com
         } catch (error) {
             sendErrorLog("Une erreur de ping du site s'est produite.", error)
         }

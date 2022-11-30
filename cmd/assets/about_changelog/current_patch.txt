@@ -2,5 +2,6 @@
 La fonctionnalité musicale a cessé de fonctionner et renvoyait un message d'erreur.
 Ce bug a été corrigé (ytdl-core non fonctionnel)
 
---> Bugs à corriger 
-Le bot est interrompu par l'hébergeur. Pour le relancer allez dans https://zbeubbot-v2.dylanvassalo.repl.co.
+--> Bugs à corriger (en test)
+Le bot peut être interrompu par l'hébergeur. Une correction du système a été réalisée. 
+Si le bot s'arrête, pour le relancer, allez dans https://zbeubbot-v2.dylanvassalo.repl.co.
