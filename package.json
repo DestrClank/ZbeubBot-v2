@@ -43,7 +43,7 @@
     "request": "^2.88.2",
     "simple-youtube-api": "^5.2.1",
     "yt-search": "^2.10.3",
-    "ytdl-core": "^4.11.2"
+    "ytdl-core": "github:matteopolak/node-ytdl-core#d6b56cd67aaa38c22966b98f7b36ad3db4c90192"
   },
   "repository": {
     "type": "git",

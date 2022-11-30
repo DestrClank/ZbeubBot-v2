@@ -2257,4 +2257,4 @@ function MusicFeatureDisabled(message) {
 }
 })()
 
- 
+client.on("debug", ( e ) => console.log("Renvoi état connexion Discord : "+e))

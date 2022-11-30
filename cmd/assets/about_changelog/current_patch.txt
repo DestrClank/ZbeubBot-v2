@@ -1,7 +1,6 @@
---> Changements majeurs :
-Migration du bot de Heroku vers Repl.it, à cause de la fin du free tier le 28 novembre 2022.
-Le nouveau serveur VPS est en cours de test et le bot peut être instable voire cesser de fonctionner si le VPS est arrêté par Repl.it.
+--> Corrections de bugs
+La fonctionnalité musicale a cessé de fonctionner et renvoyait un message d'erreur.
+Ce bug a été corrigé (ytdl-core non fonctionnel)
 
---> Bug à corriger : 
-Lorsque les détails sont affichés ou quand la commande z!np est lancée, le nombre de likes retourne la valeur "n ull". 
-Pour le moment, cela renverra "N/A".
+--> Bugs à corriger 
+Le bot est interrompu par l'hébergeur. Pour le relancer allez dans https://zbeubbot-v2.dylanvassalo.repl.co.
