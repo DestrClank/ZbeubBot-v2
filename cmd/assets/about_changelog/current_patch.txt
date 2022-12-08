@@ -1,7 +1,6 @@
---> Corrections de bugs
-La fonctionnalité musicale a cessé de fonctionner et renvoyait un message d'erreur.
-Ce bug a été corrigé (ytdl-core non fonctionnel)
+La fonction TTS (Text-to-Speech) a été ajoutée. Elle permet de faire dire des choses au bot dans un salon vocal.
+Cela a été intégrée dans la fonctionnalité musicale et toutes les commandes média fonctionnent également.
 
---> Bugs à corriger (en test)
-Le bot peut être interrompu par l'hébergeur. Une correction du système a été réalisée. 
-Si le bot s'arrête, pour le relancer, allez dans https://zbeubbot-v2.dylanvassalo.repl.co.
+Pour l'utiliser : z!tts ou /tts
+
+Remarque : Le texte est limité à 100 caractères max.

@@ -185,6 +185,19 @@ async function installslash(message, client)
         })
 
         commands.create({
+            name: "tts",
+            description: "z!tts : Fait parler le bot (langue française).",
+            options: [
+                {
+                    name: "texte",
+                    description: "Ecrivez votre texte (100 caractères max).",
+                    required: true,
+                    type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+                }
+            ]
+        })
+
+        commands.create({
             name: "hello",
             description: "z!hello : Pikachu dira bonjour à un membre.",
             options: [ 

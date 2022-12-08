@@ -6,6 +6,15 @@
 ## Les astérisques (**) indiquent que la version est une version majeure.
 ## Les underscores (__) indiquent que la version est une version mineure.
 
+**Version 0.11.2.0** :
+--> Nouveautés :
+La fonction TTS (Text-to-Speech) a été ajoutée. Elle permet de faire dire des choses au bot dans un salon vocal.
+Cela a été intégrée dans la fonctionnalité musicale et toutes les commandes média fonctionnent également.
+
+Pour l'utiliser : z!tts ou /tts
+
+Remarque : Le texte est limité à 100 caractères max.
+
 **Version 0.11.1.0 (bêta)**
 ■ Toutes les commandes sociales sont portés en commandes slash.
 Les administrateurs doivent faire la commande z!installslashcommands pour installer toutes les nouvelles 

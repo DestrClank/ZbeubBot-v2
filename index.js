@@ -106,6 +106,7 @@ const cordula = require("./cmd/cordula"); sendStatusLog("Chargement de ./cmd/cor
 const debugdeployslash = require('./debug/deployslash'); sendStatusLog("Chargement de ./debug/deployslash...")
 const restartbot = require('./testing/restartbot'); sendStatusLog("Chargement de ./testing/restartbot...")
 const botusage = require('./testing/botusage'); sendStatusLog("Chargement de ./testing/botusage...")
+const discordTTS = require("discord-tts"); sendStatusLog("Chargement de discord-tts...")
 
 if (platform == "linux") {
     var canvasgenerator = require('./testing/profileimage'); sendStatusLog("Chargement de ./testing/profileimage...")
@@ -155,6 +156,7 @@ const { zemmourrandom, zemmourmember } = require("./testing/socialslashcmd/zemmo
 const { nicerandom, nicemember } = require("./testing/socialslashcmd/nice"); sendStatusLog("Chargement de ./testing/socialslashcmd/nice...")
 const { bogossituderandom, bogossitudemember } = require("./testing/socialslashcmd/bogossitude"); sendStatusLog("Chargement de ./testing/socialslashcmd/bogossitude...")
 const keepalive = require("./keepalive")
+const speakTTS = require('./testing/tts'); sendStatusLog("Chargement de ./testing/tts...")
 
 const GuildModel = require('./schemes/guildmodel'); sendStatusLog("Chargement de ./schemes/guildmodel...")
 const { connect } = require('mongoose')
@@ -170,6 +172,7 @@ var ConfigStateSent = false;
 const PikachuEmote = client.emojis.cache.find(emoji => emoji.name === "Pikachu"); //https://cdn.discordapp.com/emojis/830729434058850345.png?v=1
 
 const queue = new Map();
+const ttsqueue = new Map()
 
 async function MusicStateEmbed(message, author, ifslash, title, description, serverQueue, ifButton, type) {
     let embedMusicState = new Discord.MessageEmbed()
@@ -860,6 +863,16 @@ client.on('interactionCreate', async interaction => {
                 let arg = interaction.options.getUser("membre")
                 bogossitudemember(interaction, arg)
             }
+        } else if (commandName === 'tts') {
+            if (connection) {
+                sendStatusLog("Le bot est en train d'enregistrer un salon vocal actuellement dans le serveur demandé. Il est donc impossible d'utiliser la fonctionnalité Text-to-Speech.")
+                return interaction.reply("Le bot est en train d'enregistrer un salon vocal actuellement dans ce serveur. Il est donc impossible d'utiliser la fonctionnalité Text-to-Speech.")
+            }
+
+            let args = options.getString("texte")
+
+            await interaction.deferReply()
+            execute(interaction, serverQueue, voiceChannel, true, member, args, author, true)
         }
     }
 });
@@ -917,6 +930,7 @@ client.on("messageCreate", async message => {
     const author = message.author
     let cmd = message.content.split(" ");
     const serverQueue = queue.get(message.guild.id);
+    const ttsserverQueue = queue.get(message.guild.id)
     const guild = client.guilds.cache.get(message.guild.id);
     const voiceChannel = message.member.voice.channel;
     const member = guild.members.cache.get(message.author.id);
@@ -1242,6 +1256,13 @@ client.on("messageCreate", async message => {
                 }
                 restartbot.sendConfirmationMsg(message, queue)
                 break;
+            case "z!tts":
+                if (connection) {
+                    sendStatusLog("Le bot est en train d'enregistrer un salon vocal actuellement dans le serveur demandé. Il est donc impossible d'utiliser la fonctionnalité Text-to-Speech.")
+                    return message.channel.send("Le bot est en train d'enregistrer un salon vocal actuellement dans ce serveur. Il est donc impossible d'utiliser la fonctionnalité Text-to-Speech.")
+                }
+                execute(message, serverQueue, voiceChannel, false, member, args, author, true)
+                break;
         default:
             message.channel.send("Cette commande n'existe pas ! ^^ \nVérifie si tu ne t'ai pas trompé en l'écrivant ou tape la commande \`z!help\` pour voir la liste des commandes !")
             sendStatusLog("La commande saisi par l'utilisateur n'existe pas.")
@@ -1275,7 +1296,7 @@ async function sendfileto(message) {
 
 const embedExecute = new Discord.MessageEmbed()
 
-async function execute(message, serverQueue, voiceChannel, ifSlash, member, argument, author) {
+async function execute(message, serverQueue, voiceChannel, ifSlash, member, argument, author, iftts) {
 
     //message.channel.send()
 
@@ -1291,7 +1312,6 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         } else {
             return message.channel.send("Le bot n'a pas de paramètres associés à ce serveur. Faites une commande slash ou une commande chat pour que le bot initialise les paramètres.")
         }
-        
     }
     
     if (!voiceChannel) // Si l'utilisateur n'est pas dans un salon vocal
@@ -1341,24 +1361,41 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         }
     }
 
-    let validate = await ytdl.validateURL(arg);
+    if (!iftts) {
+        let validate = await ytdl.validateURL(arg);
 
-    if (!validate) {
-        sendFunctionLog(values.CmdList.MusicCmds.play, values.generalText.GeneralLogsMsg.musicLogs.music_usesearchinstead);
-        if (ifSlash === true) {
-            return ytsearch(message, serverQueue, voiceChannel, true, member, arg, author, false);
-        } else {
-            return ytsearch(message, serverQueue, voiceChannel, false, member, arg, author, false);
+        if (!validate) {
+            sendFunctionLog(values.CmdList.MusicCmds.play, values.generalText.GeneralLogsMsg.musicLogs.music_usesearchinstead);
+            if (ifSlash === true) {
+                return ytsearch(message, serverQueue, voiceChannel, true, member, arg, author, false);
+            } else {
+                return ytsearch(message, serverQueue, voiceChannel, false, member, arg, author, false);
+            }
+        }
+    } else {
+        if (!arg) {
+            if (ifSlash === true) {
+                return message.editReply("Vous n'avez pas mis de texte après la commande. La commande ne peut pas continuer.")
+            } else {
+                return message.channel.send("Vous n'avez pas mis de texte après la commande. La commande ne peut pas continuer.");
+            }
         }
 
+        if (arg.length >= 100) {
+            if (ifSlash === true) {
+                return message.editReply("Le texte est trop long, réduisez votre texte.")
+            } else {
+                return message.channel.send("Le texte est trop long, réduisez votre texte.");
+            }
+        }
     }
-
-
 
     sendFunctionLog(values.CmdList.MusicCmds.play, values.generalText.GeneralLogsMsg.musicLogs.music_youtubemetadataget);
 
     try {
-        songInfo = await ytdl.getInfo(arg);
+        if (!iftts) {
+            var songInfo = await ytdl.getInfo(arg);
+        }
         //console.log(songInfo)
     } catch (err) {
         if (ifSlash) {
@@ -1370,18 +1407,36 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
     }
     //var songInfo = await ytdl.getInfo(arg);
 
-    const song = {
-        title: songInfo.videoDetails.title,
-        url: songInfo.videoDetails.video_url,
-        author: songInfo.videoDetails.author.name,
-        thumbnail: songInfo.videoDetails.thumbnails[0].url,
-        time: songInfo.videoDetails.lengthSeconds,
-        likes: "N/A", //songInfo.videoDetails.likes,
-        views: songInfo.videoDetails.viewCount,
-        addedby: author.username + "#" + author.discriminator,
-        pdp: author.displayAvatarURL(),
-        beginplaytimestamp: null
-    };
+    if (iftts) {
+        var song = {
+            tts: true,
+            title: "Texte TTS de " + author.username,
+            url: "Service Text-to-Speech",
+            author: author.username + "#" + author.discriminator,
+            thumbnail: author.displayAvatarURL(),
+            time: 0,
+            likes: "N/A", //songInfo.videoDetails.likes,
+            views: "N/A",
+            addedby: author.username + "#" + author.discriminator,
+            pdp: author.displayAvatarURL(),
+            beginplaytimestamp: null,
+            texttospeech: arg
+        };
+    } else {
+        var song = {
+            tts: false,
+            title: songInfo.videoDetails.title,
+            url: songInfo.videoDetails.video_url,
+            author: songInfo.videoDetails.author.name,
+            thumbnail: songInfo.videoDetails.thumbnails[0].url,
+            time: songInfo.videoDetails.lengthSeconds,
+            likes: "N/A", //songInfo.videoDetails.likes,
+            views: songInfo.videoDetails.viewCount,
+            addedby: author.username + "#" + author.discriminator,
+            pdp: author.displayAvatarURL(),
+            beginplaytimestamp: null
+        };
+    }
 
     if (!serverQueue) {
         const queueConstruct = {
@@ -1681,7 +1736,10 @@ async function play(guild, song, ifcrashed) {
 
     // On lance la musique
 
-    serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
+    serverQueue.audioResource = Music.createAudioResource(song.tts ? discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"}) : ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
+    //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
+
+    //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
     serverQueue.audioResource.volume.setVolume(serverQueue.volume)
 
     await audioplayer.play(serverQueue.audioResource)

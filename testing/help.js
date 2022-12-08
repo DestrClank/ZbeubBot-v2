@@ -99,7 +99,11 @@ Il est pour le moment préférable de rester sur l'ancienne règle de 20 minutes
 *L'utilisateur qui réalise la commande est le seul qui est enregistré même si plusieurs personnes sont présents dans un même salon vocal.*
 *La fonctionnalité musicale ne peut pas être utilisée en même temps que l'enregistrement de la voix.*
 
-\`z!createinvite\` : Crée un lien d'invitation vers ce salon.`)
+\`z!createinvite\` : Crée un lien d'invitation vers ce salon.
+
+\`z!tts\` : Permet au bot de dire des choses.
+*Limité à 100 caractères max.*
+*Utilisable par commande slash également.*`)
 
 const embedMusicCategory = new MessageEmbed()
 .setColor(values.settings.embedColor)

@@ -12,7 +12,7 @@ var ifrecording = true;
 var usertalked = false;
 
 /* When message is sent*/
-module.exports = async (message, client) => {
+module.exports = async (message, client, serverQueue) => {
     /* If content starts with `!record` */
         /* If member do not have admin perms */
         //if (!message.member.permissions.has('ADMINISTRATOR')) return message.channel.send("Vous n'avez pas les autorisations nécessaires pour utiliser cette commande."); 
@@ -31,7 +31,7 @@ module.exports = async (message, client) => {
                 channelId: voiceChannel.id,
                 guildId: voiceChannel.guild.id,
                 selfDeaf: false,
-                selfMute: true,
+                //selfMute: true,
                 adapterCreator: voiceChannel.guild.voiceAdapterCreator,
             });
 
@@ -83,6 +83,12 @@ module.exports = async (message, client) => {
                 message.guild.me.voice.setDeaf(false, "Le bot rétablie le son car l'opération est terminée.")
                 sendStatusLog("Le bot a rétabli le son sur le serveur.")
                 await sleep(1000)
+
+                if (serverQueue) {
+                    sendStatusLog("La fonctionnalité musicale est en cours d'utilisation donc il ne peut pas quitter.")
+                    return;
+                }
+
                 connection.destroy();
                 sendStatusLog("Le bot a quitté le salon vocal sur le serveur.")
                 return;
@@ -110,6 +116,12 @@ module.exports = async (message, client) => {
                         message.guild.me.voice.setDeaf(false, "Le bot rétablie le son car l'opération est terminée.")
                         sendStatusLog("Le bot a rétabli le son sur le serveur.")
                         await sleep(1000);
+
+                        if (serverQueue) {
+                            sendStatusLog("La fonctionnalité musicale est en cours d'utilisation donc il ne peut pas quitter.")
+                            return;
+                        }
+
                         connection.destroy();
                         sendStatusLog("Le bot a quitté le salon vocal sur le serveur.")
                         return;
@@ -122,6 +134,12 @@ module.exports = async (message, client) => {
                     message.guild.me.voice.setDeaf(false, "Le bot rétablie le son car l'opération est terminée.")
                     sendStatusLog("Le bot a rétabli le son sur le serveur.")
                     await sleep(1000);
+
+                    if (serverQueue) {
+                        sendStatusLog("La fonctionnalité musicale est en cours d'utilisation donc il ne peut pas quitter.")
+                        return;
+                    }
+
                     connection.destroy();
                     sendStatusLog("Le bot a quitté le salon vocal sur le serveur.")
                     
@@ -134,6 +152,12 @@ module.exports = async (message, client) => {
                 message.guild.me.voice.setDeaf(false, "Le bot rétablie le son car l'opération est terminée.")
                 sendStatusLog("Le bot a rétabli le son sur le serveur.")
                 await sleep(1000);
+
+                if (serverQueue) {
+                    sendStatusLog("La fonctionnalité musicale est en cours d'utilisation donc il ne peut pas quitter.")
+                    return;
+                }
+
                 connection.destroy();
                 sendStatusLog("Le bot a quitté le salon vocal sur le serveur.")
                 return msg.edit(`❌ Une erreur est survenue pendant la préparation de l'enregistrement. Code d'erreur : ${err.message}`);
