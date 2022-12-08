@@ -19,7 +19,7 @@
     "better-logging": "^4.6.0",
     "canvas": "^2.9.3",
     "discord-api-types": "^0.24.0",
-    "discord-tts": "^1.2.2",
+    "discord-tts": "github:DestrClank/discord-tts",
     "discord.js": "^13.8.1",
     "discord.js-commando": "^0.12.3",
     "discord.js-slash-command": "^1.2.1",
