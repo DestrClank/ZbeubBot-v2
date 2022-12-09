@@ -76,7 +76,7 @@ botIntents.add(
     Perm.DIRECT_MESSAGE_TYPING
 )
 sendStatusLog("Chargement des dépendances...")
-const client = new Discord.Client({ intents: botIntents, partials: ["CHANNEL"] }); sendStatusLog("Création du client Discord...") //Création du client
+const client = new Discord.Client({ intents: botIntents, partials: ["CHANNEL"], shards : 'auto' }); sendStatusLog("Création du client Discord...") //Création du client
 var connectionstate = "connecting"
 
 client.voiceManager = new Discord.Collection()
@@ -873,6 +873,19 @@ client.on('interactionCreate', async interaction => {
 
             await interaction.deferReply()
             execute(interaction, serverQueue, voiceChannel, true, member, args, author, true)
+        } else if (commandName === "settings") {
+            if (interaction.options.getSubcommandGroup() === "simplifiedmenu") {
+                //console.log("ca a deteckté")
+                if (interaction.options.getSubcommand() === "activate") {
+                    await GuildModel.findOneAndUpdate({id : interaction.guild.id}, { $set: { SimplifiedMusicMenus: "true"}})
+                    interaction.reply({content: "Le menu de commande musicale simplifié (avec des icônes à la place du texte) est activé.", files: [{attachment: "./cmd/assets/music_menu_styles/newstyle.png", name: "newstyle.png"}]})
+                    //console.log("ca marche c activé")
+                } else {
+                    await GuildModel.findOneAndUpdate({id : interaction.guild.id}, { $set: { SimplifiedMusicMenus: "false"}})
+                    interaction.reply({content: "Le menu de commande musicale simplifié (avec des icônes à la place du texte) est désactivé.", files: [{attachment: "./cmd/assets/music_menu_styles/oldstyle.png", name: "oldstyle.png"}]})
+                    //console.log("ca marche c pa active")
+                }
+            }
         }
     }
 });
@@ -948,6 +961,8 @@ client.on("messageCreate", async message => {
         const defaultsettings = new GuildModel({id: message.guild.id})
         await defaultsettings.save()
     }
+
+    //console.log(ifsettings.SimplifiedMusicMenus)
 
     switch (cmd[0]) {
         case values.CmdList.InfoCmds.help:
@@ -1447,7 +1462,9 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
             volume: serversettings.MusicVolume,
             playing: true,
             loop: false,
-            Button: false
+            Button: false,
+            firstmusicpassed: false,
+            firstmessage: message
         };
 
         sendFunctionLog(values.CmdList.MusicCmds.play, values.generalText.GeneralLogsMsg.musicLogs.music_addtoplaylistmsg);
@@ -1471,16 +1488,25 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
             //console.log(connection)
 
             if (ifSlash === true) {
-                await message.editReply("La musique a été préparée. La lecture va commencer.")
+                if (iftts) {
+                    await message.editReply(`Le texte TTS de \`${song.addedby}\` va être joué.`)
+                } else {
+                    await message.editReply("La musique a été ajoutée. La lecture peut commencer.")
+                }
+            } else {
+                if (iftts) {
+                    await message.react("🔊")
+                }
             }
 
             queueConstruct.connection = connection;
 
-
             // On lance la musique
             sendFunctionLog(values.CmdList.MusicCmds.play, values.generalText.GeneralLogsMsg.musicLogs.music_youtubesucess);
-            play(member.guild, queueConstruct.songs[0], false);
 
+            sleep(700);
+
+            play(member.guild, queueConstruct.songs[0], false);
 
             if (ifSlash === true) {
                 if (voiceChannel.type === 'GUILD_STAGE_VOICE') {
@@ -1529,9 +1555,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
         } else {
             return await message.channel.send({ embeds: [embedAddPlaylist], components: [row]});
         }
-
     }
-
 }
 
 async function setVolume(message, serverQueue, author, arg, ifSlash) {
@@ -1651,7 +1675,6 @@ async function stop(message, serverQueue, author, ifSlash, ifButton) {
     if (!serverQueue.playing) {
         sendStatusLog(values.generalText.GeneralLogsMsg.musicLogs.music_stopproccesslonger); //LOGIK
         serverQueue.audioPlayer.unpause();
-
     }
 
     let embedMusicState = new Discord.MessageEmbed()
@@ -1747,6 +1770,7 @@ async function play(guild, song, ifcrashed) {
 
     audioplayer.on(Music.AudioPlayerStatus.Idle, async () => { // On écoute l'événement de fin de musique
         if (!serverQueue.loop) serverQueue.songs.shift(); // On passe à la musique suivante quand la courante se termine
+        serverQueue.firstmusicpassed = true;
         await serverQueue.audioPlayer.stop()
         //serverQueue = undefined
         play(guild, serverQueue.songs[0], false);
@@ -1799,10 +1823,13 @@ async function play(guild, song, ifcrashed) {
         if (serverQueue.loop == false) {
             if (serverQueue.Button == false) {
                 serverQueue.Button = false
-                serverQueue.textChannel.send({ embeds: [embedIsPlaying], components: [row] });
+                if (song.tts && !serverQueue.firstmusicpassed) {
+                    sendStatusLog("La musique est un texte TTS.")
+                } else {
+                    serverQueue.textChannel.send({ embeds: [embedIsPlaying], components: [row] });
+                }
             }
         }   
-
     return;
 }
 
@@ -2122,6 +2149,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
         return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton);
     }
 
+
     if (command == "skip") {
         if (!serverQueue.loop) {
             var nowPlaying = serverQueue.songs[1];
@@ -2131,7 +2159,8 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
     } else {
         var nowPlaying = serverQueue.songs[0];
     }
-    
+
+    //let nowPlaying = serverQueue.songs[0];
 
     if (!nowPlaying) {
         const embedFinished = new Discord.MessageEmbed()
@@ -2179,70 +2208,147 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                 { name: "Mode loop", value: `${serverQueue.loop ? `Activé` : `Désactivé`}`, inline: true })
             .setThumbnail(song.thumbnail)
             .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl});
+        
+        //textcompliqué = ["Reprendre du début", "Suivant", "Liste de lecture", "Reprendre", "Pause", "Activer loop", "Désactiver loop", "Stop"]
+        //textesimple = ["⏪", "⏭️", "Liste de lecture", "▶️", "⏸️", "🔁", "🔂", "⏹️" ]
 
         const row = new Discord.MessageActionRow()
+        const serversettings = await GuildModel.findOne({id: message.guild.id})
 
-        if (serverQueue.loop) {
-            row.addComponents(
-                new Discord.MessageButton()
-                .setLabel('Reprendre du début')
-                .setStyle('SECONDARY')
-                .setCustomId("skip_music")
-            )
-        } else {
-            row.addComponents(
-                new Discord.MessageButton()
-                .setLabel('Suivant')
-                .setStyle('SECONDARY')
-                .setCustomId("skip_music")
-            )
+        console.log(serversettings.SimplifiedMusicMenus)
+
+        switch (serversettings.SimplifiedMusicMenus) {
+            default:
+                console.log("false")
+                if (serverQueue.loop) {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setLabel('Reprendre du début')
+                        .setStyle('SECONDARY')
+                        .setCustomId("skip_music")
+                    )
+                } else {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setLabel('Suivant')
+                        .setStyle('SECONDARY')
+                        .setCustomId("skip_music")
+                    )
+                }
+        
+        
+                if (serverQueue.playing == false) {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setLabel('Reprendre')
+                        .setStyle('DANGER')
+                        .setCustomId("resume_music")
+                    )
+                } else {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setLabel('Pause')
+                        .setStyle('SECONDARY')
+                        .setCustomId("pause_music")
+                    )
+                }
+        
+                if (serverQueue.loop == false) {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setLabel('Activer loop')
+                        .setStyle('SECONDARY')
+                        .setCustomId("toggleloop_music")
+                    )
+                } else {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setLabel('Désactiver loop')
+                        .setStyle('PRIMARY')
+                        .setCustomId("toggleloop_music")
+                    )
+                }
+        
+                row.addComponents(
+                    new Discord.MessageButton()
+                    .setLabel('Stop')
+                    .setStyle('DANGER')
+                    .setCustomId("stop_music")
+                )
+
+                row.addComponents(
+                    new Discord.MessageButton()
+                    .setLabel('Liste de lecture')
+                    .setStyle('SECONDARY')
+                    .setCustomId("showqueue")
+                )
+
+                break;
+            case "true":
+                if (serverQueue.loop) {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setStyle('SECONDARY')
+                        .setCustomId("skip_music")
+                        .setEmoji("⏪")
+                    )
+                } else {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setStyle('SECONDARY')
+                        .setCustomId("skip_music")
+                        .setEmoji("⏭️")
+                    )
+                }
+        
+                if (serverQueue.playing == false) {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setStyle('DANGER')
+                        .setCustomId("resume_music")
+                        .setEmoji("▶️")
+                    )
+                } else {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setStyle('SECONDARY')
+                        .setCustomId("pause_music")
+                        .setEmoji("⏸️")
+                    )
+                }
+        
+                if (serverQueue.loop == false) {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setStyle('SECONDARY')
+                        .setCustomId("toggleloop_music")
+                        .setEmoji("🔁")
+                    )
+                } else {
+                    row.addComponents(
+                        new Discord.MessageButton()
+                        .setStyle('PRIMARY')
+                        .setCustomId("toggleloop_music")
+                        .setEmoji("🔂")
+                    )
+                }
+        
+                row.addComponents(
+                    new Discord.MessageButton()
+                    .setStyle('DANGER')
+                    .setCustomId("stop_music")
+                    .setEmoji("⏹️")
+                )
+
+                row.addComponents(
+                    new Discord.MessageButton()
+                    .setLabel('Liste de lecture')
+                    .setStyle('SECONDARY')
+                    .setCustomId("showqueue")
+                )
+
+                break;
         }
-
-            row.addComponents(
-                new Discord.MessageButton()
-                .setLabel('Liste de lecture')
-                .setStyle('SECONDARY')
-                .setCustomId("showqueue")
-            )
-
-        if (serverQueue.playing == false) {
-            row.addComponents(
-                new Discord.MessageButton()
-                .setLabel('Reprendre')
-                .setStyle('DANGER')
-                .setCustomId("resume_music")
-            )
-        } else {
-            row.addComponents(
-                new Discord.MessageButton()
-                .setLabel('Pause')
-                .setStyle('SECONDARY')
-                .setCustomId("pause_music")
-            )
-        }
-
-        if (serverQueue.loop == false) {
-            row.addComponents(
-                new Discord.MessageButton()
-                .setLabel('Activer loop')
-                .setStyle('SECONDARY')
-                .setCustomId("toggleloop_music")
-            )
-        } else {
-            row.addComponents(
-                new Discord.MessageButton()
-                .setLabel('Désactiver loop')
-                .setStyle('PRIMARY')
-                .setCustomId("toggleloop_music")
-            )
-        }
-
-        row.addComponents(
-            new Discord.MessageButton()
-            .setLabel('Stop')
-            .setStyle('DANGER')
-            .setCustomId("stop_music")
-        )
 
         if (ifButton) {
             if (command != "skip") {
@@ -2267,7 +2373,6 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
         sendErrorLog("Une erreur de merde est survenue.", err)
         return message.channel.send(values.generalText.ErrorMsg.userend.music_unknownerror)
     }
-
 }
 
 function convertHMS(value) {

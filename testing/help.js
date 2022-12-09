@@ -83,6 +83,19 @@ const embedMembersCategory = new MessageEmbed()
 \`z!showinfoaboutmember\` : Affiche des informations à propos d'un membre.
 \`z!membercard\` : Envoie une carte de profil d'un membre.`);
 
+const embedSettingsCategory = new MessageEmbed()
+.setColor(values.settings.embedColor)
+.setTitle("Aide de Zbeub Bot 😊")
+.setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
+.addField("Paramètres du bot", `
+Pour utiliser les paramètres, il faut installer ou mettre à jour les commandes slash sur votre serveur.
+Rendez-vous dans l'onglet \`Installation et configuration\` pour plus d'informations.
+
+Commande générale : \`/settings\`
+
+Paramètres disponibles : 
+\`simplifiedmenu (activate/deactivate)\` : Active ou désactive le menu musical simplifié.`);
+
 const embedMiscCategory = new MessageEmbed()
 .setColor(values.settings.embedColor)
 .setTitle("Aide de Zbeub Bot 😊")
@@ -205,6 +218,15 @@ const menu = new MessageActionRow()
                     }
                 },
                 {
+                    label: "Paramètres du bot",
+                    description: "Ensemble de paramètres configurables pour personnaliser le bot.",
+                    value: "Settings_Category",
+                    emoji: {
+                        id: "1050825866998988820",
+                        name: "settings"
+                    }
+                },
+                {
                     label: "Fermer",
                     description: "Quitte l'aide",
                     value: "Close_Help",
@@ -245,6 +267,8 @@ module.exports = {
                 return message.update({embeds: [embedMusicCategory]})
             case "Misc_Category":
                 return message.update({embeds: [embedMiscCategory]})
+            case "Settings_Category":
+                return message.update({embeds: [embedSettingsCategory]})
             case "Close_Help": 
                 return message.message.delete()
         }

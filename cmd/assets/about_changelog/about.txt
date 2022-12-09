@@ -6,6 +6,24 @@
 ## Les astérisques (**) indiquent que la version est une version majeure.
 ## Les underscores (__) indiquent que la version est une version mineure.
 
+**Version  0.11.3.0** : 
+--> Nouveautés : 
+Le menu de commande musical (commande z!np ou /np) possède un mode "simplifié", à la place du texte sur les boutons, ce sont des icônes pour indiquer les fonctionnalités.
+Ce mode peut être activé via une commande slash (à mettre à jour via z!installslashcommands) :
+-> /settings simplifiedmenu activate
+Pour désactiver : -> /settings simplifiedmenu deactivate
+
+Un nouvel onglet dans l'aide (z!help) a été ajouté pour les paramètres.
+
+--> Améliorations : 
+Lorsque que la commande z!tts est utilisé en premier (si il n'y a pas de musique en cours de lecture), le message "Musique en cours" ne s'affichera plus.
+A la place si c'est une commande par message, une réaction sera ajoutée au message.
+Si c'est une commande slash, un message sera répondu.
+
+--> Remarques pour les administrateurs : 
+Les commandes slash sont désormais à la version 5, il est recommandé de faire la commande 
+z!installslashcommands pour mettre à jour les commandes slash sur votre serveur.
+
 **Version 0.11.2.0** :
 --> Nouveautés :
 La fonction TTS (Text-to-Speech) a été ajoutée. Elle permet de faire dire des choses au bot dans un salon vocal.

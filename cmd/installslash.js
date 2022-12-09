@@ -223,6 +223,30 @@ async function installslash(message, client)
         })
 
         commands.create({
+            name: "settings",
+            description: "Paramètres du bot sur ce serveur.",
+            options: [ 
+                {
+                    name: "simplifiedmenu",
+                    description: "Menu de commande musical simplifié (avec icônes).",
+                    type: 2,
+                    options: [ 
+                        {
+                            name: "activate",
+                            description: "Activer le menu de commande musical simplifié.",
+                            type: 1
+                        },
+                        {
+                            name: "deactivate",
+                            description: "Désactiver le menu de commande musical simplifié.",
+                            type: 1
+                        }
+                    ]
+                },
+            ]
+        })
+
+        commands.create({
             name: "attack",
             description: "z!attack : Pikachu attaquera un membre.",
             options: [ 

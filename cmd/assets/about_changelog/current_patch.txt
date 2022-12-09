@@ -1,6 +1,16 @@
-La fonction TTS (Text-to-Speech) a été ajoutée. Elle permet de faire dire des choses au bot dans un salon vocal.
-Cela a été intégrée dans la fonctionnalité musicale et toutes les commandes média fonctionnent également.
+--> Nouveautés : 
+Le menu de commande musical (commande z!np ou /np) possède un mode "simplifié", à la place du texte sur les boutons, ce sont des icônes pour indiquer les fonctionnalités.
+Ce mode peut être activé via une commande slash (à mettre à jour via z!installslashcommands) :
+-> /settings simplifiedmenu activate
+Pour désactiver : -> /settings simplifiedmenu deactivate
 
-Pour l'utiliser : z!tts ou /tts
+Un nouvel onglet dans l'aide (z!help) a été ajouté pour les paramètres.
 
-Remarque : Le texte est limité à 100 caractères max.
+--> Améliorations : 
+Lorsque que la commande z!tts est utilisé en premier (si il n'y a pas de musique en cours de lecture), le message "Musique en cours" ne s'affichera plus.
+A la place si c'est une commande par message, une réaction sera ajoutée au message.
+Si c'est une commande slash, un message sera répondu.
+
+--> Remarques pour les administrateurs : 
+Les commandes slash sont désormais à la version 5, il est recommandé de faire la commande 
+z!installslashcommands pour mettre à jour les commandes slash sur votre serveur.
