@@ -10,7 +10,7 @@ const { Routes } = require('discord-api-types/v9');
 
 const token = process.env.BOT_TOKEN
 
-module.exports = (message, slash) => {
+module.exports = (message) => {
     //return message.channel.send("Cette commande est en cours de développement.")
     if (!message.member.permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR)) {
         sendWarnLog("z!deleteslashcommands : L'utilisateur n'a pas les droits nécessaires et la désinstallation des commandes est annulée.");

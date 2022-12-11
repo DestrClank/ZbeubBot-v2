@@ -37,31 +37,96 @@ const guildId = values.settings.DevelopmentServer
 
 client.once('ready', async () => {
     sendStatusLog("Déploiement des commandes slash...")
-    const guilddev = client.guilds.cache.get(guildId)
+    //const guilddev = client.guilds.cache.get(guildId)
 
     client.user.setActivity(`${values.generalText.GeneralLogsMsg.DeploymentSlashCmd.botDeploying}`, { type: "PLAYING" })
-
+/*
     if (guilddev) {
         commands = guilddev.commands
     } else {
-        commands = guilddev.application.commands
+        
     }
+*/
+    commands = client.application.commands
 
-    sendStatusLog("Déploiement de ping...")
+    console.log(commands)
 
     commands.create({
         name: "ping",
         description: "Une fonction de test qui permet de ping le bot OnO."
     })
 
-    sendStatusLog("Déploiement de test...")
+    commands.create({
+        name: "about",
+        description: "z!about : Affiche le changelog de la version actuelle."
+    })
 
+    commands.create({
+        name: "changelog",
+        description: "z!changelog : Envoie le changelog complet du bot depuis la version 0.3.3."
+    })
+
+    commands.create({
+        name: "credits",
+        description: "z!credits : Affiche les crédits."
+    })
+
+    commands.create({
+        name: "botusage",
+        description: "z!botusage : Affiche des informations statistiques concernant le bot."
+    })
+
+    commands.create({
+        name: "infos",
+        description: "z!infos : Affiche des informations concernant l'avenir des bots musicaux et de Zbeub Bot."
+    })
+
+    commands.create({
+        name: "Dire bonjour",
+        type: 2
+    })
+
+    commands.create({
+        name: "Attaquer",
+        type: 2
+    })
+    /*
+    commands.create({
+        name: "bogossitude",
+        type: 2
+    })
+    */
+    /*
+    commands.create({
+        name: "cordula",
+        type: 2
+    })
+    */
+    commands.create({
+        name: "Danser",
+        type: 2
+    })
+
+    commands.create({
+        name: "Faire un câlin",
+        type: 2
+    })
+    /*
+    commands.create({
+        name: "mtm",
+        type: 2
+    })
+    */
+    /*
+    commands.create({
+        name: "nice",
+        type: 2
+    })
+    */
     commands.create({
         name: "test",
         description: "Une fonction simple de test, qui teste les commandes slash."
     })
-
-    sendStatusLog("Déploiement de embed...")
 
     commands.create({
         name: "embed",
@@ -82,22 +147,6 @@ client.once('ready', async () => {
         ]
     })
 
-    sendStatusLog("Déploiement de sendmessage...")
-
-    commands.create({
-        name: "sendmessage",
-        description: "Le bot renvoie un message saisi par l'utilisateur.",
-        options: [
-            {
-                name: "texte",
-                description: "Entrez le message ici.",
-                required: true,
-                type: Discord.Constants.ApplicationCommandOptionTypes.STRING
-
-            }
-        ]
-    })
-
     commands.create({
         name: "ytconvert",
         description: "z!ytconvert : Le bot convertit une vidéo YouTube en fichier mp3.",
@@ -112,22 +161,28 @@ client.once('ready', async () => {
         ]
     })
 
+    commands.create({
+        name: "sendmessage",
+        description: "Le bot renvoie un message saisi par l'utilisateur.",
+    options: [
+        {
+            name: "texte",
+            description: "Entrez le message ici.",
+            required: true,
+            type: Discord.Constants.ApplicationCommandOptionTypes.STRING
 
-    sendStatusLog("Déploiement de error...")
+        }
+    ]})
 
     commands.create({
         name: "error",
         description: "z!error : envoie un message d'erreur."
     })
 
-    sendStatusLog("Déploiement de help...")
-
     commands.create({
         name: "help",
         description: "z!help : envoie la liste des commandes."
     })
-
-    sendStatusLog("Déploiement de play...")
 
     commands.create({
         name: "play",
@@ -139,62 +194,321 @@ client.once('ready', async () => {
                 required: true,
                 type: Discord.Constants.ApplicationCommandOptionTypes.STRING
             }
-
+        
         ]
 
-
+        
     })
 
-    sendStatusLog("Déploiement de stop...")
+    commands.create({
+        name: "volume",
+        description: "z!volume : Règle le volume sonore de la musique.",
+        options: [
+            {
+                name: "argument",
+                description: "Entrez une valeur entre 0 et 200.",
+                required: true,
+                type: Discord.Constants.ApplicationCommandOptionTypes.INTEGER
+            }
+        ]
+    })
+
+    commands.create({
+        name: "tts",
+        description: "z!tts : Fait parler le bot (langue française).",
+        options: [
+            {
+                name: "texte",
+                description: "Ecrivez votre texte (100 caractères max).",
+                required: true,
+                type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+            }
+        ]
+    })
+
+    commands.create({
+        name: "hello",
+        description: "z!hello : Pikachu dira bonjour à un membre.",
+        options: [ 
+            {
+                name: "member",
+                description: "z!hello : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!hello : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "settings",
+        description: "Paramètres du bot sur ce serveur.",
+        options: [ 
+            {
+                name: "simplifiedmenu",
+                description: "Menu de commande musical simplifié (avec icônes).",
+                type: 2,
+                options: [ 
+                    {
+                        name: "activate",
+                        description: "Activer le menu de commande musical simplifié.",
+                        type: 1
+                    },
+                    {
+                        name: "deactivate",
+                        description: "Désactiver le menu de commande musical simplifié.",
+                        type: 1
+                    }
+                ]
+            },
+        ]
+    })
+
+    commands.create({
+        name: "attack",
+        description: "z!attack : Pikachu attaquera un membre.",
+        options: [ 
+            {
+                name: "member",
+                description: "z!attack : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!attack : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "dance",
+        description: "z!dance : Pikachu fera une danse à un membre.",
+        options: [ 
+            {
+                name: "member",
+                description: "z!dance : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!dance : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "hug",
+        description: "z!hug : Pikachu fera un câlin à un membre.",
+        options: [ 
+            {
+                name: "member",
+                description: "z!hug : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!hug : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "wala",
+        description: "z!wala : Vous jurez que c'est vrai ??",
+        options: [ 
+            {
+                name: "member",
+                description: "z!wala : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!wala : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "mtm",
+        description: "z!mtm : Kirby passera un message à un membre.",
+        options: [ 
+            {
+                name: "member",
+                description: "z!mtm : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!mtm : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "zemmour",
+        description: "z!zemmour : A pas d'humour.",
+        options: [ 
+            {
+                name: "member",
+                description: "z!zemmour : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!zemmour : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "nice",
+        description: "z!nice : Hmmm, nice !",
+        options: [ 
+            {
+                name: "member",
+                description: "z!nice : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!nice : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "bogossitude",
+        description: "z!bogossitude : La bogossitude à son paroxysme.",
+        options: [ 
+            {
+                name: "member",
+                description: "z!bogossitude : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!bogossitude : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
 
     commands.create({
         name: "stop",
         description: "z!stop : permet d'arrêter la musique."
     })
 
-    sendStatusLog("Déploiement de skip...")
-
     commands.create({
         name: "skip",
         description: "z!skip : Permet de passer la musique."
     })
-
-    sendStatusLog("Déploiement de loop...")
 
     commands.create({
         name: "loop",
         description: "z!loop : Permet de boucler la musique en cours de lecture."
     })
 
-    sendStatusLog("Déploiement de queue...")
-
     commands.create({
         name: "queue",
         description: "z!queue : Permet d'afficher la liste de lecture."
     })
-
-    sendStatusLog("Déploiement de pause...")
 
     commands.create({
         name: "pause",
         description: "z!pause : Permet de mettre en pause la musique."
     })
 
-    sendStatusLog("Déploiement de resume...")
-
     commands.create({
         name: "resume",
         description: "z!resume : Permet de reprendre la lecture de la musique."
     })
 
-    sendStatusLog("Déploiement de np...")
-
     commands.create({
         name: "np",
         description: "z!np : Permet de voir les détails de la musique en cours de lecture."
     })
-
-    sendStatusLog("Déploiement de qp...")
 
     commands.create({
         name: "qp",
@@ -207,12 +521,7 @@ client.once('ready', async () => {
         }]
     })
 
-    sendStatusLog("Déploiement terminé.")
-    setTimeout(() => {
-        sendStatusLog("Fermeture du programme.")
-        process.exit(0)
-    }, 5000)
-    
+    console.log("Déploiement terminé.")
 
 })
 

@@ -24,6 +24,12 @@ Si c'est une commande slash, un message sera répondu.
 Les commandes slash sont désormais à la version 5, il est recommandé de faire la commande 
 z!installslashcommands pour mettre à jour les commandes slash sur votre serveur.
 
+__0.11.3.1__ :
+-> Si une commande slash était faite dans les messages privés, le bot plantait systématiquement. 
+Désormais, le bot va envoyer un message indiquant que la commande ne peut pas être réalisée.
+
+-> Tentative de réparation liée au ratelimit, le bot devrait redémarrer le container tout seul.
+
 **Version 0.11.2.0** :
 --> Nouveautés :
 La fonction TTS (Text-to-Speech) a été ajoutée. Elle permet de faire dire des choses au bot dans un salon vocal.

@@ -14,3 +14,9 @@ Si c'est une commande slash, un message sera répondu.
 --> Remarques pour les administrateurs : 
 Les commandes slash sont désormais à la version 5, il est recommandé de faire la commande 
 z!installslashcommands pour mettre à jour les commandes slash sur votre serveur.
+
+Patch actuel :
+-> Si une commande slash était faite dans les messages privés, le bot plantait systématiquement. 
+Désormais, le bot va envoyer un message indiquant que la commande ne peut pas être réalisée.
+
+-> Tentative de réparation liée au ratelimit, le bot devrait redémarrer le container tout seul.

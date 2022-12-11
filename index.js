@@ -48,10 +48,11 @@ sendStatusLog(`Le fichier log ${logfilepath} a été crée avec succès.`)
 sendStatusLog(`Plateforme actuelle : ${platform}`)
 
 //Modules et assets
+const { spawn } = require('child_process'); sendStatusLog("Chargement de child_process...")
 const Discord = require('discord.js'); sendStatusLog("Chargement de discord.js...") //Chargement module Discord
 const ytdl = require('ytdl-core'); sendStatusLog("Chargement de ytdl-core...") //Chargement module lecture vidéo Youtube
 const yts = require('yt-search'); sendStatusLog("Chargement de yt-search...") //Chargement module Youtube Data API v3 (eh ouais)
-const DiscordSlash = require('discord.js-slash-command'); sendStatusLog("Chargement de discord.js-slash-command...") //Chargement module Discord Slash Commands
+//const DiscordSlash = require('discord.js-slash-command'); sendStatusLog("Chargement de discord.js-slash-command...") //Chargement module Discord Slash Commands
 const fs = require('fs'); sendStatusLog("Chargement de fs...")
 
 sendStatusLog("Définition des intents du bot...")
@@ -86,7 +87,7 @@ const hello = require("./cmd/hello"); sendStatusLog("Chargement de ./cmd/hello..
 const help = require("./cmd/help"); sendStatusLog("Chargement de ./cmd/help...") //Charge le module de l'aide
 const attack = require("./cmd/attack"); sendStatusLog("Chargement de ./cmd/hello...") //Charge le module Attaque
 const dance = require("./cmd/dance"); sendStatusLog("Chargement de ./cmd/dance...")//Charge le module Danse
-const slash = new DiscordSlash.Slash(client); sendStatusLog("Création de DiscordSlash.Slash...") //Création des commandes slash
+//const slash = new DiscordSlash.Slash(client); sendStatusLog("Création de DiscordSlash.Slash...") //Création des commandes slash
 const about = require("./cmd/about"); sendStatusLog("Chargement de ./cmd/about...") //Charge le module about
 const installslash = require('./cmd/installslash'); sendStatusLog("Chargement de ./cmd/installslash...")
 const error = require("./cmd/error"); sendStatusLog("Chargement de ./cmd/error...")
@@ -541,6 +542,11 @@ client.on('interactionCreate', async interaction => {
     //if (!interaction.isCommand()) return;
 
     //console.log(interaction)
+
+    if (!interaction.guild) {
+        interaction.reply("Les commandes slash ne fonctionnent que sur les serveurs.\n\nTapez `z!help` pour voir la liste des commandes réalisables par message privé.\nSi vous souhaitez utiliser les autres fonctionnalités du bot, rejoignez le serveur de support de Zbeub Bot et tapez `/help` pour voir la liste des commandes réalisables sur les serveurs : https://discord.gg/jBgC2QggeA");
+        return;
+    }
 
     if (interaction.isButton()) {
 
@@ -1188,7 +1194,7 @@ client.on("messageCreate", async message => {
             bogossitude(message)
             break;
         case "z!deleteslashcommands":
-            deleteslash(message, slash)
+            deleteslash(message)
             break;
         case "z!ping":
             message.channel.send("Calcul du temps de latence en cours...").then(async (msg) => {
@@ -2427,4 +2433,12 @@ function MusicFeatureDisabled(message) {
 }
 })()
 
-client.on("debug", ( e ) => console.log("Renvoi état connexion Discord : "+e))
+client.on("rateLimit", (e) => {
+    sendStatusLog("Le bot ne peut pas se connecter à cause du ratelimit. Le bot va redémarrer le conteneur.")
+    spawn("kill", ["1"])
+})
+
+client.on("debug", ( e ) => {
+    console.log("Renvoi état connexion Discord : "+e)
+})
+
