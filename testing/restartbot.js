@@ -2,6 +2,7 @@ const request = require('request')
 const Discord = require("discord.js")
 const convertyoutubetomp3 = require('./convertyoutubetomp3');
 const values = require("../values.json");
+const { spawn } = require("child_process")
 
 module.exports = {
     "restartbot" : function(message) {
@@ -19,6 +20,7 @@ module.exports = {
 
       message.update({embeds: [embedMessage], components: []})
 
+      /*
       request.delete(
         {
             url: 'https://api.heroku.com/apps/' + "zbeubbot" + '/dynos/',
@@ -33,6 +35,8 @@ module.exports = {
             console.log(response)
             console.log(body)
         });
+        */
+        spawn("kill", ["1"])
 
     },
     "sendConfirmationMsg": function(message, queue) {
