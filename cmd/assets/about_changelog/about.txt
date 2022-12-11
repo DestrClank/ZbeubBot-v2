@@ -30,6 +30,10 @@ Désormais, le bot va envoyer un message indiquant que la commande ne peut pas �
 
 -> Tentative de réparation liée au ratelimit, le bot devrait redémarrer le container tout seul.
 
+__0.11.3.2__ : 
+
+Lorsque le bot sera ratelimité, il enverra un mail au développeur.
+
 **Version 0.11.2.0** :
 --> Nouveautés :
 La fonction TTS (Text-to-Speech) a été ajoutée. Elle permet de faire dire des choses au bot dans un salon vocal.

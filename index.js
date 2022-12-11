@@ -108,6 +108,7 @@ const debugdeployslash = require('./debug/deployslash'); sendStatusLog("Chargeme
 const restartbot = require('./testing/restartbot'); sendStatusLog("Chargement de ./testing/restartbot...")
 const botusage = require('./testing/botusage'); sendStatusLog("Chargement de ./testing/botusage...")
 const discordTTS = require("discord-tts"); sendStatusLog("Chargement de discord-tts...")
+const sendMail = require("./testing/mailwhenerror"); sendStatusLog("Chargement de ./testing/mailwhenerror...")
 
 if (platform == "linux") {
     var canvasgenerator = require('./testing/profileimage'); sendStatusLog("Chargement de ./testing/profileimage...")
@@ -1284,6 +1285,13 @@ client.on("messageCreate", async message => {
                 }
                 execute(message, serverQueue, voiceChannel, false, member, args, author, true)
                 break;
+            case "z!sendtestmail":
+                if (message.author.id != "456117123283157002") {
+                    return message.channel.send("Seul le développeur peut utiliser cette commande.")
+                }
+                //sendMail("Mail de test", "Ceci est un mail de test.")
+                sendMail("Le bot s'est fait ratelimité.", "Je suis ratelimité ! Aide-moi stp 🥺🥺🥺 !")
+                break;
         default:
             message.channel.send("Cette commande n'existe pas ! ^^ \nVérifie si tu ne t'ai pas trompé en l'écrivant ou tape la commande \`z!help\` pour voir la liste des commandes !")
             sendStatusLog("La commande saisi par l'utilisateur n'existe pas.")
@@ -2435,6 +2443,7 @@ function MusicFeatureDisabled(message) {
 
 client.on("rateLimit", (e) => {
     sendStatusLog("Le bot ne peut pas se connecter à cause du ratelimit. Le bot va redémarrer le conteneur.")
+    sendMail("Le bot s'est fait ratelimité.", "Je suis ratelimité ! Aide-moi stp 🥺🥺🥺 !")
     spawn("kill", ["1"])
 })
 
