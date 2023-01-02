@@ -59,7 +59,8 @@ const embedSocialCategory = new MessageEmbed()
 \`z!mtm\` : Kirby vous transmettra un joli message !
 \`z!zemmour\` : Ça ne rigole plus là OnO !
 \`z!nice\` : Nice...
-\`z!bogossitude\` : La bogossitude à son paroxysme.`
+\`z!bogossitude\` : La bogossitude à son paroxysme.
+\`z!sartek\` : Sartek, le dégradé !`
     });
 
 const embedSlashCommandsCategory = new MessageEmbed()
