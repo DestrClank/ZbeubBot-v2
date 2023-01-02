@@ -2,7 +2,7 @@ const request = require('request')
 const Discord = require("discord.js")
 const convertyoutubetomp3 = require('./convertyoutubetomp3');
 const values = require("../values.json");
-const { spawn } = require("child_process")
+const { spawn, exec } = require("child_process")
 
 module.exports = {
     "restartbot" : function(message) {
@@ -36,7 +36,13 @@ module.exports = {
             console.log(body)
         });
         */
-        spawn("kill", ["1"])
+        exec('kill 1', (err, output) => {
+          if (err) {
+              console.error("Impossible d'éxecuter la commande de redémarrage.", err);
+              return
+          }
+        console.log(`Commande de redémarrage réussie.`);
+      });  
 
     },
     "sendConfirmationMsg": function(message, queue) {
