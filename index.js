@@ -144,6 +144,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders"); sendStatusLog("C
 
 const getParam = require('./debug/getParam'); sendStatusLog("Chargement de ./debug/getParam...")
 const bogossitude = require("./cmd/bogossitude"); sendStatusLog("Chargement de ./cmd/bogossitude...")
+const sartek = require("./cmd/sartek"); sendStatusLog("Chargement de ./cmd/sartek...")
 const testrecordaudio = require("./testing/recordaudio"); sendStatusLog("Chargement de ./testing/recordaudio...")
 const { sendHelp, modifyHelp } = require("./testing/help"); sendStatusLog("Chargement de ./testing/help...")
 
@@ -157,6 +158,7 @@ const { mtmrandom, mtmmember } = require("./testing/socialslashcmd/mtm"); sendSt
 const { zemmourrandom, zemmourmember } = require("./testing/socialslashcmd/zemmour"); sendStatusLog("Chargement de ./testing/socialslashcmd/zemmour...")
 const { nicerandom, nicemember } = require("./testing/socialslashcmd/nice"); sendStatusLog("Chargement de ./testing/socialslashcmd/nice...")
 const { bogossituderandom, bogossitudemember } = require("./testing/socialslashcmd/bogossitude"); sendStatusLog("Chargement de ./testing/socialslashcmd/bogossitude...")
+const { sartekrandom, sartekmember } = require("./testing/socialslashcmd/sartek"); sendStatusLog("Chargement de ./testing/socialslashcmd/sartek...")
 const keepalive = require("./keepalive")
 const speakTTS = require('./testing/tts'); sendStatusLog("Chargement de ./testing/tts...")
 
@@ -269,7 +271,7 @@ const express = require('express');
 const about_music_bots = require("./cmd/about_music_bots");
 const { rejects } = require("assert");
 const app = express()
-const request = require('request')
+const request = require('request');
 
 app.use(express.static(__dirname + "/test_webpage"))
 app.use("/downloaderror", express.static(__dirname + "/test_webpage/downloaderror"))
@@ -882,6 +884,15 @@ client.on('interactionCreate', async interaction => {
                     //console.log("ca marche c pa active")
                 }
             }
+        } else if (commandName === 'sartek') {
+            if (interaction.options.getSubcommand() === "random") {
+                await interaction.deferReply()
+                sartekrandom(interaction)
+            } else if (interaction.options.getSubcommand() === "member") {
+                await interaction.deferReply()
+                let arg = interaction.options.getUser("membre")
+                sartekmember(interaction, arg)
+            }
         }
     }
 });
@@ -1280,6 +1291,9 @@ client.on("messageCreate", async message => {
                 }
                 //sendMail("Mail de test", "Ceci est un mail de test.")
                 sendMail("Le bot s'est fait ratelimité.", "Je suis ratelimité ! Aide-moi stp 🥺🥺🥺 !")
+                break;
+            case "z!sartek":
+                sartek(message) 
                 break;
         default:
             message.channel.send("Cette commande n'existe pas ! ^^ \nVérifie si tu ne t'ai pas trompé en l'écrivant ou tape la commande \`z!help\` pour voir la liste des commandes !")

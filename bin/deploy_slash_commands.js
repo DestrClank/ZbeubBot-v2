@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 require("dotenv").config(); //token
 const Discord = require('discord.js'); //Chargement module Discord
+const args = require("minimist")(process.argv.slice(2))
 
 const values = require("../values.json")
 const versionNumber = values.version.versionNumber
@@ -33,7 +34,19 @@ const { sendCmdLog, sendStatusLog, sendErrorLog, sendFunctionLog } = require("..
 
 const guildId = values.settings.DevelopmentServer
 
-
+switch (args.v) {
+    case "release":
+        console.log("Installation des commandes sur la version Release.")
+        token = process.env.RELEASE_BOT_TOKEN
+        break;
+    case "debug": 
+        console.log("Installation des commandes sur la version Debug.")
+        token = process.env.BOT_TOKEN
+        break;
+    default:
+        console.log("Vous n'avez pas mentionné de version après la commande. Utilisez l'argument -v suivi de \"debug\" ou \"release\" pour installer les commandes slash sur la version Debug ou Release du bot.")
+        process.exit(1)
+}
 
 client.once('ready', async () => {
     sendStatusLog("Déploiement des commandes slash...")
@@ -246,6 +259,31 @@ client.once('ready', async () => {
             {
                 name: "random",
                 description: "z!hello : Le bot choisit un membre au hasard.",
+                type: 1,
+            }
+        ]
+    })
+
+    commands.create({
+        name: "sartek",
+        description: "z!sartek : Sartek, votre coupe !",
+        options: [ 
+            {
+                name: "member",
+                description: "z!sartek : Vous choisissez un membre.",
+                type: 1,
+                options: [ 
+                    {
+                        name: "membre",
+                        description: "Choisissez un membre.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "random",
+                description: "z!sartek : Le bot choisit un membre au hasard.",
                 type: 1,
             }
         ]
@@ -548,5 +586,5 @@ process.on('unhandledRejection', error => {
 
 })
 
-client.login(process.env.BOT_TOKEN);
+client.login(token);
 

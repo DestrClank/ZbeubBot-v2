@@ -1,8 +1,8 @@
 {
     "version": {
-        "versionNumber": "0.11.3.3 (bêta)",
-        "shortversionNumber": "0.11.3.3",
-        "slashversionNumber":  "5",
+        "versionNumber": "0.11.4.0 (bêta)",
+        "shortversionNumber": "0.11.4.0",
+        "slashversionNumber":  "6",
         "settingsVersion": "1"
     },
     "properties": {

@@ -7,7 +7,9 @@ Pour désactiver : -> /settings simplifiedmenu deactivate
 Un nouvel onglet dans l'aide (z!help) a été ajouté pour les paramètres.
 
 --> Améliorations : 
-Correction d'un problème qui empêchait les fichiers de plus de 8 Mo d'être téléchargés depuis le serveur.
-Le bot est "normalement" censé redémarrer le conteneur correctement désormais, ce qui devrait permettre au bot de rester connecté plus souvent.
-Si le bot rencontrait une erreur sérieuse avant qu'il puisse se connecter à Discord, il pouvait rentrer dans une boucle et être coincé.
-Ceci a été corrigé et le bot devrait s'arrêter correctement.
+0.11.4.0 :
+Ajout de la commande z!sartek (et de son équivalent en commande slash).
+Un meme qui a été demandé par une pote à moi a ducoup été ajouté dans les commandes sociales. (cc madame feur OnO)
+Elle fonctionne comme toutes les autres commandes sociales, vous pouvez utiliser random pour laisser le bot choisir ou vous pouvez mentionner un membre.
+
+D'autres correctifs ont été réalisés depuis la version 0.11.3.3 (voir z!changelog pour en savoir plus).

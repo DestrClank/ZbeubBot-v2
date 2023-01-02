@@ -6,6 +6,12 @@
 ## Les astérisques (**) indiquent que la version est une version majeure.
 ## Les underscores (__) indiquent que la version est une version mineure.
 
+**Version 0.11.4.0** :
+
+--> Ajout de la commande z!sartek (et de son équivalent en commande slash).
+Un meme qui a été demandé par une pote à moi a ducoup été ajouté dans les commandes sociales. (cc madame feur OnO)
+Elle fonctionne comme toutes les autres commandes sociales, vous pouvez utiliser random pour laisser le bot choisir ou vous pouvez mentionner un membre.
+
 **Version  0.11.3.0** : 
 --> Nouveautés : 
 Le menu de commande musical (commande z!np ou /np) possède un mode "simplifié", à la place du texte sur les boutons, ce sont des icônes pour indiquer les fonctionnalités.
