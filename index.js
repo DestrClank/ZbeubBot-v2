@@ -48,7 +48,7 @@ sendStatusLog(`Le fichier log ${logfilepath} a été crée avec succès.`)
 sendStatusLog(`Plateforme actuelle : ${platform}`)
 
 //Modules et assets
-const { spawn } = require('child_process'); sendStatusLog("Chargement de child_process...")
+const { spawn, exec } = require('child_process'); sendStatusLog("Chargement de child_process...")
 const Discord = require('discord.js'); sendStatusLog("Chargement de discord.js...") //Chargement module Discord
 const ytdl = require('ytdl-core'); sendStatusLog("Chargement de ytdl-core...") //Chargement module lecture vidéo Youtube
 const yts = require('yt-search'); sendStatusLog("Chargement de yt-search...") //Chargement module Youtube Data API v3 (eh ouais)
@@ -303,7 +303,7 @@ app.get('/download/:userid', function(req, res){
     let finalfilename = futurefilename.replace(/[/\\?%*:|"<>]/g, "_") + ".mp3"
   
     var filename = path.basename(file);
-    var mimetype = mime.lookup(file);
+    var mimetype = mime.getType(file);
   
     res.setHeader('Content-disposition', 'attachment; filename=' + finalfilename);
     res.setHeader('Content-type', mimetype);
@@ -354,21 +354,27 @@ client.once('ready', async () => {
 });
 
 function getConfig() {
-    switch (client.user.id) {
-        case "986916236719980574":
-            var configfile = require("./debug_config.json");
-            break;
-        default:
-            var configfile = require("./release_config.json");
-            break;
-    }
+    try {
+        switch (client.user.id) {
+            case "986916236719980574":
+                var configfile = require("./debug_config.json");
+                break;
+            default:
+                var configfile = require("./release_config.json");
+                break;
+        }
+    
+        if (ConfigStateSent == false) {
+            sendStatusLog("\nConfiguration appliquée : "+configfile.ConfigType+"\n\nLogs:\nSendLogsWhenShutdown:"+configfile.SendLogs.SendLogsWhenShutdown+"\nSendLogsWhenCrash:"+configfile.SendLogs.SendLogsWhenCrash+"\nSendLogsWhenError:"+configfile.SendLogs.SendLogsWhenError)
+            ConfigStateSent = true
+        }
 
-    if (ConfigStateSent == false) {
-        sendStatusLog("\nConfiguration appliquée : "+configfile.ConfigType+"\n\nLogs:\nSendLogsWhenShutdown:"+configfile.SendLogs.SendLogsWhenShutdown+"\nSendLogsWhenCrash:"+configfile.SendLogs.SendLogsWhenCrash+"\nSendLogsWhenError:"+configfile.SendLogs.SendLogsWhenError)
-        ConfigStateSent = true
-    }
+        return configfile;
 
-    return configfile;
+    } catch {
+        sendWarnLog("Impossible de vérifier la configuration à appliquer au bot. Le bot va s'arrêter.")
+        process.exit(1)
+    }
    
 }
 
@@ -398,23 +404,6 @@ function sleep(ms) {
         setTimeout(resolve, ms);
     });
 }
-
-
-if (!fs.existsSync("./.noping")) {
-
-    setInterval(function () {
-        sendStatusLog("Ping du site en cours.")
-        try {
-            http.get("http://ZbeubBot-v2.dylanvassalo.repl.co") //http://zbeubbot.herokuapp.com
-        } catch (error) {
-            sendErrorLog("Une erreur de ping du site s'est produite.", error)
-        }
-    }, 1200000) //Maintien toutes les 20 minutes. 
-} else {
-    sendWarnLog("La configuration du bot désactive la fonction de ping du site. Supprimez le fichier .noping à la racine pour réactiver la fonction.")
-}
-
-
 
 client.once("reconnecting", () => {
     connectionstate = "connecting"
@@ -2440,14 +2429,40 @@ function MusicFeatureDisabled(message) {
     process.exit(1)
 }
 })()
-
+/*
 client.on("rateLimit", (e) => {
     sendStatusLog("Le bot ne peut pas se connecter à cause du ratelimit. Le bot va redémarrer le conteneur.")
     sendMail("Le bot s'est fait ratelimité.", "Je suis ratelimité ! Aide-moi stp 🥺🥺🥺 !")
     spawn("kill", ["1"])
 })
-
-client.on("debug", ( e ) => {
-    console.log("Renvoi état connexion Discord : "+e)
-})
-
+*/
+//sends a kill 1 command to the child node if there is a 429 error
+client.on("debug", function(info){
+    let check429error = info.split(" ");
+    //console.log(`info -> ${check429error}`); //debugger
+    if (check429error[2] === `429`) {
+        sendWarnLog(`Une erreur 429 s'est produite. Le bot va redémarrer le conteneur.`); 
+        sendMail("Le bot s'est fait ratelimité.", "Je suis ratelimité ! Aide-moi stp 🥺🥺🥺 !")
+            exec('kill 1', (err, output) => {
+                if (err) {
+                    console.error("Impossible d'éxecuter la commande de redémarrage.", err);
+                    return
+                }
+              console.log(`Commande de redémarrage réussie.`);
+            });         
+    }
+});
+/*
+if (getConfig().Configuration.EnablePingSite == true && connectionstate != "connecting") {
+    setInterval(function () {
+        sendStatusLog("Ping du site en cours.")
+        try {
+            http.get("http://ZbeubBot-v2.dylanvassalo.repl.co") //http://zbeubbot.herokuapp.com
+        } catch (error) {
+            sendErrorLog("Une erreur de ping du site s'est produite.", error)
+        }
+    }, 1200000) //Maintien toutes les 20 minutes. 
+} else {
+    sendWarnLog("La configuration du bot désactive la fonction de ping du site.")
+}
+*/

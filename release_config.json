@@ -12,6 +12,10 @@
         "DeleteAfter1Hour": true,
         "DeleteAfterSending": true
     },
+    "Configuration":
+    {
+        "EnablePingSite": false
+    },
     "AccessWebSite": {
         "EnableWebSite" : false,
         "EnableLargeFilesDownloads": false

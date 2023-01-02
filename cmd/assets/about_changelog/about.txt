@@ -34,6 +34,15 @@ __0.11.3.2__ :
 
 Lorsque le bot sera ratelimité, il enverra un mail au développeur.
 
+__0.11.3.3__ : 
+
+--> Correction d'un problème qui empêchait les fichiers de plus de 8 Mo d'être téléchargés depuis le serveur.
+--> Le bot est "normalement" censé redémarrer le conteneur correctement désormais, ce qui devrait permettre au bot de rester connecté plus souvent.
+--> Si le bot rencontrait une erreur sérieuse avant qu'il puisse se connecter à Discord, il pouvait rentrer dans une boucle et être coincé.
+Ceci a été corrigé et le bot devrait s'arrêter correctement.
+--> Le bot pouvait planter complètement de manière aléatoire en pingant le site. 
+Le correctif est en cours de test et le bot pourrait se déconnecter de Discord plus fréquemment qu'avant.
+
 **Version 0.11.2.0** :
 --> Nouveautés :
 La fonction TTS (Text-to-Speech) a été ajoutée. Elle permet de faire dire des choses au bot dans un salon vocal.

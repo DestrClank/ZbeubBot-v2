@@ -21,9 +21,9 @@ const embedInfo = new Discord.MessageEmbed()
         {name: "Version @discord.js/opus", value: "Non disponible."},
         {name: "Version simple-youtube-api", value: versions.dependencies['simple-youtube-api']},
         {name: "Ce bot utilise les dépendances listées ci-dessus.", value:"\u200b"},
-        {name: "Merci à :", value: "Sunna Crazy et Neko pour leurs idées géniales, qui ont permis d'améliorer ce petit bot, à l'image de Pikachu *pika pika pikachu ^^* !"},
+        {name: "Merci à :", value: "<@861311210862411786> et <@1033801232512471170> pour leurs idées géniales, qui ont permis d'améliorer ce petit bot, à l'image de Pikachu *pika pika pikachu ^^* !"},
         {name: "\u200b", value: "Foura, pour avoir testé ce bot !"},
-        {name: "\u200b", value : "Merci à Xilou aussi xD !"}
+        {name: "\u200b", value : "Merci à <@660062370697183233> aussi xD !"}
     )
     .setFooter({text:`Zbeub Bot version ${values.version.versionNumber}`, iconURL:values.properties.botprofileurl})
 
