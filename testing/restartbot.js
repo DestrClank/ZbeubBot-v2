@@ -36,6 +36,7 @@ module.exports = {
             console.log(body)
         });
         */
+       /*
         exec('kill 1', (err, output) => {
           if (err) {
               console.error("Impossible d'éxecuter la commande de redémarrage.", err);
@@ -43,6 +44,8 @@ module.exports = {
           }
         console.log(`Commande de redémarrage réussie.`);
       });  
+      */
+     process.kill(1);
 
     },
     "sendConfirmationMsg": function(message, queue) {
