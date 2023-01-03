@@ -1833,7 +1833,7 @@ async function play(guild, song, ifcrashed) {
                 return discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"})
             case "livestream":
                 //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [128,127,120,96,95,94,93] });
-                return ytdl(song.url, { highWaterMark: 1 << 25, dlChunkSize: 1<<12, quality: [91,92,93,94,95], opusEncoded: true, liveBuffer: 1 << 62 });//ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }, {quality: [128,127,120,96,95,94,93]}) //format.url;
+                return ytdl(song.url, { highWaterMark: 1 << 25, dlChunkSize: 1<<12, quality: [91,92,93,94,95], opusEncoded: true, liveBuffer: 4900 });//ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }, {quality: [128,127,120,96,95,94,93]}) //format.url;
             case "video":
                 //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [18,137,248,136,247,135,134,140]} )//, { quality: [128,127,120,96,95,94,93] });
                 return ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 })//format.url;
