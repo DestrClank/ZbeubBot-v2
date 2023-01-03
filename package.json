@@ -43,6 +43,7 @@
     "node-id3": "^0.2.3",
     "node-opus": "^0.3.3",
     "nodemailer": "^6.8.0",
+    "play-dl": "^1.9.6",
     "prism-media": "^2.0.0-alpha.0",
     "request": "^2.88.2",
     "simple-youtube-api": "^5.2.1",

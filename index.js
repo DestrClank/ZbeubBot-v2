@@ -84,6 +84,7 @@ var connectionstate = "connecting"
 
 client.voiceManager = new Discord.Collection()
 
+const { stream } = require("play-dl"); sendStatusLog("Chargement de play-dl...")
 const Music = require('@discordjs/voice'); sendStatusLog("Chargement de @discordjs/voice...")
 const hello = require("./cmd/hello"); sendStatusLog("Chargement de ./cmd/hello...") //Charge le module pour la commande z!hello
 const help = require("./cmd/help"); sendStatusLog("Chargement de ./cmd/help...") //Charge le module de l'aide
@@ -1827,20 +1828,25 @@ async function play(guild, song, ifcrashed) {
 
     // On lance la musique
 
-    const stream = () => {
-        switch (song.mode) {
-            case "tts": 
-                return discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"})
-            case "livestream":
-                //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [128,127,120,96,95,94,93] });
-                return ytdl(song.url, { highWaterMark: 1 << 25, dlChunkSize: 1<<12, quality: [91,92,93,94,95], opusEncoded: true, liveBuffer: 4900 });//ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }, {quality: [128,127,120,96,95,94,93]}) //format.url;
-            case "video":
-                //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [18,137,248,136,247,135,134,140]} )//, { quality: [128,127,120,96,95,94,93] });
-                return ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 })//format.url;
-        }
+    switch (song.mode) {
+        case "tts": 
+            serverQueue.audioResource = Music.createAudioResource(discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"}), { seek: 0, inlineVolume: true })
+            break;
+        case "livestream":
+            //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [128,127,120,96,95,94,93] });
+            let streamdata = await stream(song.url)
+            serverQueue.audioResource = Music.createAudioResource(streamdata.stream, { seek: 0, inlineVolume: true, inputType: streamdata.type })
+            break;
+             //ytdl(song.url, { highWaterMark: 1 << 25, dlChunkSize: 1<<12, quality: [91,92,93,94,95], opusEncoded: true, liveBuffer: 4900 });//ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }, {quality: [128,127,120,96,95,94,93]}) //format.url;
+        case "video":
+            //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [18,137,248,136,247,135,134,140]} )//, { quality: [128,127,120,96,95,94,93] });
+            serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
+            break;
+            //format.url;
     }
+    
 
-    serverQueue.audioResource = Music.createAudioResource(stream(), { seek: 0, inlineVolume: true })
+    //serverQueue.audioResource = Music.createAudioResource(streamdata(), { seek: 0, inlineVolume: true })
     //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
 
     //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
