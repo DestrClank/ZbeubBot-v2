@@ -27,6 +27,13 @@ Cette catégorie liste toutes les manières de soumettre un problème au dévelo
 
 --> Les textes TTS ne peuvent plus être mis en pause ni mis en boucle, comme pour les vidéos en direct.
 
+__0.11.4.2 | testing_version__ :
+
+Certains problèmes liés au support des vidéos en direct ont été corrigés.
+
+-> Le bot lit correctement tout type de contenu, les vidéos classiques, en direct, et les textes TTS.
+-> Le bot durant les tests, semble ne pas arrêter les vidéos en direct.
+
 **Version  0.11.3.0** : 
 --> Nouveautés : 
 Le menu de commande musical (commande z!np ou /np) possède un mode "simplifié", à la place du texte sur les boutons, ce sont des icônes pour indiquer les fonctionnalités.

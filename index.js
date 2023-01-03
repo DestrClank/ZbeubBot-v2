@@ -1339,6 +1339,16 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
     const serversettings = await GuildModel.findOne({id: message.guild.id})
     console.log(serversettings.MusicVolume)
 
+    /*
+    if (serverQueue && serverQueue.mode == "livestream") {
+        if (ifSlash === true) {
+            return await message.editReply({ content: "Impossible d'ajouter la musique ou le texte TTS, une vidéo en direct est en cours de lecture. Arrêtez d'abord la musique avec `z!stop` ou `/stop` puis réessayez."})
+        } else {
+            return await message.channel.send({ content: "Impossible d'ajouter la musique ou le texte TTS, une vidéo en direct est en cours de lecture. Arrêtez d'abord la musique avec `z!stop` ou `/stop` puis réessayez."});
+        }
+    }
+    */
+
     if (!serversettings) {
         sendStatusLog("Aucun paramètres sont associés à ce serveur, la commande ne peut pas continuer.")
         if (ifSlash) {
@@ -1580,6 +1590,7 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
     }
     else {
         serverQueue.Button = false;
+
         serverQueue.songs.push(song);
         sendStatusLog(values.generalText.GeneralLogsMsg.musicLogs.music_linkadded);
         sendStatusLog(`z!play : Titre : ${song.title}`);
@@ -1817,15 +1828,19 @@ async function play(guild, song, ifcrashed) {
     // On lance la musique
 
     const stream = () => {
-        if (song.iflivestream) {
-            sendStatusLog("La vidéo en cours de lecture est une vidéo en direct.")
-            const format = ytdl.chooseFormat(song.formats, { quality: [128,127,120,96,95,94,93] });
-            return format.url;
-            //return ytdl(song.url, { highWaterMark: 1 << 25, dlChunkSize: 1<<12, quality: [91,92,93,94,95], opusEncoded: true, liveBuffer: 1 << 62 })
-        } else return ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 })
+        switch (song.mode) {
+            case "tts": 
+                return discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"})
+            case "livestream":
+                //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [128,127,120,96,95,94,93] });
+                return ytdl(song.url, { highWaterMark: 1 << 25, dlChunkSize: 1<<12, quality: [91,92,93,94,95], opusEncoded: true, liveBuffer: 1 << 62 });//ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }, {quality: [128,127,120,96,95,94,93]}) //format.url;
+            case "video":
+                //format = ytdl.chooseFormat(song.formats, { filter: "audioonly", quality: [18,137,248,136,247,135,134,140]} )//, { quality: [128,127,120,96,95,94,93] });
+                return ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 })//format.url;
+        }
     }
 
-    serverQueue.audioResource = Music.createAudioResource(song.tts ? discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"}) : stream(), { seek: 0, inlineVolume: true })
+    serverQueue.audioResource = Music.createAudioResource(stream(), { seek: 0, inlineVolume: true })
     //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
 
     //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
@@ -2319,6 +2334,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                         .setLabel('Suivant')
                         .setStyle('SECONDARY')
                         .setCustomId("skip_music")
+                        //.setDisabled(pauseloopbtndisable)
                     )
                 }
         
@@ -2368,6 +2384,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                     .setLabel('Liste de lecture')
                     .setStyle('SECONDARY')
                     .setCustomId("showqueue")
+                    //.setDisabled(pauseloopbtndisable)
                 )
 
                 break;
@@ -2385,6 +2402,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                         .setStyle('SECONDARY')
                         .setCustomId("skip_music")
                         .setEmoji("⏭️")
+                        //.setDisabled(pauseloopbtndisable)
                     )
                 }
         
@@ -2434,6 +2452,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                     .setLabel('Liste de lecture')
                     .setStyle('SECONDARY')
                     .setCustomId("showqueue")
+                    //.setDisabled(pauseloopbtndisable)
                 )
 
                 break;

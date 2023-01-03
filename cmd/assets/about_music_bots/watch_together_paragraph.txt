@@ -7,3 +7,4 @@ Concernant Zbeub Bot, la fonctionnalité musicale restera activée même après 
 La fonctionnalité Watch Together devrait arriver dans tous les serveurs à la fin du mois d'octobre.
 
 Edit 11/07/2022 : Watch Together n'est TOUJOURS pas déployé mdrrr !!!
+Edit 03/01/2023 : Watch Together est finalement disponible. Le bot étant pour le moment pas connu garde YouTube en tant que plateforme supporté mais à l'avenir, le bot pourrait supporter plus de plateformes que YouTube.
