@@ -12,6 +12,21 @@
 Un meme qui a été demandé par une pote à moi a ducoup été ajouté dans les commandes sociales. (cc madame feur OnO)
 Elle fonctionne comme toutes les autres commandes sociales, vous pouvez utiliser random pour laisser le bot choisir ou vous pouvez mentionner un membre.
 
+__0.11.4.1 [testing_version]__ :
+
+--> Test du support des vidéos en direct comme source musicale pour le bot. Vous pouvez essayer de mettre un lien de vidéo en direct et le bot devrait lire le contenu du live.
+
+Problèmes connus durant les tests: 
+-> Le bot pourrait ne pas émettre de musique du tout à l'ajout de la vidéo en direct, dans ce cas là, contactez le développeur sur le serveur de support mentionné dans la rubrique "Support et assistance" de z!help.
+-> La musique pourrait s'arrêter de manière inopinée si le contenu est une vidéo en direct.
+
+--> Une nouvelle catégorie a été ajoutée dans z!help : "Support et assistance".
+Cette catégorie liste toutes les manières de soumettre un problème au développeur du bot et envoie un lien pour rejoindre le serveur de support du bot.
+
+--> Le texte dans "Durée" dans les détails de la musique n'affiche pas un temps si la vidéo est en direct ou si c'est un texte TTS.
+
+--> Les textes TTS ne peuvent plus être mis en pause ni mis en boucle, comme pour les vidéos en direct.
+
 **Version  0.11.3.0** : 
 --> Nouveautés : 
 Le menu de commande musical (commande z!np ou /np) possède un mode "simplifié", à la place du texte sur les boutons, ce sont des icônes pour indiquer les fonctionnalités.

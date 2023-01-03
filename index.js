@@ -12,6 +12,8 @@
  *
  */
 
+
+
 const invalidwindowsnames = [
     "con",
     "prn",
@@ -631,7 +633,7 @@ client.on('interactionCreate', async interaction => {
             await interaction.deferReply()
             //console.log()
             try {
-                execute(interaction, serverQueue, voiceChannel, true, member, args, author)
+                execute(interaction, serverQueue, voiceChannel, true, member, args, author, false)
             } catch (err) {
                 sendErrorLog("Fonction execute : La musique n'a pas pu être traitée.", error);
                 return interaction.editReply(`${values.generalText.ErrorMsg.userend.music_oups}, ${values.generalText.ErrorMsg.userend.music_linkbroken}`)
@@ -1427,6 +1429,8 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
     try {
         if (!iftts) {
             var songInfo = await ytdl.getInfo(arg);
+            //var basicsongInfo = await ytdl.getBasicInfo(arg)
+            //console.log(basicsongInfo)
         }
         //console.log(songInfo)
     } catch (err) {
@@ -1452,7 +1456,9 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
             addedby: author.username + "#" + author.discriminator,
             pdp: author.displayAvatarURL(),
             beginplaytimestamp: null,
-            texttospeech: arg
+            texttospeech: arg,
+            iflivestream: "tts",
+            formats: null
         };
     } else {
         var song = {
@@ -1466,9 +1472,38 @@ async function execute(message, serverQueue, voiceChannel, ifSlash, member, argu
             views: songInfo.videoDetails.viewCount,
             addedby: author.username + "#" + author.discriminator,
             pdp: author.displayAvatarURL(),
-            beginplaytimestamp: null
+            beginplaytimestamp: null,
+            iflivestream: songInfo.videoDetails.isLiveContent,
+            formats: songInfo.formats
         };
     }
+
+    switch (song.iflivestream) {
+        case true:
+            song.mode = "livestream"
+            break;
+        case false:
+            song.mode = "video"
+            break;
+        case "tts":
+            song.mode = "tts"
+            break;
+    }
+
+    switch (song.mode) {
+        case "video":
+            sendStatusLog("Le contenu ajouté est une vidéo.")
+            break;
+        case "livestream":
+            sendStatusLog("Le contenu ajouté est une vidéo en direct.")
+            break;
+        case "tts":
+            sendStatusLog("Le contenu ajouté est un texte Text-to-Speech.")
+            break;
+    }
+
+
+    //console.log(songInfo)
 
     if (!serverQueue) {
         const queueConstruct = {
@@ -1728,6 +1763,11 @@ async function loop(message, serverQueue, author, ifSlash, ifButton) {
         return MusicStateEmbed(message, author, ifSlash, values.generalText.ErrorMsg.userend.music_oups, values.generalText.GeneralUserMsg.music_nomusicplaying, serverQueue, ifButton, "no_music");
     }
 
+    if (serverQueue.songs[0].mode == "livestream") {
+        sendFunctionLog(values.CmdList.MusicCmds.pause, "La musique en cours de lecture est une vidéo en direct, impossible d'activer le loop.");
+        return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique en cours de lecture est une vidéo en direct. Impossible d'aciver la fonction de loop ! 😅`, serverQueue);
+    }
+
     serverQueue.loop = !serverQueue.loop
     sendStatusLog(`z!loop : Le bouclage (loop) de la musique en cours de lecture est : ${serverQueue.loop ? `activé` : `**désactivé`}`);
     
@@ -1776,7 +1816,16 @@ async function play(guild, song, ifcrashed) {
 
     // On lance la musique
 
-    serverQueue.audioResource = Music.createAudioResource(song.tts ? discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"}) : ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
+    const stream = () => {
+        if (song.iflivestream) {
+            sendStatusLog("La vidéo en cours de lecture est une vidéo en direct.")
+            const format = ytdl.chooseFormat(song.formats, { quality: [128,127,120,96,95,94,93] });
+            return format.url;
+            //return ytdl(song.url, { highWaterMark: 1 << 25, dlChunkSize: 1<<12, quality: [91,92,93,94,95], opusEncoded: true, liveBuffer: 1 << 62 })
+        } else return ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 })
+    }
+
+    serverQueue.audioResource = Music.createAudioResource(song.tts ? discordTTS.getVoiceStream(song.texttospeech, {lang : "fr"}) : stream(), { seek: 0, inlineVolume: true })
     //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
 
     //serverQueue.audioResource = Music.createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }), { seek: 0, inlineVolume: true })
@@ -2004,7 +2053,7 @@ async function ytsearch(message, serverQueue, voiceChannel, ifSlash, member, arg
         //message.channel.send(`values.generalText.GeneralUserMsg.music_searchresultstext + resp`, {components: [menu]});
 
         if (ifquickplay === true) {
-            return execute(message, serverQueue, voiceChannel, ifSlash, member, videos[0].url, author)
+            return execute(message, serverQueue, voiceChannel, ifSlash, member, videos[0].url, author, false)
         } else {
             if (ifSlash === true) {
                 await message.editReply({ components: [menu], embeds: [embedYTSearch] })
@@ -2067,7 +2116,6 @@ async function showQueue(message, serverQueue, author, ifSlash, ifButton) {
 
         }
 
-
         embedQueueMsg.addField("Liste de lecture : ", msg)
         embedQueueMsg.setDescription(description)
 
@@ -2109,6 +2157,11 @@ async function pauseMusic(message, serverQueue, author, ifSlash, ifButton) {
     if (!serverQueue.playing) {
         sendFunctionLog(values.CmdList.MusicCmds.pause, values.generalText.ErrorMsg.logs.music_alreadypaused);
         return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique est déja en pause ! 😅`, serverQueue);
+    }
+
+    if (serverQueue.songs[0].mode == "livestream") {
+        sendFunctionLog(values.CmdList.MusicCmds.pause, "La musique en cours de lecture est une vidéo en direct, impossible de mettre en pause.");
+        return MusicStateEmbed(message, author, ifSlash, null, `${PikachuEmote} La musique en cours de lecture est une vidéo en direct. Impossible de mettre en pause la musique ! 😅`, serverQueue);
     }
 
     serverQueue.playing = false;
@@ -2193,6 +2246,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
     try {
         //const songInfo = await ytdl.getInfo(nowPlaying.url);
         const song = {
+            mode: nowPlaying.mode,
             title: nowPlaying.title,
             url: nowPlaying.url,
             author: nowPlaying.author,
@@ -2205,7 +2259,22 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
             timestamp: nowPlaying.beginplaytimestamp
         }
 
-        const duration = convertHMS(song.time);
+        switch (song.mode) {
+            case "tts":
+                duration = "Texte TTS"
+                pauseloopbtndisable = true
+                break;
+            case "livestream": 
+                duration = "En live"
+                pauseloopbtndisable = true
+                break;
+            case "video":
+                duration = convertHMS(song.time)
+                pauseloopbtndisable = false
+                break;
+        }
+
+        //const duration = convertHMS(song.time);
         //const currenttime = convertHMS(Math.abs(song.timestamp - Date.now()))
 
         //sendFunctionLog(values.CmdList.MusicCmds.np, values.generalText.GeneralLogsMsg.musicLogs.music_youtubemetadataget)
@@ -2253,7 +2322,6 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                     )
                 }
         
-        
                 if (serverQueue.playing == false) {
                     row.addComponents(
                         new Discord.MessageButton()
@@ -2267,6 +2335,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                         .setLabel('Pause')
                         .setStyle('SECONDARY')
                         .setCustomId("pause_music")
+                        .setDisabled(pauseloopbtndisable)
                     )
                 }
         
@@ -2276,6 +2345,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                         .setLabel('Activer loop')
                         .setStyle('SECONDARY')
                         .setCustomId("toggleloop_music")
+                        .setDisabled(pauseloopbtndisable)
                     )
                 } else {
                     row.addComponents(
@@ -2331,6 +2401,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                         .setStyle('SECONDARY')
                         .setCustomId("pause_music")
                         .setEmoji("⏸️")
+                        .setDisabled(pauseloopbtndisable)
                     )
                 }
         
@@ -2340,6 +2411,7 @@ async function whatsplaying(message, serverQueue, author, ifSlash, ifButton, com
                         .setStyle('SECONDARY')
                         .setCustomId("toggleloop_music")
                         .setEmoji("🔁")
+                        .setDisabled(pauseloopbtndisable)
                     )
                 } else {
                     row.addComponents(

@@ -7,9 +7,6 @@ Pour désactiver : -> /settings simplifiedmenu deactivate
 Un nouvel onglet dans l'aide (z!help) a été ajouté pour les paramètres.
 
 --> Améliorations : 
-0.11.4.0 :
-Ajout de la commande z!sartek (et de son équivalent en commande slash).
-Un meme qui a été demandé par une pote à moi a ducoup été ajouté dans les commandes sociales. (cc madame feur OnO)
-Elle fonctionne comme toutes les autres commandes sociales, vous pouvez utiliser random pour laisser le bot choisir ou vous pouvez mentionner un membre.
-
-D'autres correctifs ont été réalisés depuis la version 0.11.3.3 (voir z!changelog pour en savoir plus).
+--> Test des vidéos en direct en tant que contenu musical.
+--> Ajout de la catégorie "Support et assistance" dans l'aide du bot.
+--> Le texte dans "Durée" dans les détails de la musique n'affiche pas un temps si la vidéo est en direct ou si c'est un texte TTS.

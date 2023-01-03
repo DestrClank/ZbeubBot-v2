@@ -136,6 +136,28 @@ const embedMusicCategory = new MessageEmbed()
 \`z!np\` : Affiche la musique en cours de lecture.
 \`z!qp\` : Recherche la musique sur YouTube et lance immédiatement la lecture ou l'ajoute dans la liste de lecture. La commande fonctionne avec les liens également.
 *Ces commandes sont utilisables par les commandes slash également.*`)
+
+const embedSupportCategory = new MessageEmbed()
+.setColor(values.settings.embedColor)
+.setTitle("Aide de Zbeub Bot 😊")
+.setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
+.addField("Support et assistance", `
+Si vous rencontrez des problèmes, des bugs, ou vous voulez demander de l'aide ou des conseils pour utiliser le bot, vous pouvez envoyer un MP au développeur :
+
+--> <@456117123283157002>
+
+Vous pouvez aussi rejoindre le serveur d'assistance de Zbeub Bot :
+
+--> https://discord.gg/jBgC2QggeA
+
+Plus d'informations sont présentes dans le serveur d'assistance.
+
+Vous pouvez aussi utiliser la commande \`z!sendcomments\` dans les messages privés du bot pour envoyer des commentaires, faire des rapports de bugs, demander de l'assistance etc...
+Vous pourrez joindre des captures d'écran également.
+
+*Privilégiez l'usage du serveur pour expliquer votre problème ou pour demander des conseils sur l'utilisation du bot.
+Veuillez respecter les règles mentionnées dans \`z!help\` par message privé si vous utilisez les messages privés du bot.*`)
+
 //.addField("Musique", "Les commandes musicales sont désactivées, tapez la commande \`z!infos\` pour avoir plus d'informations concernant la désactivation des commandes musicales.");
 
 const menu = new MessageActionRow()
@@ -228,6 +250,16 @@ const menu = new MessageActionRow()
                     }
                 },
                 {
+                    label: "Support et assistance",
+                    description: "Assistance en cas de problèmes, de bugs, ou vous avez besoin de conseils pour utiliser le bot.",
+                    value: "Support_Category",
+                    emoji: {
+                        id: "1059843974266900530",
+                        name: "support"
+                    }
+                },
+                
+                {
                     label: "Fermer",
                     description: "Quitte l'aide",
                     value: "Close_Help",
@@ -270,6 +302,8 @@ module.exports = {
                 return message.update({embeds: [embedMiscCategory]})
             case "Settings_Category":
                 return message.update({embeds: [embedSettingsCategory]})
+            case "Support_Category":
+                return message.update({embeds: [embedSupportCategory]})
             case "Close_Help": 
                 return message.message.delete()
         }
