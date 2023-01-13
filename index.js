@@ -12,7 +12,7 @@
  *
  */
 
-
+const launchargs = require("yargs").argv
 
 const invalidwindowsnames = [
     "con",
@@ -40,7 +40,19 @@ const invalidwindowsnames = [
     "deltarune chapter 2 - spamton theme (remix and extended)"]
 
 require("dotenv").config(); //token du bot
-require('better-logging')(console)
+switch (launchargs.logs) {
+    case "detailed":
+        require('better-logging')(console)
+        break;
+    case "default":
+        console.log("Les logs détaillés sont désactivés.")
+        break;
+    default:
+        require('better-logging')(console)
+        break;
+}
+
+
 const { sendCmdLog, sendStatusLog, sendErrorLog, sendFunctionLog, sendWarnLog, sendLogToDev, logfilepath, sendCrashLog } = require("./debug/consolelogs")
 
 var platform = process.platform
@@ -132,6 +144,8 @@ const url = require('url'); sendStatusLog("Chargement de url...")
 const NodeID3 = require('node-id3'); sendStatusLog("Chargement de Node-ID3...")
 const boteasteregg = require('./cmd/bin/boteasteregg'); sendStatusLog("Chargement de ./cmd/bin/boteasteregg...")
 const findRemoveSync = require('find-remove'); sendStatusLog("Chargement de find-remove...")
+const slashprofileimage = require("./testing/socialslashcmd/profileimage"); sendStatusLog("Chargement de ./testing/socialslashcmd/profileimage...")
+const slashinfoaboutmember = require("./testing/socialslashcmd/sendInfoaboutMember"); sendStatusLog("Chargement de ./testing/socialslashcmd/sendInfoaboutMember...")
 
 const menuhello = require('./cmd/contextmenu/hello'); sendStatusLog("Chargement de ./cmd/contextmenu/hello...")
 const menuattack = require('./cmd/contextmenu/attack'); sendStatusLog("Chargement de ./cmd/contextmenu/attack...")
@@ -164,6 +178,8 @@ const { bogossituderandom, bogossitudemember } = require("./testing/socialslashc
 const { sartekrandom, sartekmember } = require("./testing/socialslashcmd/sartek"); sendStatusLog("Chargement de ./testing/socialslashcmd/sartek...")
 const keepalive = require("./keepalive")
 const speakTTS = require('./testing/tts'); sendStatusLog("Chargement de ./testing/tts...")
+const djs = require("simply-djs"); sendStatusLog("Chargement de simply-djs...")
+//djs.connect(process.env.MONGODB_URI)
 
 const GuildModel = require('./schemes/guildmodel'); sendStatusLog("Chargement de ./schemes/guildmodel...")
 const { connect } = require('mongoose')
@@ -703,6 +719,7 @@ client.on('interactionCreate', async interaction => {
                 embedMessage.setImage(Attachment[0].url)
             }
             */
+            
             await interaction.reply({ embeds: [embedMessage] })
 
         } else if (commandName === 'user') {
@@ -896,6 +913,26 @@ client.on('interactionCreate', async interaction => {
                 let arg = interaction.options.getUser("membre")
                 sartekmember(interaction, arg)
             }
+        } else if (commandName === "calc") {
+            await interaction.deferReply()
+            djs.calculator(interaction, {
+                embed: {
+                    title: "Calculatrice",
+                    color: values.settings.embedColor,
+                    footer: {
+                        text: `Zbeub Bot version ${versionNumber}`,
+                        iconURL: values.properties.botprofileurl
+                    },
+                    credit: false
+                }
+            })
+        } else if (commandName == "membercard") {
+            await interaction.deferReply()
+            let arg = interaction.options.getUser("membre")
+            slashprofileimage(interaction, arg)
+        } else if (commandName == "showinfoaboutmember") {
+            await interaction.deferReply()
+            slashinfoaboutmember(interaction, client, Discord)
         }
     }
 });

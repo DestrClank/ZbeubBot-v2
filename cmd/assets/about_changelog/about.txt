@@ -34,6 +34,19 @@ Certains problèmes liés au support des vidéos en direct ont été corrigés.
 -> Le bot lit correctement tout type de contenu, les vidéos classiques, en direct, et les textes TTS.
 -> Le bot durant les tests, semble ne pas arrêter les vidéos en direct.
 
+__0.11.4.4 | testing_version__ :
+
+Test des vidéos en direct en source musicale est toujours en test.
+
+-> Ajout de la fonction calculatrice : /calc.
+-> Amélioration de l'aide : les commandes slash, lorsque qu'elles sont disponibles sont mentionnés dans l'aide et certains textes ont été modifiées.
+-> Les systèmes de déploiement des commandes slash ont été retravaillés.
+-> La commande z!installslashcommands va servir pour le développeur exclusivement.
+-> La commande slash /chewie a été rajoutée.
+-> Les crédits mentionnent tous les packages utilisés par le bot (depuis package.json).
+-> Les commandes z!showinfoaboutmember et z!membercard sont disponibles par commande slash.
+
+
 **Version  0.11.3.0** : 
 --> Nouveautés : 
 Le menu de commande musical (commande z!np ou /np) possède un mode "simplifié", à la place du texte sur les boutons, ce sont des icônes pour indiquer les fonctionnalités.

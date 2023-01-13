@@ -1,0 +1,487 @@
+[
+    {
+        "name": "ping",
+        "description": "Une fonction de test qui permet de ping le bot OnO."
+    },
+    {
+        "name": "about",
+        "description": "z!about : Affiche le changelog de la version actuelle."
+    },
+    {
+        "name": "changelog",
+        "description": "z!changelog : Envoie le changelog complet du bot depuis la version 0.3.3."
+    },
+    {
+        "name": "credits",
+        "description": "z!credits : Affiche les crédits."
+    },
+    {
+        "name": "botusage",
+        "description": "z!botusage : Affiche des informations statistiques concernant le bot."
+    },
+    {
+        "name": "infos",
+        "description": "z!infos : Affiche des informations concernant l'avenir des bots musicaux et de Zbeub Bot."
+    },
+    {
+        "name": "Dire bonjour",
+        "type": 2
+    },
+    {
+        "name": "Attaquer",
+        "type": 2
+    },
+    {
+        "name": "Danser",
+        "type": 2
+    },
+    {
+        "name": "Faire un câlin",
+        "type": 2
+    },
+    {
+        "name": "test",
+        "description": "Une fonction simple de test, qui teste les commandes slash."
+    },
+    {
+        "name": "embed",
+        "description": "Renvoie le message saisi sous la forme d'un embed.",
+        "options": [
+            {
+                "name": "description",
+                "description": "Entrez la description de l'embed ici.",
+                "required": true,
+                "type": 3
+            },
+            {
+                "name": "titre",
+                "description": "Entrez le titre de l'embed ici.",
+                "required": false,
+                "type": 3
+            }
+        ]
+    },
+    {
+        "name": "ytconvert",
+        "description": "z!ytconvert : Le bot convertit une vidéo YouTube en fichier mp3.",
+        "options": [
+            {
+                "name": "argument",
+                "description": "Entrez le lien de la vidéo ici.",
+                "required": true,
+                "type": 3
+            }
+        ]
+    },
+    {
+        "name": "sendmessage",
+        "description": "Le bot renvoie un message saisi par l'utilisateur.",
+        "options": [
+            {
+                "name": "texte",
+                "description": "Entrez le message ici.",
+                "required": true,
+                "type": 3
+            }
+        ]
+    },
+    {
+        "name": "error",
+        "description": "z!error : envoie un message d'erreur."
+    },
+    {
+        "name": "help",
+        "description": "z!help : envoie la liste des commandes."
+    },
+    {
+        "name": "play",
+        "description": "z!play : permet de lire de la musique dans un salon vocal ou de faire une recherche YouTube.",
+        "options": [
+            {
+                "name": "argument",
+                "description": "Entrez une recherche ou un lien YouTube.",
+                "required": true,
+                "type": 3
+            }
+        ]
+    },
+    {
+        "name": "volume",
+        "description": "z!volume : Règle le volume sonore de la musique.",
+        "options": [
+            {
+                "name": "argument",
+                "description": "Entrez une valeur entre 0 et 200.",
+                "required": true,
+                "type": 4
+            }
+        ]
+    },
+    {
+        "name": "tts",
+        "description": "z!tts : Fait parler le bot (langue française).",
+        "options": [
+            {
+                "name": "texte",
+                "description": "Ecrivez votre texte (100 caractères max).",
+                "required": true,
+                "type": 3
+            }
+        ]
+    },
+    {
+        "name": "hello",
+        "description": "z!hello : Pikachu dira bonjour à un membre.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!hello : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!hello : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "sartek",
+        "description": "z!sartek : Sartek, votre coupe !",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!sartek : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!sartek : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "settings",
+        "description": "Paramètres du bot sur ce serveur.",
+        "options": [
+            {
+                "name": "simplifiedmenu",
+                "description": "Menu de commande musical simplifié (avec icônes).",
+                "type": 2,
+                "options": [
+                    {
+                        "name": "activate",
+                        "description": "Activer le menu de commande musical simplifié.",
+                        "type": 1
+                    },
+                    {
+                        "name": "deactivate",
+                        "description": "Désactiver le menu de commande musical simplifié.",
+                        "type": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "attack",
+        "description": "z!attack : Pikachu attaquera un membre.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!attack : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!attack : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "dance",
+        "description": "z!dance : Pikachu fera une danse à un membre.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!dance : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!dance : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "hug",
+        "description": "z!hug : Pikachu fera un câlin à un membre.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!hug : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!hug : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "wala",
+        "description": "z!wala : Vous jurez que c'est vrai ??",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!wala : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!wala : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "mtm",
+        "description": "z!mtm : Kirby passera un message à un membre.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!mtm : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!mtm : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "zemmour",
+        "description": "z!zemmour : A pas d'humour.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!zemmour : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!zemmour : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "nice",
+        "description": "z!nice : Hmmm, nice !",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!nice : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!nice : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "bogossitude",
+        "description": "z!bogossitude : La bogossitude à son paroxysme.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!bogossitude : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!bogossitude : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    },
+    {
+        "name": "stop",
+        "description": "z!stop : permet d'arrêter la musique."
+    },
+    {
+        "name": "skip",
+        "description": "z!skip : Permet de passer la musique."
+    },
+    {
+        "name": "loop",
+        "description": "z!loop : Permet de boucler la musique en cours de lecture."
+    },
+    {
+        "name": "queue",
+        "description": "z!queue : Permet d'afficher la liste de lecture."
+    },
+    {
+        "name": "resume",
+        "description": "z!resume : Permet de reprendre la lecture de la musique."
+    },
+    {
+        "name": "pause",
+        "description": "z!pause : Permet de mettre en pause la musique."
+    },
+    {
+        "name": "np",
+        "description": "z!np : Permet de voir les détails de la musique en cours de lecture."
+    },
+    {
+        "name": "qp",
+        "description": "z!qp : Permet de lire de la musique sans passer par le choix de celle-ci.",
+        "options": [
+            {
+                "name": "argument",
+                "description": "Entrez une recherche ou un lien YouTube.",
+                "required": true,
+                "type": 3
+            }
+        ]
+    },
+    {
+        "name": "membercard",
+        "description": "Affiche les informations d'un membre sous la forme d'une carte de membre.",
+        "options": [
+            {
+                "name": "membre",
+                "description": "Mentionnez un membre.",
+                "required": true,
+                "type": 6
+            }
+        ]
+    },
+    {
+        "name": "showinfoaboutmember",
+        "description": "Affiche les informations d'un membre.",
+        "options": [
+            {
+                "name": "membre",
+                "description": "Mentionnez un membre.",
+                "required": true,
+                "type": 6
+            }
+        ]
+    },
+    {
+        "name": "calc",
+        "description": "Calculatrice permettant de faire des calculs simples."
+    },
+    {
+        "name": "chewie",
+        "description": "z!chewie : Christina Cordula Cordon Bleu jugera votre apparence.",
+        "options": [
+            {
+                "name": "member",
+                "description": "z!chewie : Vous choisissez un membre.",
+                "type": 1,
+                "options": [
+                    {
+                        "name": "membre",
+                        "description": "Choisissez un membre.",
+                        "type": 6,
+                        "required": true
+                    }
+                ]
+            },
+            {
+                "name": "random",
+                "description": "z!chewie : Le bot choisit un membre au hasard.",
+                "type": 1
+            }
+        ]
+    }
+]

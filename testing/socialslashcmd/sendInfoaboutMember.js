@@ -1,12 +1,9 @@
-const values = require("../values.json");
+const values = require("../../values.json");
 const versionNumber = values.version.versionNumber
 
 module.exports = async (message, client, Discord) => {
-    const member = message.mentions.members.first()
-
-    if (!member) {
-        return message.channel.send("Vous n'avez mentionné aucun membre ou le membre n'a pas été trouvé.");
-    }   
+    const mention = await message.options.getUser("membre")
+    const member = message.guild.members.cache.get(mention.id)
 
     var joindate = new Date(member.joinedTimestamp)
     var textdate = joindate.getDate() + "/" + (joindate.getMonth()+1) + "/" + joindate.getFullYear()
@@ -29,5 +26,5 @@ module.exports = async (message, client, Discord) => {
         .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl});
 
     //console.log(client)
-    return message.channel.send({embeds: [embedInfoMember]})
+    return message.editReply({embeds: [embedInfoMember]})
 }

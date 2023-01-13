@@ -10,7 +10,7 @@ const embedHelpHome = new MessageEmbed()
     .setTitle("Aide de Zbeub Bot 😊")
     .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
     .addFields({
-        name : "Bienvenue dans l'aide de Zbeub Bot !", value: "Coucou, tu as besoin d'aide ? Ca tombe bien, je suis là pour t'aider ! ^^ \n Choisis en bas la catégorie que tu veux voir et Pikachu t'indiquera le chemin !"
+        name : "Bienvenue dans l'aide de Zbeub Bot !", value: "Coucou, tu as besoin d'aide ? Ca tombe bien, je suis là pour t'aider ! ^^ \n Presque toutes les commandes peuvent être utilisées via les commandes textuelles ou via les commandes slash ! \n Choisis en bas la catégorie que tu veux voir et Pikachu t'indiquera le chemin !"
     });
 
 const embedInfoBotCategory = new MessageEmbed()
@@ -19,15 +19,15 @@ const embedInfoBotCategory = new MessageEmbed()
     .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
     .addFields({
         name: "Aide et informations", value: `
-\`z!help\` : Affiche l'aide.
+\`z!help\`|</help:1051212673439780955> : Affiche l'aide.
 L'aide est aussi disponible en ligne sur https://ZbeubBot-v2.dylanvassalo.repl.co !
         
-\`z!about\` : Affiche des informations à propos du bot (patch note).
-\`z!changelog\` : Affiche le changelog complet du bot.
-\`z!credits\` : Affiche les crédits.
-\`z!botusage\` : Affiche des informations statistiques concernant le bot.
-\`z!ping\` : Calcule le temps de latence entre le bot et l'API.
-\`z!infos\` : Affiche des informations importantes concernant l'avenir des bots musicaux et de Zbeub Bot (il y a aussi les commentaires du créateur).
+\`z!about\`|</about:1051212409752272916> : Affiche des informations à propos du bot (patch note).
+\`z!changelog\`|</changelog:1051212411211886613> : Affiche le changelog complet du bot.
+\`z!credits\`|</credits:1051212412923150446> : Affiche les crédits.
+\`z!botusage\`|</botusage:1051212415372628140> : Affiche des informations statistiques concernant le bot.
+\`z!ping\`|</ping:1051212407487352872> : Calcule le temps de latence entre le bot et l'API.
+\`z!infos\`|</infos:1051212496456912927> : Affiche des informations importantes concernant l'avenir des bots musicaux et de Zbeub Bot (il y a aussi les commentaires du créateur).
 *Toutes les commandes dans ce paragraphe sont aussi disponibles en commandes slash.*`
     });
 
@@ -38,8 +38,12 @@ const embedInstallCategory = new MessageEmbed()
     .addFields({
         name: "Installation et configuration", value: `
 **Ces commandes nécessitent d'avoir la permission** \`Administrateur\` **pour être utilisables.**
-\`z!installslashcommands\` : Installe les commandes slash et les commandes d'application sur le serveur.
-\`z!deleteslashcommands\` : Supprime les commandes slash et les commandes d'application sur le serveur.`
+
+Les commandes slash sont désormais déployées de manière globale et ne nécessitent plus d'installation manuelle via la commande \`z!installslashcommands\`.
+
+Cependant, si vous avez installé les commandes slash manuellement auparavant, les commandes peuvent apparaître en double. Utilisez \`z!deleteslashcommands\` pour supprimer la copie installée sur votre serveur et ainsi ne garder que la copie globale.
+
+*Note: Une commande slash qui a été ajoutée suite à une mise à jour du bot peut prendre jusqu'à une heure pour apparaître sur votre serveur. Dans ce cas de figure, utilisez l'équivalent de la commande en textuel, si son équivalent est disponible. Sinon, attendez une heure pour que la commande slash apparaîsse.*`
     });
 
 const embedSocialCategory = new MessageEmbed()
@@ -49,18 +53,18 @@ const embedSocialCategory = new MessageEmbed()
     .addFields({
         name: "Fun et social", value: `
 *Arguments acceptés :* \`@mention\`,\`random\`
-\`z!hello\` : Dit bonjour à quelqu'un.
-\`z!error\` : Envoie un message d'erreur.
-\`z!attack\` : Pikachu fera une attaque Boule Elek à quelqu'un.
-\`z!dance\` : Pikachu fera une danse à quelqu'un.
-\`z!hug\` : Pikachu fera un câlin à quelqu'un.
-\`z!chewie\` : Christina Pikachu Cordon Bleu vous sortira sa meilleure phrase !
-\`z!wala\` : Vous jurez que ce n'est pas vous ??
-\`z!mtm\` : Kirby vous transmettra un joli message !
-\`z!zemmour\` : Ça ne rigole plus là OnO !
-\`z!nice\` : Nice...
-\`z!bogossitude\` : La bogossitude à son paroxysme.
-\`z!sartek\` : Sartek, le dégradé !`
+\`z!hello\`|</hello member:1051212682558185493> : Dit bonjour à quelqu'un.
+\`z!error\`|</error:1051212595975163995> : Envoie un message d'erreur.
+\`z!attack\`|</attack member:1051213175074324490> : Pikachu fera une attaque Boule Elek à quelqu'un.
+\`z!dance\`|</dance member:1051213177041457223> : Pikachu fera une danse à quelqu'un.
+\`z!hug\`|</hug member:1051213178819837962> : Pikachu fera un câlin à quelqu'un.
+\`z!chewie\`|</chewie member:1063524943809216613> : Christina Pikachu Cordon Bleu vous sortira sa meilleure phrase !
+\`z!wala\`|</wala member:1051213180459819139> : Vous jurez que ce n'est pas vous ??
+\`z!mtm\`|</mtm member:1051213261447639192> : Kirby vous transmettra un joli message !
+\`z!zemmour\`|</zemmour member:1051213263200866447> : Ça ne rigole plus là OnO !
+\`z!nice\`|</nice member:1051213264564015116> : Nice...
+\`z!bogossitude\`|</bogossitude member:1051213267239972945> : La bogossitude à son paroxysme.
+\`z!sartek\`|</sartek member:1059515971980759060> : Sartek, le dégradé !`
     });
 
 const embedSlashCommandsCategory = new MessageEmbed()
@@ -68,12 +72,12 @@ const embedSlashCommandsCategory = new MessageEmbed()
 .setTitle("Aide de Zbeub Bot 😊")
 .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
 .addField("Commandes slash", `
-*Les commandes slash doivent être installés via une commande décrite dans* **"Installation"** *pour être utilisables.*
-\`/sendmessage\` : Le bot enverra le message que vous avez saisi.
-\`/embed\` : Le bot enverra le message que vous avez saisi sous la forme d'un "embed".
-\`/error\` : Envoie un message d'erreur.
-\`/test\` : Teste la fonction commande slash.
-\`/ping\`: Fait un ping-pong.`);
+</sendmessage:1051212592976232588> : Le bot enverra le message que vous avez saisi.
+</embed:1051212587167129672> : Le bot enverra le message que vous avez saisi sous la forme d'un "embed".
+</error:1051212595975163995> : Envoie un message d'erreur.
+</test:1051212585174847609> : Teste la fonction commande slash.
+</ping:1051212407487352872>: Fait un ping-pong.
+</calc:1063524942139891782>: Affiche une calculatrice permettant des calculs simples.`);
 
 const embedMembersCategory = new MessageEmbed()
 .setColor(values.settings.embedColor)
@@ -81,17 +85,14 @@ const embedMembersCategory = new MessageEmbed()
 .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
 .addField("Informations de membres", `
 *Arguments nécessaires :* \`@mention\`
-\`z!showinfoaboutmember\` : Affiche des informations à propos d'un membre.
-\`z!membercard\` : Envoie une carte de profil d'un membre.`);
+\`z!showinfoaboutmember\`|</showinfoaboutmember:1063524861491814411> : Affiche des informations à propos d'un membre.
+\`z!membercard\`|</membercard:1063524859377881120> : Envoie une carte de profil d'un membre.`);
 
 const embedSettingsCategory = new MessageEmbed()
 .setColor(values.settings.embedColor)
 .setTitle("Aide de Zbeub Bot 😊")
 .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
 .addField("Paramètres du bot", `
-Pour utiliser les paramètres, il faut installer ou mettre à jour les commandes slash sur votre serveur.
-Rendez-vous dans l'onglet \`Installation et configuration\` pour plus d'informations.
-
 Commande générale : \`/settings\`
 
 Paramètres disponibles : 
@@ -102,7 +103,7 @@ const embedMiscCategory = new MessageEmbed()
 .setTitle("Aide de Zbeub Bot 😊")
 .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
 .addField("Autres", `
-\`z!ytconvert <lien>\` : Permet de convertir une vidéo YouTube en fichier musique (.mp3).
+\`z!ytconvert <lien>\`|</ytconvert:1051212589700501546> : Permet de convertir une vidéo YouTube en fichier musique (.mp3).
 *Cette commande est utilisable également par commande slash.*
 *La vidéo ne doit pas dépasser 2 heures.*
 *Remarque : Cette amélioration de la commande est en cours de test et peut rendre le bot instable.
@@ -115,7 +116,7 @@ Il est pour le moment préférable de rester sur l'ancienne règle de 20 minutes
 
 \`z!createinvite\` : Crée un lien d'invitation vers ce salon.
 
-\`z!tts\` : Permet au bot de dire des choses.
+\`z!tts\`|</tts:1051212680477819001> : Permet au bot de dire des choses.
 *Limité à 100 caractères max.*
 *Utilisable par commande slash également.*`)
 
@@ -125,16 +126,16 @@ const embedMusicCategory = new MessageEmbed()
 .setFooter({text: `Zbeub Bot version ${versionNumber}`, iconURL: values.properties.botprofileurl})
 .addField("Musique", `
 **Pour effectuer ces commandes, soyez dans un salon vocal avant !**
-\`z!play <mots-clés ou lien>\` : Joue de la musique via le lien YouTube ou effectue une recherche. 
-\`z!skip\` : Permet de passer la musique.
-\`z!stop\` : Stoppe la musique.
-\`z!loop\` : Boucle la musique en cours de lecture.
-\`z!queue\` : Affiche la liste de lecture.
-\`z!pause\` : Met en pause la musique.
-\`z!resume\` : Met en lecture la musique.
-\`z!volume <0-200>\` : Règle le volume sonore de la musique.
-\`z!np\` : Affiche la musique en cours de lecture.
-\`z!qp\` : Recherche la musique sur YouTube et lance immédiatement la lecture ou l'ajoute dans la liste de lecture. La commande fonctionne avec les liens également.
+\`z!play <mots-clés ou lien>\`|</play:1051212676333842483> : Joue de la musique via le lien YouTube ou effectue une recherche. 
+\`z!skip\`|</skip:1051213349968412782> : Permet de passer la musique.
+\`z!stop\`|</stop:1051213270394097756> : Stoppe la musique.
+\`z!loop\`|</loop:1051213353114140722> : Boucle la musique en cours de lecture.
+\`z!queue\`|</queue:1051213357170053120> : Affiche la liste de lecture.
+\`z!pause\`|</pause:1051213359854407771> : Met en pause la musique.
+\`z!resume\`|</resume:1051213362215800894> : Met en lecture la musique.
+\`z!volume <0-200>\`|</volume:1051212678644891708> : Règle le volume sonore de la musique.
+\`z!np\`|</np:1051213437633572864> : Affiche la musique en cours de lecture.
+\`z!qp\`|</qp:1051213439139319818> : Recherche la musique sur YouTube et lance immédiatement la lecture ou l'ajoute dans la liste de lecture. La commande fonctionne avec les liens également.
 *Ces commandes sont utilisables par les commandes slash également.*`)
 
 const embedSupportCategory = new MessageEmbed()

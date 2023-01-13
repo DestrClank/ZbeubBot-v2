@@ -64,42 +64,42 @@ client.once('ready', async () => {
 
     console.log(commands)
 
-    commands.create({
+    await commands.create({
         name: "ping",
         description: "Une fonction de test qui permet de ping le bot OnO."
     })
 
-    commands.create({
+    await commands.create({
         name: "about",
         description: "z!about : Affiche le changelog de la version actuelle."
     })
 
-    commands.create({
+    await commands.create({
         name: "changelog",
         description: "z!changelog : Envoie le changelog complet du bot depuis la version 0.3.3."
     })
 
-    commands.create({
+    await commands.create({
         name: "credits",
         description: "z!credits : Affiche les crédits."
     })
 
-    commands.create({
+    await commands.create({
         name: "botusage",
         description: "z!botusage : Affiche des informations statistiques concernant le bot."
     })
 
-    commands.create({
+    await commands.create({
         name: "infos",
         description: "z!infos : Affiche des informations concernant l'avenir des bots musicaux et de Zbeub Bot."
     })
 
-    commands.create({
+    await commands.create({
         name: "Dire bonjour",
         type: 2
     })
 
-    commands.create({
+    await commands.create({
         name: "Attaquer",
         type: 2
     })
@@ -115,12 +115,12 @@ client.once('ready', async () => {
         type: 2
     })
     */
-    commands.create({
+    await commands.create({
         name: "Danser",
         type: 2
     })
 
-    commands.create({
+    await commands.create({
         name: "Faire un câlin",
         type: 2
     })
@@ -136,12 +136,12 @@ client.once('ready', async () => {
         type: 2
     })
     */
-    commands.create({
+    await commands.create({
         name: "test",
         description: "Une fonction simple de test, qui teste les commandes slash."
     })
 
-    commands.create({
+    await commands.create({
         name: "embed",
         description: "Renvoie le message saisi sous la forme d'un embed.",
         options: [
@@ -160,7 +160,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "ytconvert",
         description: "z!ytconvert : Le bot convertit une vidéo YouTube en fichier mp3.",
         options: [
@@ -174,7 +174,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "sendmessage",
         description: "Le bot renvoie un message saisi par l'utilisateur.",
     options: [
@@ -187,17 +187,17 @@ client.once('ready', async () => {
         }
     ]})
 
-    commands.create({
+    await commands.create({
         name: "error",
         description: "z!error : envoie un message d'erreur."
     })
 
-    commands.create({
+    await commands.create({
         name: "help",
         description: "z!help : envoie la liste des commandes."
     })
 
-    commands.create({
+    await commands.create({
         name: "play",
         description: "z!play : permet de lire de la musique dans un salon vocal ou de faire une recherche YouTube.",
         options: [
@@ -213,7 +213,7 @@ client.once('ready', async () => {
         
     })
 
-    commands.create({
+    await commands.create({
         name: "volume",
         description: "z!volume : Règle le volume sonore de la musique.",
         options: [
@@ -226,7 +226,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "tts",
         description: "z!tts : Fait parler le bot (langue française).",
         options: [
@@ -239,7 +239,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "hello",
         description: "z!hello : Pikachu dira bonjour à un membre.",
         options: [ 
@@ -264,7 +264,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "sartek",
         description: "z!sartek : Sartek, votre coupe !",
         options: [ 
@@ -289,7 +289,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "settings",
         description: "Paramètres du bot sur ce serveur.",
         options: [ 
@@ -313,7 +313,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "attack",
         description: "z!attack : Pikachu attaquera un membre.",
         options: [ 
@@ -338,7 +338,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "dance",
         description: "z!dance : Pikachu fera une danse à un membre.",
         options: [ 
@@ -363,7 +363,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "hug",
         description: "z!hug : Pikachu fera un câlin à un membre.",
         options: [ 
@@ -388,7 +388,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "wala",
         description: "z!wala : Vous jurez que c'est vrai ??",
         options: [ 
@@ -413,7 +413,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "mtm",
         description: "z!mtm : Kirby passera un message à un membre.",
         options: [ 
@@ -438,7 +438,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "zemmour",
         description: "z!zemmour : A pas d'humour.",
         options: [ 
@@ -463,7 +463,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "nice",
         description: "z!nice : Hmmm, nice !",
         options: [ 
@@ -488,7 +488,7 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "bogossitude",
         description: "z!bogossitude : La bogossitude à son paroxysme.",
         options: [ 
@@ -513,42 +513,42 @@ client.once('ready', async () => {
         ]
     })
 
-    commands.create({
+    await commands.create({
         name: "stop",
         description: "z!stop : permet d'arrêter la musique."
     })
 
-    commands.create({
+    await commands.create({
         name: "skip",
         description: "z!skip : Permet de passer la musique."
     })
 
-    commands.create({
+    await commands.create({
         name: "loop",
         description: "z!loop : Permet de boucler la musique en cours de lecture."
     })
 
-    commands.create({
+    await commands.create({
         name: "queue",
         description: "z!queue : Permet d'afficher la liste de lecture."
     })
 
-    commands.create({
+    await commands.create({
         name: "pause",
         description: "z!pause : Permet de mettre en pause la musique."
     })
 
-    commands.create({
+    await commands.create({
         name: "resume",
         description: "z!resume : Permet de reprendre la lecture de la musique."
     })
 
-    commands.create({
+    await commands.create({
         name: "np",
         description: "z!np : Permet de voir les détails de la musique en cours de lecture."
     })
 
-    commands.create({
+    await commands.create({
         name: "qp",
         description: "z!qp : Permet de lire de la musique sans passer par le choix de celle-ci.",
         options: [{

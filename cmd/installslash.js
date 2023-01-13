@@ -10,18 +10,102 @@ const { sendCmdLog, sendStatusLog, sendErrorLog, sendFunctionLog, sendWarnLog } 
 //    return app
 //}
 
+const commandlist = 
+[
+    {
+        name: "membercard",
+        description: "Affiche les informations d'un membre sous la forme d'une carte de membre.",
+        options: 
+        [{
+            name: "membre",
+            description: "Mentionnez un membre.",
+            required: true,
+            type: 6
+        }]
+    },
+    {
+        name: "showinfoaboutmember",
+        description: "Affiche les informations d'un membre.",
+        options: 
+        [{
+            name: "membre",
+            description: "Mentionnez un membre.",
+            required: true,
+            type: 6
+        }]
+    },
+    {
+        name: "calc",
+        description: "Calculatrice permettant de faire des calculs simples."
+    }
+]
+
 
 async function installslash(message, client)
 {
     //const guild = client.guilds.cache.get(message.guild.id);
     //const member = guild.members.cache.get(message.author.id);
 
+    if (message.author.id != "456117123283157002") {
+        sendStatusLog("L'utilisateur n'est pas le développeur et ne peut pas utiliser cette commande.")
+        return message.channel.send("Cette commande est désormais obsolète et n'est utilisée que par le développeur pour le débogage et le test de nouvelles commandes slash et les commandes d'application en cours de développement avant leur publication globale. \n\nToutes les commandes slash publiées devraient être disponibles dès que le bot a rejoint votre serveur et sont mises à jour automatiquement par le développeur au fur et à mesure que le bot reçoit des mises à jour. \n\nSi vous voyez que les commandes slash du bot sont présentes en double, vous pouvez lancer la commande `z!deleteslashcommands` pour supprimer la copie des commandes sur votre serveur et ne garder que la copie publique des commandes.")
+    }
+
     try {
 
         const guild = client.guilds.cache.get(message.guild.id)
 
         commands = guild.commands
-    
+
+        for (cmd of commandlist) {
+            sendStatusLog(`Création de ${cmd.name}...`)
+            await commands.create(cmd)
+        }
+        
+        message.channel.send("Les commandes slash et les commandes d'application sont en cours d'installation sur ce serveur.")
+    } catch {
+        sendErrorLog("Les commandes slash n'ont pas été installés à cause d'une erreur.", "")
+        return message.channel.send("Les commandes slash n'ont pas été installés à cause d'une erreur.")
+    }
+}
+
+module.exports = (message, guildId) =>  {
+    installslash(message, guildId)
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
         commands.create({
             name: "ping",
             description: "Une fonction de test qui permet de ping le bot OnO."
@@ -73,6 +157,7 @@ async function installslash(message, client)
             type: 2
         })
         */
+       /*
         commands.create({
             name: "Danser",
             type: 2
@@ -94,6 +179,7 @@ async function installslash(message, client)
             type: 2
         })
         */
+       /*
         commands.create({
             name: "test",
             description: "Une fonction simple de test, qui teste les commandes slash."
@@ -372,6 +458,23 @@ async function installslash(message, client)
         })
 
         commands.create({
+            name: "buttonrole",
+            description: "Créer des boutons permettant d'obtenir un rôle.",
+            options: [ 
+                {
+                    name: "add",
+                    description: "Ajouter un bouton faisant obtenir un rôle.",
+                    type: 1
+                },
+                {
+                    name: "remove",
+                    description: "Supprimer un bouton faisant obtenir un rôle.",
+                    type: 1,
+                }
+            ]
+        })
+
+        commands.create({
             name: "zemmour",
             description: "z!zemmour : A pas d'humour.",
             options: [ 
@@ -480,6 +583,11 @@ async function installslash(message, client)
             name: "np",
             description: "z!np : Permet de voir les détails de la musique en cours de lecture."
         })
+
+        commands.create({
+            name: "calc",
+            description: "Calculatrice permettant de faire des calculs simples."
+        })
     
         commands.create({
             name: "qp",
@@ -491,14 +599,4 @@ async function installslash(message, client)
                 type: Discord.Constants.ApplicationCommandOptionTypes.STRING
             }]
         })
-
-        message.channel.send("Les commandes slash et les commandes d'application sont en cours d'installation sur ce serveur.")
-    } catch {
-        sendErrorLog("Les commandes slash n'ont pas été installés à cause d'une erreur.", "")
-        return message.channel.send("Les commandes slash n'ont pas été installés à cause d'une erreur.")
-    }
-}
-
-module.exports = (message, guildId) =>  {
-    installslash(message, guildId)
-};
+        */
