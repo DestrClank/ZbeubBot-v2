@@ -1,5 +1,5 @@
 const { Client, Intents, MessageAttachment } = require('discord.js')
-const Canvas = require('canvas');
+const Canvas = require('@napi-rs/canvas');
 const values = require("../values.json")
 const { fillTextWithTwemoji } = require('node-canvas-with-twemoji-and-discord-emoji');
 

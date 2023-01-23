@@ -144,7 +144,13 @@ const url = require('url'); sendStatusLog("Chargement de url...")
 const NodeID3 = require('node-id3'); sendStatusLog("Chargement de Node-ID3...")
 const boteasteregg = require('./cmd/bin/boteasteregg'); sendStatusLog("Chargement de ./cmd/bin/boteasteregg...")
 const findRemoveSync = require('find-remove'); sendStatusLog("Chargement de find-remove...")
-const slashprofileimage = require("./testing/socialslashcmd/profileimage"); sendStatusLog("Chargement de ./testing/socialslashcmd/profileimage...")
+
+if (platform == "linux") {
+    var slashprofileimage = require("./testing/socialslashcmd/profileimage"); sendStatusLog("Chargement de ./testing/socialslashcmd/profileimage...")
+} else {
+    sendWarnLog("La plateforme actuelle étant Windows (ou plateforme incompatible n'étant pas Linux), impossible de charger le module ./testing/socialslashcmd/profileimage. La fonctionnalité sera désactivée.")
+}
+
 const slashinfoaboutmember = require("./testing/socialslashcmd/sendInfoaboutMember"); sendStatusLog("Chargement de ./testing/socialslashcmd/sendInfoaboutMember...")
 
 const menuhello = require('./cmd/contextmenu/hello'); sendStatusLog("Chargement de ./cmd/contextmenu/hello...")
@@ -928,8 +934,12 @@ client.on('interactionCreate', async interaction => {
             })
         } else if (commandName == "membercard") {
             await interaction.deferReply()
-            let arg = interaction.options.getUser("membre")
-            slashprofileimage(interaction, arg)
+            if (platform == "linux") {
+                let arg = interaction.options.getUser("membre")
+                slashprofileimage(interaction, arg)
+            } else {
+                return interaction.editReply("La plateforme actuelle qui fait tourner le bot est Windows ou Android (ou une autre plateforme autre qu'un système Linux). Cette fonctionnalité est désactivée.")
+            }
         } else if (commandName == "showinfoaboutmember") {
             await interaction.deferReply()
             slashinfoaboutmember(interaction, client, Discord)

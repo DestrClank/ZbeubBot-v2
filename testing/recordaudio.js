@@ -17,6 +17,12 @@ module.exports = async (message, client, serverQueue) => {
         /* If member do not have admin perms */
         //if (!message.member.permissions.has('ADMINISTRATOR')) return message.channel.send("Vous n'avez pas les autorisations nécessaires pour utiliser cette commande."); 
         /* Get the voice channel the user is in */
+
+        if (!process.versions.node.startsWith("16")) {
+            sendStatusLog(`Impossible d'éxecuter la commande sur Node.js version ${process.versions.node}.`)
+            return message.channel.send(`Le bot ne tourne pas actuellement sur Node.js version 16. Pour le moment, cette commande ne fonctionne pas sur d'autres versions de Node.js.\n\n\`Version de Node.js actuel : Version ${process.versions.node}\``)
+        }
+
         const voiceChannel = message.member.voice.channel
         /* Check if the bot is in voice channel */
         let connection = client.voiceManager.get(message.channel.guild.id)
