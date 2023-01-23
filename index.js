@@ -1260,7 +1260,7 @@ client.on("messageCreate", async message => {
             bogossitude(message)
             break;
         case "z!deleteslashcommands":
-            deleteslash(message, bottoken)
+            deleteslash(message, bottoken, client.user.id)
             break;
         case "z!ping":
             message.channel.send("Calcul du temps de latence en cours...").then(async (msg) => {

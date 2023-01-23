@@ -8,7 +8,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
-module.exports = (message, token) => {
+module.exports = (message, token, clientId) => {
     //return message.channel.send("Cette commande est en cours de développement.")
     if (!message.member.permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR)) {
         sendWarnLog("z!deleteslashcommands : L'utilisateur n'a pas les droits nécessaires et la désinstallation des commandes est annulée.");
@@ -18,7 +18,7 @@ module.exports = (message, token) => {
     sendStatusLog(`z!deleteslashcommands : La désinstallation des commandes slash a commencé sur le serveur demandé.`)
     sendStatusLog(`Guild ID du serveur demandé : : ${message.guild.id}`)
 
-    const clientId = "830766885006999573"
+    //const clientId = "830766885006999573"
     const guildId = message.guild.id;
 
     const rest = new REST({ version: '9' }).setToken(token);
