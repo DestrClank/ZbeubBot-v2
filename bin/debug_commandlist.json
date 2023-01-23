@@ -1,0 +1,28 @@
+[
+    {
+        "name": "membercard",
+        "description": "Affiche les informations d'un membre sous la forme d'une carte de membre.",
+        "options": 
+        [{
+            "name": "membre",
+            "description": "Mentionnez un membre.",
+            "required": true,
+            "type": 6
+        }]
+    },
+    {
+        "name": "showinfoaboutmember",
+        "description": "Affiche les informations d'un membre.",
+        "options": 
+        [{
+            "name": "membre",
+            "description": "Mentionnez un membre.",
+            "required": true,
+            "type": 6
+        }]
+    },
+    {
+        "name": "calc",
+        "description": "Calculatrice permettant de faire des calculs simples."
+    }
+]

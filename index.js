@@ -52,6 +52,21 @@ switch (launchargs.logs) {
         break;
 }
 
+switch (launchargs.build) {
+    case "release":
+        console.log("Lancement du bot sur le mode Release.")
+        bottoken = process.env.RELEASE_BOT_TOKEN
+        break;
+    case "debug":
+        console.log("Lancement du bot sur le mode Debug.")
+        bottoken = process.env.DEBUG_BOT_TOKEN
+        break;
+    default:
+        console.log("Lancement du bot sur le mode Debug par défaut.")
+        bottoken = process.env.DEBUG_BOT_TOKEN
+        break;
+}
+
 
 const { sendCmdLog, sendStatusLog, sendErrorLog, sendFunctionLog, sendWarnLog, sendLogToDev, logfilepath, sendCrashLog } = require("./debug/consolelogs")
 
@@ -1208,7 +1223,7 @@ client.on("messageCreate", async message => {
             if (platform == "linux") {
                 canvasgenerator(message)
             } else {
-                return message.channel.send("La plateforme actuelle qui fait tourner le bot est Windows (ou une autre plateforme autre qu'un système Linux). Cette fonctionnalité est désactivée.")
+                return message.channel.send("La plateforme actuelle qui fait tourner le bot est Windows ou Android (ou une autre plateforme autre qu'un système Linux). Cette fonctionnalité est désactivée.")
             }
             break;
         case values.CmdList.SocialCmds.mtm:
@@ -1245,7 +1260,7 @@ client.on("messageCreate", async message => {
             bogossitude(message)
             break;
         case "z!deleteslashcommands":
-            deleteslash(message)
+            deleteslash(message, token)
             break;
         case "z!ping":
             message.channel.send("Calcul du temps de latence en cours...").then(async (msg) => {
@@ -2580,7 +2595,7 @@ function MusicFeatureDisabled(message) {
         useNewUrlParser: true,
     })
     sendStatusLog("Le bot est connecté au serveur MongoDB.")
-    await client.login(process.env.BOT_TOKEN);//connexion du bot au serveur de Discord
+    await client.login(bottoken);//connexion du bot au serveur de Discord
     sendStatusLog(`Le bot est connecté en tant que ${client.user.tag} et est présent sur ${client.guilds.cache.size} serveurs.`)
 } catch (err) {
     sendErrorLog("Impossible de se connecter à l'API de Discord et/ou au serveur MongoDB. Le bot ne peut pas continuer et va par conséquent s'arrêter.", err)
