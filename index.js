@@ -125,7 +125,7 @@ const botusage = require('./testing/botusage'); sendStatusLog("Chargement de ./t
 const discordTTS = require("discord-tts"); sendStatusLog("Chargement de discord-tts...")
 const sendMail = require("./testing/mailwhenerror"); sendStatusLog("Chargement de ./testing/mailwhenerror...")
 
-if (platform == "linux" || platform == "android") {
+if (platform == "linux") {
     var canvasgenerator = require('./testing/profileimage'); sendStatusLog("Chargement de ./testing/profileimage...")
 } else {
     sendWarnLog("La plateforme actuelle étant Windows (ou plateforme incompatible n'étant pas Linux), impossible de charger le module ./testing/profileimage. La fonctionnalité sera désactivée.")
@@ -145,7 +145,7 @@ const NodeID3 = require('node-id3'); sendStatusLog("Chargement de Node-ID3...")
 const boteasteregg = require('./cmd/bin/boteasteregg'); sendStatusLog("Chargement de ./cmd/bin/boteasteregg...")
 const findRemoveSync = require('find-remove'); sendStatusLog("Chargement de find-remove...")
 
-if (platform == "linux" || platform == "android") {
+if (platform == "linux") {
     var slashprofileimage = require("./testing/socialslashcmd/profileimage"); sendStatusLog("Chargement de ./testing/socialslashcmd/profileimage...")
 } else {
     sendWarnLog("La plateforme actuelle étant Windows (ou plateforme incompatible n'étant pas Linux), impossible de charger le module ./testing/socialslashcmd/profileimage. La fonctionnalité sera désactivée.")
