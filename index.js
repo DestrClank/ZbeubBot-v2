@@ -12,6 +12,11 @@
  *
  */
 
+/* Pour lancer le Gestionnaire de commandes slash de Zbeub Bot
+ *
+ * $ node bin/deploy_slash_commands_new.js 
+*/
+
 const launchargs = require("yargs").argv
 
 const invalidwindowsnames = [
@@ -176,6 +181,7 @@ const menudance = require('./cmd/contextmenu/dance'); sendStatusLog("Chargement 
 const menuhug = require('./cmd/contextmenu/hug'); sendStatusLog("Chargement de ./cmd/contextmenu/hug...")
 const menumtm = require('./cmd/contextmenu/mtm'); sendStatusLog("Chargement de ./cmd/contextmenu/mtm...")
 const menunice = require('./cmd/contextmenu/nice'); sendStatusLog("Chargement de ./cmd/contextmenu/nice...")
+const menuinfoaboutmember = require('./cmd/contextmenu/sendInfoaboutMember'); sendStatusLog("Chargement de ./cmd/contextmenu/sendInfoaboutMember...")
 
 const values = require("./values.json"); sendStatusLog("Chargement des paramètres de configuration...")
 const { SlashCommandBuilder } = require("@discordjs/builders"); sendStatusLog("Chargement de @discordjs/builders...")
@@ -629,6 +635,8 @@ client.on('interactionCreate', async interaction => {
             menumtm(interaction)
         } else if (commandName === "nice") {
             menunice(interaction)
+        } else if (commandName === "Informations utilisateur") {
+            menuinfoaboutmember(interaction, client, Discord)
         }
 
         sendStatusLog("Fonction interactionCreate : Une interaction avec le menu contextuel a été effectuée.")

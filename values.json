@@ -1,10 +1,10 @@
 {
     "version": {
-        "versionNumber": "0.11.4.4 (bêta) | testing_version",
-        "shortversionNumber": "0.11.4.4",
+        "versionNumber": "0.11.5.0 (bêta) | testing_version",
+        "shortversionNumber": "0.11.5.0",
         "slashversionNumber":  "6",
         "settingsVersion": "1",
-        "deployerVersion": "1.0.0"
+        "deployerVersion": "1.1.0"
     },
     "properties": {
         "name": "Zbeub Bot",

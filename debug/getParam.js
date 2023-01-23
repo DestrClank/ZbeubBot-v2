@@ -31,6 +31,6 @@ module.exports = () => {
     Nombre de coeurs : "+oscpu()[1]+"\n\
     Mémoire libre sur l'ordinateur : "+os.freemem()/(1*10**6)+" MB\n\
     Mémoire RAM totale sur l'ordinateur : "+os.totalmem()/(1*10**9)+" GB\n\
-    Version de l'installateur de commandes slash de Zbeub Bot : "+values.version.deployerVersion+"\n\
+    Version du Gestionnaire de commandes slash de Zbeub Bot : "+values.version.deployerVersion+"\n\
     Version de Node.js utilisée : "+process.versions.node)
 }
