@@ -4,25 +4,25 @@
   "description": "Bot pour la team Zbeub",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": ">=18.17",
+    "npm": ">=9"
   },
   "author": "DestrClank",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/builders": "^0.8.2",
-    "@discordjs/rest": "^0.5.0",
-    "@discordjs/voice": "^0.10.0",
+    "@discordjs/builders": "^1.7.0",
+    "@discordjs/rest": "^2.1.0",
+    "@discordjs/voice": "^0.16.0",
     "ansi-colors": "^4.1.3",
     "better-logging": "^4.6.0",
     "canvas": "^2.9.3",
     "cli-progress": "^3.11.2",
     "discord-api-types": "^0.24.0",
     "discord-tts": "github:DestrClank/discord-tts",
-    "discord.js": "^13.8.1",
+    "discord.js": "^14.14.1",
     "discord.js-commando": "^0.12.3",
     "discord.js-slash-command": "^1.2.1",
     "dotenv": "^8.6.0",
@@ -38,7 +38,7 @@
     "mime": "^3.0.0",
     "minimist": "^1.2.7",
     "mongoose": "^6.4.1",
-    "node": "^16.17.0",
+    "node": "^18.0.0",
     "node-abort-controller": "^3.0.1",
     "node-canvas-with-twemoji-and-discord-emoji": "github:DiscordStatbot/node-canvas-with-twemoji-and-discord-emoji",
     "node-crc": "^1.3.2",
