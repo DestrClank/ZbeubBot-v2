@@ -4,7 +4,7 @@ const path = require('path');
 const values = require('../../values.json');
 
 async function buildAboutEmbed() {
-  const changelogPath = path.join(__dirname, '..', '..', 'cmd', 'assets', 'about_changelog', 'current_patch.txt');
+  const changelogPath = path.join(__dirname, '..', '..', 'assets', 'about_changelog', 'current_patch.txt');
   let changelog = 'Patch note indisponible.';
 
   try {
